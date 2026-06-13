@@ -4,431 +4,275 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FCR Tunisie — Checklist importation véhicule (Changement de résidence)</title>
-<meta name="description" content="Checklist claire et complète pour importer votre voiture en Tunisie sous le régime FCR (changement de résidence) — conforme aux exigences de la Douane tunisienne et de l'ATTT." />
-<meta name="theme-color" content="#3f7384" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%233f7384'/><circle cx='50' cy='50' r='26' fill='white'/><circle cx='56' cy='50' r='21' fill='%233f7384'/><path d='M60 38 l4 10 10 0 -8 7 3 11 -9-7 -9 7 3-11 -8-7 10 0z' fill='white'/></svg>" />
+<meta name="description" content="Checklist claire pour importer votre véhicule en Tunisie sous le régime FCR (changement de résidence) — Douane tunisienne & ATTT." />
+<meta name="theme-color" content="#2c5563" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%233f7384'/><circle cx='50' cy='50' r='26' fill='white'/><circle cx='56' cy='50' r='21' fill='%233f7384'/><path d='M60 38 l4 10 10 0 -8 7 3 11 -9-7 -9 7 3-11 -8-7 10 0z' fill='white'/></svg>" />
 <style>
   :root {
-    --red: #3f7384;
-    --red-dark: #2c5563;
+    --brand: #3f7384;
+    --brand-dark: #2c5563;
     --ink: #14181f;
     --muted: #5b6573;
     --line: #e7ebf0;
     --surface: #ffffff;
-    --bg: #f5f7fa;
+    --bg: #f4f6f8;
     --green: #16a34a;
-    --green-soft: #ecfdf3;
-    --amber: #d97706;
     --amber-soft: #fffbeb;
-    --radius: 16px;
-    --shadow: 0 1px 2px rgba(16,24,40,.05), 0 12px 32px -12px rgba(16,24,40,.18);
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(16,24,40,.05), 0 10px 28px -14px rgba(16,24,40,.20);
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 1rem; }
 
-  /* ---------- Header ---------- */
+  /* ---------- Header (slim) ---------- */
   header {
-    position: relative;
-    overflow: hidden;
-    background:
-      radial-gradient(1200px 400px at 80% -50%, rgba(255,255,255,.18), transparent),
-      linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    background: linear-gradient(135deg, var(--brand), var(--brand-dark));
     color: #fff;
-    padding: 1.5rem 1.25rem 3rem;
   }
-  .wrap { max-width: 840px; margin: 0 auto; }
-  .brand { display: flex; align-items: center; gap: .65rem; font-weight: 700; letter-spacing: .02em; }
-  .brand .star { width: 30px; height: 30px; display: grid; place-items: center; background: #fff; color: var(--red); border-radius: 8px; font-size: 1rem; }
-  header h1 {
-    margin: .9rem 0 .4rem;
-    font-size: clamp(1.5rem, 1rem + 2.2vw, 2.1rem);
-    line-height: 1.15;
-    letter-spacing: -.02em;
-    font-weight: 800;
-  }
-  header p { margin: 0; max-width: 56ch; color: rgba(255,255,255,.92); font-size: clamp(1rem,.95rem + .3vw,1.15rem); }
-  .meta-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.4rem; }
-  .pill {
-    background: rgba(255,255,255,.16);
-    border: 1px solid rgba(255,255,255,.28);
-    backdrop-filter: blur(4px);
-    padding: .35rem .75rem; border-radius: 999px; font-size: .82rem; font-weight: 600;
-  }
+  .topbar { display: flex; align-items: center; gap: .6rem; padding: .7rem 0; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-weight: 700; letter-spacing: .01em; font-size: 1.05rem; }
+  .brand .star { width: 26px; height: 26px; display: grid; place-items: center; background: #fff; color: var(--brand); border-radius: 7px; font-size: .9rem; }
+  .brand small { font-weight: 500; opacity: .85; font-size: .78rem; }
 
-  /* ---------- Progress bar (sticky) ---------- */
-  .progress-wrap {
-    position: sticky; top: 0; z-index: 50;
-    margin: -2.25rem auto 1.75rem;
-    max-width: 840px; padding: 0 1.25rem;
+  /* ---------- Tabs ---------- */
+  nav.tabs {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--brand-dark);
+    box-shadow: 0 4px 12px -6px rgba(0,0,0,.3);
   }
+  .tabs-inner { display: flex; gap: .25rem; overflow-x: auto; max-width: 820px; margin: 0 auto; padding: .4rem 1rem; scrollbar-width: none; }
+  .tabs-inner::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: none; border: none; cursor: pointer; white-space: nowrap;
+    background: rgba(255,255,255,.10); color: #fff;
+    padding: .5rem .85rem; border-radius: 9px; font-size: .85rem; font-weight: 600;
+    transition: background .18s var(--ease), color .18s var(--ease);
+  }
+  .tab:hover { background: rgba(255,255,255,.2); }
+  .tab[aria-selected="true"] { background: #fff; color: var(--brand-dark); }
+
+  /* ---------- Progress ---------- */
   .progress-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 1rem 1.25rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .ring { --p: 0; width: 56px; height: 56px; flex: none; border-radius: 50%;
-    background: conic-gradient(var(--green) calc(var(--p) * 1%), var(--line) 0);
-    display: grid; place-items: center; transition: --p .5s var(--ease);
-  }
-  .ring::after { content: ""; width: 42px; height: 42px; background: var(--surface); border-radius: 50%; grid-area: 1/1; }
-  .ring span { grid-area: 1/1; z-index: 1; font-weight: 800; font-size: .82rem; }
-  .progress-text { flex: 1; min-width: 0; }
-  .progress-text strong { display: block; font-size: 1rem; }
-  .progress-text small { color: var(--muted); }
-  .reset-btn {
-    border: 1px solid var(--line); background: var(--bg); color: var(--muted);
-    border-radius: 10px; padding: .5rem .8rem; font-size: .82rem; font-weight: 600;
-    cursor: pointer; transition: all .2s var(--ease); white-space: nowrap;
-  }
-  .reset-btn:hover { color: var(--red); border-color: var(--red); background: #fff; }
-
-  /* ---------- Layout ---------- */
-  main { max-width: 840px; margin: 0 auto; padding: 0 1.25rem 4rem; }
-
-  .toolbar { display: flex; gap: .6rem; margin-bottom: 1.75rem; flex-wrap: wrap; }
-  .search {
-    flex: 1; min-width: 200px; position: relative;
-  }
-  .search input {
-    width: 100%; padding: .8rem 1rem .8rem 2.6rem; border-radius: 12px;
-    border: 1px solid var(--line); background: var(--surface); font-size: .95rem; color: var(--ink);
-    box-shadow: var(--shadow); transition: border-color .2s var(--ease);
-  }
-  .search input:focus { outline: none; border-color: var(--red); }
-  .search svg { position: absolute; left: .85rem; top: 50%; transform: translateY(-50%); color: var(--muted); }
-  .filter-btn {
-    border: 1px solid var(--line); background: var(--surface); border-radius: 12px;
-    padding: 0 1rem; font-weight: 600; font-size: .88rem; cursor: pointer; color: var(--muted);
-    box-shadow: var(--shadow); transition: all .2s var(--ease);
-  }
-  .filter-btn[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
-
-  /* ---------- Phase / cards ---------- */
-  .phase { margin-bottom: 2.25rem; }
-  .phase-head {
-    display: flex; align-items: baseline; gap: .6rem; margin: 0 0 1rem;
-  }
-  .phase-num {
-    flex: none; width: 30px; height: 30px; border-radius: 9px; background: var(--red);
-    color: #fff; font-weight: 800; font-size: .9rem; display: grid; place-items: center;
-    transform: translateY(4px);
-  }
-  .phase-head h2 { margin: 0; font-size: clamp(1.2rem,1rem + .8vw,1.5rem); letter-spacing: -.01em; }
-  .phase-head .flag { margin-left: auto; font-size: 1.5rem; transform: translateY(2px); }
-
-  .group {
     background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-    box-shadow: var(--shadow); overflow: hidden; margin-bottom: 1rem;
+    box-shadow: var(--shadow); padding: .8rem 1rem; margin: 1rem 0 1.25rem;
+    display: flex; align-items: center; gap: .9rem;
   }
-  .group > h3 {
-    margin: 0; padding: .9rem 1.15rem; font-size: .82rem; text-transform: uppercase;
-    letter-spacing: .06em; color: var(--muted); background: linear-gradient(var(--bg), #fff);
-    border-bottom: 1px solid var(--line);
-  }
-  ul.tasks { list-style: none; margin: 0; padding: .35rem; }
-  .task {
-    display: flex; gap: .85rem; align-items: flex-start; padding: .7rem .85rem;
-    border-radius: 11px; cursor: pointer; transition: background .15s var(--ease);
-  }
+  .ring { --p: 0; width: 48px; height: 48px; flex: none; border-radius: 50%;
+    background: conic-gradient(var(--green) calc(var(--p)*1%), var(--line) 0); display: grid; place-items: center; }
+  .ring::after { content:""; width: 36px; height: 36px; background: var(--surface); border-radius: 50%; grid-area: 1/1; }
+  .ring span { grid-area: 1/1; z-index: 1; font-weight: 800; font-size: .72rem; }
+  .progress-text { flex: 1; min-width: 0; }
+  .progress-text strong { display: block; font-size: .95rem; }
+  .progress-text small { color: var(--muted); font-size: .82rem; }
+  .reset-btn { border: 1px solid var(--line); background: var(--bg); color: var(--muted);
+    border-radius: 9px; padding: .45rem .7rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .2s var(--ease); white-space: nowrap; }
+  .reset-btn:hover { color: var(--brand); border-color: var(--brand); background: #fff; }
+
+  main { padding-bottom: 3rem; }
+
+  /* ---------- Views ---------- */
+  .view { display: none; animation: fade .25s var(--ease); }
+  .view.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .view-head { display: flex; align-items: center; gap: .6rem; margin: 0 0 1rem; }
+  .view-head .flag { font-size: 1.6rem; }
+  .view-head h2 { margin: 0; font-size: 1.3rem; letter-spacing: -.01em; }
+  .view-head small { display: block; color: var(--muted); font-weight: 500; font-size: .82rem; }
+
+  .group { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: .9rem; }
+  .group > h3 { margin: 0; padding: .8rem 1.1rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--bg); }
+  ul.tasks { list-style: none; margin: 0; padding: .3rem; }
+  .task { display: flex; gap: .8rem; align-items: flex-start; padding: .65rem .8rem; border-radius: 10px; cursor: pointer; transition: background .15s var(--ease); }
   .task:hover { background: var(--bg); }
   .task input { position: absolute; opacity: 0; pointer-events: none; }
-  .box {
-    flex: none; width: 22px; height: 22px; border-radius: 7px; border: 2px solid #cdd5df;
-    margin-top: 1px; display: grid; place-items: center; transition: all .18s var(--ease);
-  }
+  .box { flex: none; width: 21px; height: 21px; border-radius: 6px; border: 2px solid #cdd5df; margin-top: 1px; display: grid; place-items: center; transition: all .18s var(--ease); }
   .box svg { opacity: 0; transform: scale(.4); transition: all .18s var(--ease); color: #fff; }
   .task .label { flex: 1; }
   .task .label b { font-weight: 700; }
-  .task .label small { display: block; color: var(--muted); font-size: .85rem; margin-top: .1rem; }
+  .task .label small { display: block; color: var(--muted); font-size: .82rem; margin-top: .1rem; }
   .task input:checked + .box { background: var(--green); border-color: var(--green); }
   .task input:checked + .box svg { opacity: 1; transform: scale(1); }
   .task input:checked ~ .label { color: var(--muted); }
   .task input:checked ~ .label b { text-decoration: line-through; text-decoration-color: rgba(0,0,0,.25); }
-  .task input:focus-visible + .box { outline: 2px solid var(--red); outline-offset: 2px; }
+  .task input:focus-visible + .box { outline: 2px solid var(--brand); outline-offset: 2px; }
 
-  /* ---------- Tip boxes ---------- */
-  .tip {
-    display: flex; gap: .7rem; padding: .85rem 1rem; margin: 0 .35rem .35rem;
-    border-radius: 11px; background: var(--amber-soft); border: 1px solid #fde68a;
-    font-size: .88rem; color: #92400e;
-  }
-  .tip.info { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
-  .tip .ic { flex: none; }
+  .tip { display: flex; gap: .6rem; padding: .8rem 1rem; margin: 0 0 .9rem; border-radius: 11px; background: var(--amber-soft); border: 1px solid #fde68a; font-size: .85rem; color: #92400e; }
+  .tip.info { background: #eef6f8; border-color: #c5e0e6; color: var(--brand-dark); }
 
-  /* ---------- Info section ---------- */
-  .info-grid { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); margin-top: 1rem; }
-  .info-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem; box-shadow: var(--shadow); }
-  .info-card h4 { margin: 0 0 .35rem; font-size: .95rem; display: flex; gap: .45rem; align-items: center; }
-  .info-card p { margin: 0; font-size: .88rem; color: var(--muted); }
-  .info-card .big { font-size: 1.4rem; font-weight: 800; color: var(--red); display: block; }
+  /* ---------- Infos / FAQ ---------- */
+  .info-grid { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); }
+  .info-card { background: var(--surface); border: 1px solid var(--line); border-radius: 13px; padding: 1rem; box-shadow: var(--shadow); }
+  .info-card h4 { margin: 0 0 .3rem; font-size: .9rem; }
+  .info-card .big { font-size: 1.35rem; font-weight: 800; color: var(--brand); display: block; }
+  .info-card p { margin: .15rem 0 0; font-size: .84rem; color: var(--muted); }
 
-  details.faq {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
-    margin-bottom: .6rem; box-shadow: var(--shadow); overflow: hidden;
-  }
-  details.faq summary {
-    padding: .95rem 1.1rem; font-weight: 600; cursor: pointer; list-style: none;
-    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  }
+  details.faq { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin-bottom: .55rem; box-shadow: var(--shadow); overflow: hidden; }
+  details.faq summary { padding: .9rem 1rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; align-items: center; font-size: .92rem; }
   details.faq summary::-webkit-details-marker { display: none; }
-  details.faq summary::after { content: "+"; color: var(--red); font-size: 1.3rem; font-weight: 400; transition: transform .2s var(--ease); }
+  details.faq summary::after { content: "+"; color: var(--brand); font-size: 1.25rem; transition: transform .2s var(--ease); }
   details.faq[open] summary::after { transform: rotate(45deg); }
-  details.faq p { margin: 0; padding: 0 1.1rem 1.05rem; color: var(--muted); font-size: .9rem; }
+  details.faq p { margin: 0; padding: 0 1rem 1rem; color: var(--muted); font-size: .88rem; }
 
-  .section-title { font-size: clamp(1.2rem,1rem+.8vw,1.5rem); margin: 2.75rem 0 .25rem; letter-spacing:-.01em; }
-  .section-sub { color: var(--muted); margin: 0 0 1rem; }
+  .disclaimer { margin-top: 1.5rem; padding: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; font-size: .8rem; color: var(--muted); line-height: 1.6; }
+  .disclaimer a { color: var(--brand); font-weight: 600; text-decoration: none; }
 
-  .empty { text-align: center; color: var(--muted); padding: 2.5rem 1rem; display: none; }
-
-  footer {
-    border-top: 1px solid var(--line); background: var(--surface);
-    padding: 2rem 1.25rem; text-align: center; color: var(--muted); font-size: .85rem;
-  }
-  footer .wrap { max-width: 840px; }
-  footer a { color: var(--red); text-decoration: none; font-weight: 600; }
-  .disclaimer { font-size: .8rem; margin-top: 1rem; line-height: 1.6; }
-
-  .hidden { display: none !important; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+  @media (prefers-reduced-motion: reduce) { *, .view { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="wrap">
-    <div class="brand"><span class="star">★</span> FCR Tunisie</div>
-    <h1>Importer votre véhicule en Tunisie, sans rien oublier.</h1>
-    <p>Checklist claire et étape par étape pour le régime <b>FCR — changement de résidence</b>. Cochez au fur et à mesure, votre progression est enregistrée automatiquement sur cet appareil.</p>
-    <div class="meta-pills">
-      <span class="pill">🇫🇷 → 🇹🇳 Procédure complète</span>
-      <span class="pill">Conforme Douane &amp; ATTT</span>
-      <span class="pill">Sauvegarde automatique</span>
+  <div class="wrap topbar">
+    <div class="brand">
+      <span class="star">★</span>
+      <span>FCR Tunisie <small>· importation véhicule</small></span>
     </div>
   </div>
 </header>
 
-<div class="progress-wrap">
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs-inner" id="tabs"><!-- injected --></div>
+</nav>
+
+<div class="wrap">
   <div class="progress-card">
     <div class="ring" id="ring"><span id="ringPct">0%</span></div>
     <div class="progress-text">
       <strong id="progLabel">Démarrons !</strong>
-      <small id="progCount">0 / 0 étapes complétées</small>
+      <small id="progCount">0 / 0 étapes</small>
     </div>
     <button class="reset-btn" id="resetBtn" type="button">Réinitialiser</button>
   </div>
 </div>
 
-<main>
-  <div class="toolbar">
-    <div class="search">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="search" id="search" placeholder="Rechercher un document, une étape…" aria-label="Rechercher" />
-    </div>
-    <button class="filter-btn" id="todoFilter" type="button" aria-pressed="false">À faire seulement</button>
-  </div>
-
-  <div id="checklist"><!-- injected --></div>
-
-  <div class="empty" id="empty">Aucune étape ne correspond à votre recherche.</div>
-
-  <!-- INFOS UTILES -->
-  <h2 class="section-title">📌 Bon à savoir</h2>
-  <p class="section-sub">Les conditions clés du régime FCR en un coup d'œil.</p>
-  <div class="info-grid">
-    <div class="info-card">
-      <h4>🚗 Âge du véhicule</h4>
-      <span class="big">≤ 5 ans</span>
-      <p>Pour les voitures particulières. <b>≤ 3 ans</b> pour les utilitaires légers.</p>
-    </div>
-    <div class="info-card">
-      <h4>🏠 Résidence à l'étranger</h4>
-      <span class="big">≥ 2 ans</span>
-      <p>Sans dépasser <b>120 jours/an</b> de présence cumulée en Tunisie.</p>
-    </div>
-    <div class="info-card">
-      <h4>📑 Passeport</h4>
-      <span class="big">32 pages</span>
-      <p>Photocopie intégrale exigée pour justifier les mouvements frontaliers.</p>
-    </div>
-    <div class="info-card">
-      <h4>🪪 Plaque RS « ن ت »</h4>
-      <span class="big">Régime FCR</span>
-      <p>Plaque tunisienne normale possible si les taxes sont payées (≈ 30 %).</p>
-    </div>
-  </div>
-
-  <!-- FAQ -->
-  <h2 class="section-title">❓ Questions fréquentes</h2>
-  <p class="section-sub">Les points qui bloquent le plus souvent.</p>
-
-  <details class="faq">
-    <summary>Qu'est-ce que la « Mou3ayna » (معاينة) ?</summary>
-    <p>C'est la visite technique d'identification du véhicule effectuée dans un centre de l'ATTT à votre arrivée. Elle débouche sur le <b>Certificat d'identification (Annexe V)</b>, indispensable pour le dossier de douane.</p>
-  </details>
-  <details class="faq">
-    <summary>Ai-je besoin d'un transitaire ?</summary>
-    <p>Oui, dans la grande majorité des cas. Le transitaire saisit informatiquement la déclaration de douane et vous accompagne dans le dépôt et la validation du dossier. Comparez les tarifs avant de choisir.</p>
-  </details>
-  <details class="faq">
-    <summary>Pourquoi réimprimer le certificat de non-gage en Tunisie ?</summary>
-    <p>La douane exige souvent un certificat de non-gage français <b>récent</b>, daté <b>après</b> votre date d'entrée en Tunisie. Pensez à le réimprimer une fois sur place.</p>
-  </details>
-  <details class="faq">
-    <summary>Qui peut conduire un véhicule en plaque RS ?</summary>
-    <p>Par défaut, seul le bénéficiaire. Pour la famille proche (conjoint, parents, enfants, frères et sœurs), il faut déposer une <b>demande d'autorisation exceptionnelle (procuration de conduite RS)</b> auprès de la douane.</p>
-  </details>
-  <details class="faq">
-    <summary>Le formulaire « Modèle 6.3.41 », c'est quoi ?</summary>
-    <p>C'est la <b>Demande de privilège fiscal</b> à remplir et signer pour bénéficier de la franchise douanière dans le cadre du changement de résidence.</p>
-  </details>
-</main>
-
-<footer>
-  <div class="wrap">
-    <p><b>FCR Tunisie</b> — Checklist non officielle d'aide à la préparation.</p>
-    <p class="disclaimer">
-      ⚠️ Ce site est un outil d'organisation personnel. Les exigences peuvent évoluer : vérifiez toujours auprès des
-      sources officielles — <b>Douane Tunisienne</b>, <b>ATTT</b> et le <b>Consulat de Tunisie</b> dont vous dépendez.
-      Aucune donnée n'est envoyée : votre progression reste sur votre appareil.
-    </p>
-  </div>
-</footer>
+<main class="wrap" id="main"><!-- injected --></main>
 
 <script>
-/* ---------- Données de la checklist ---------- */
 const DATA = [
-  {
-    phase: "Phase 1 — En France", flag: "🇫🇷",
-    groups: [
-      { title: "Avant d'acheter la voiture", items: [
-        { t: "Vérifier l'âge du véhicule", d: "≤ 5 ans (voitures) · ≤ 3 ans (utilitaires légers)." },
-        { t: "Vérifier les conditions de séjour", d: "≥ 2 ans de résidence à l'étranger, sans dépasser 120 jours/an en Tunisie." },
+  { key:"p1", tab:"1 · France", phase:"Phase 1 — En France", flag:"🇫🇷",
+    groups:[
+      { title:"Avant d'acheter", items:[
+        { t:"Vérifier l'âge du véhicule", d:"≤ 5 ans (voitures) · ≤ 3 ans (utilitaires légers)." },
+        { t:"Vérifier les conditions de séjour", d:"≥ 2 ans à l'étranger, sans dépasser 120 jours/an en Tunisie." },
       ]},
-      { title: "Au moment de l'achat", items: [
-        { t: "Facture d'achat originale", d: "Original + copie." },
-        { t: "Certificat de cession", d: "Rempli et signé par le vendeur et l'acheteur." },
-        { t: "Déclaration d'achat", d: "Si achat via un professionnel." },
-        { t: "Carte grise française originale", d: "Barrée, datée et signée — mention « Vendu le… »." },
-        { t: "Certificat de non-gage / situation administrative", d: "À imprimer." },
+      { title:"Au moment de l'achat", items:[
+        { t:"Facture d'achat originale", d:"Original + copie." },
+        { t:"Certificat de cession", d:"Rempli et signé par le vendeur et l'acheteur." },
+        { t:"Déclaration d'achat", d:"Si achat via un professionnel." },
+        { t:"Carte grise française originale", d:"Barrée, datée, signée — mention « Vendu le… »." },
+        { t:"Certificat de non-gage", d:"Situation administrative à imprimer." },
       ]},
-      { title: "Consulat de Tunisie en France", items: [
-        { t: "Légalisation de signature", d: "Sur le certificat de cession." },
-        { t: "Fiche des mouvements frontaliers", d: "Si passeport récent (< 2 ans) ou tampons illisibles." },
+      { title:"Consulat de Tunisie en France", items:[
+        { t:"Légalisation de signature", d:"Sur le certificat de cession." },
+        { t:"Fiche des mouvements frontaliers", d:"Si passeport < 2 ans ou tampons illisibles." },
       ]},
-    ]
-  },
-  {
-    phase: "Phase 2 — La traversée (Bateau CTN)", flag: "🚢",
-    tip: { type: "info", text: "Ces formalités se font directement à bord, auprès du bureau des douanes du navire." },
-    groups: [
-      { title: "À bord du bateau", items: [
-        { t: "Déclaration de douane du véhicule", d: "À remplir auprès du bureau des douanes à bord." },
-        { t: "Permis de circulation provisoire", d: "Récupérer le ticket / diptyque cartonné." },
+    ]},
+  { key:"p2", tab:"2 · Bateau", phase:"Phase 2 — La traversée (CTN)", flag:"🚢",
+    tip:{ type:"info", text:"Ces formalités se font à bord, auprès du bureau des douanes du navire." },
+    groups:[
+      { title:"À bord du bateau", items:[
+        { t:"Déclaration de douane du véhicule", d:"À remplir auprès des douanes à bord." },
+        { t:"Permis de circulation provisoire", d:"Récupérer le ticket / diptyque cartonné." },
       ]},
-    ]
-  },
-  {
-    phase: "Phase 3 — En Tunisie (Inspection & Douane)", flag: "🇹🇳",
-    groups: [
-      { title: "Documents administratifs", items: [
-        { t: "Photocopie des 32 pages du passeport", d: "Bénéficiaire." },
-        { t: "Photocopie de la CIN", d: "Bénéficiaire + conjoint." },
-        { t: "Extrait de naissance tunisien", d: "Moins de 3 mois." },
-        { t: "Certificat de non-gage français récent", d: "Réimprimé après la date d'entrée en Tunisie." },
+    ]},
+  { key:"p3", tab:"3 · Douane", phase:"Phase 3 — En Tunisie", flag:"🇹🇳",
+    groups:[
+      { title:"Documents administratifs", items:[
+        { t:"Photocopie des 32 pages du passeport", d:"Bénéficiaire." },
+        { t:"Photocopie de la CIN", d:"Bénéficiaire + conjoint." },
+        { t:"Extrait de naissance tunisien", d:"Moins de 3 mois." },
+        { t:"Certificat de non-gage récent", d:"Réimprimé après la date d'entrée en Tunisie." },
       ]},
-      { title: "Inspection du véhicule (ATTT)", items: [
-        { t: "Passage de la Mou3ayna (معاينة)", d: "Dans un centre de visite technique de l'ATTT." },
-        { t: "Certificat d'identification (Annexe V)", d: "À récupérer après la Mou3ayna." },
-        { t: "Fiche de pesée", d: "Uniquement pour utilitaires / grands gabarits." },
+      { title:"Inspection ATTT", items:[
+        { t:"Passage de la Mou3ayna (معاينة)", d:"Centre de visite technique de l'ATTT." },
+        { t:"Certificat d'identification (Annexe V)", d:"À récupérer après la Mou3ayna." },
+        { t:"Fiche de pesée", d:"Uniquement utilitaires / grands gabarits." },
       ]},
-      { title: "Bureau de douane & transitaire", items: [
-        { t: "Saisie de la déclaration de douane", d: "En collaboration avec le transitaire." },
-        { t: "Demande de privilège fiscal (Modèle 6.3.41)", d: "Remplir et signer le formulaire officiel." },
-        { t: "Dépôt du dossier complet", d: "Identité, papiers du garage légalisés, Mou3ayna, permis provisoire." },
-        { t: "Paiement des droits & Mainlevée", d: "Obtention de la quittance / mainlevée." },
+      { title:"Douane & transitaire", items:[
+        { t:"Saisie de la déclaration de douane", d:"Avec le transitaire." },
+        { t:"Demande de privilège fiscal (Modèle 6.3.41)", d:"Formulaire officiel à signer." },
+        { t:"Dépôt du dossier complet", d:"Identité, papiers légalisés, Mou3ayna, permis provisoire." },
+        { t:"Paiement des droits & Mainlevée", d:"Quittance / mainlevée." },
       ]},
-    ]
-  },
-  {
-    phase: "Phase 4 — Formalités finales & immatriculation", flag: "💳",
-    groups: [
-      { title: "Immatriculation", items: [
-        { t: "Demande de carte grise tunisienne", d: "Auprès de l'ATTT, avec l'accord de la douane." },
-        { t: "Pose de la nouvelle plaque", d: "Série « ن ت » (RS) ou série normale si taxes payées (≈ 30 %)." },
+    ]},
+  { key:"p4", tab:"4 · Immat.", phase:"Phase 4 — Immatriculation", flag:"💳",
+    groups:[
+      { title:"Immatriculation", items:[
+        { t:"Demande de carte grise tunisienne", d:"À l'ATTT, avec l'accord de la douane." },
+        { t:"Pose de la nouvelle plaque", d:"Série « ن ت » (RS) ou normale si taxes payées (≈ 30 %)." },
       ]},
-      { title: "Mise en circulation", items: [
-        { t: "Souscrire une assurance tunisienne", d: "Avec le nouveau numéro d'immatriculation." },
-        { t: "Acheter la vignette", d: "Taxe de circulation à la Recette des Finances." },
-        { t: "Procuration de conduite RS", d: "Autorisation exceptionnelle pour la famille proche." },
+      { title:"Mise en circulation", items:[
+        { t:"Assurance tunisienne", d:"Avec le nouveau numéro d'immatriculation." },
+        { t:"Achat de la vignette", d:"Taxe de circulation à la Recette des Finances." },
+        { t:"Procuration de conduite RS", d:"Autorisation exceptionnelle pour la famille proche." },
       ]},
-    ]
-  },
+    ]},
 ];
 
-/* ---------- État ---------- */
-const KEY = "fcr-tn-v1";
+const KEY = "fcr-tn-v2";
 let done = JSON.parse(localStorage.getItem(KEY) || "{}");
-let todoOnly = false;
-
-const checkEl = document.getElementById("checklist");
+let active = "p1";
 const checkSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-let idc = 0;
 const allIds = [];
 
-function render() {
-  checkEl.innerHTML = "";
-  idc = 0;
-  allIds.length = 0;
-  DATA.forEach((p, pi) => {
-    const phase = document.createElement("section");
-    phase.className = "phase";
-    phase.innerHTML = `<div class="phase-head"><span class="phase-num">${pi+1}</span><h2>${p.phase.replace(/^Phase \d+ — /,'')}</h2><span class="flag">${p.flag}</span></div>`;
+const tabsEl = document.getElementById("tabs");
+const mainEl = document.getElementById("main");
 
-    if (p.tip) phase.appendChild(makeTip(p.tip));
+// extra (non-task) tabs
+const EXTRA = [
+  { key:"infos", tab:"📌 Infos", html: infosHTML },
+  { key:"faq", tab:"❓ FAQ", html: faqHTML },
+];
 
-    p.groups.forEach(g => {
-      const group = document.createElement("div");
-      group.className = "group";
-      const ul = document.createElement("ul");
-      ul.className = "tasks";
-      g.items.forEach(it => {
-        const id = "t" + (idc++);
-        allIds.push(id);
-        const li = document.createElement("li");
-        li.dataset.text = (it.t + " " + (it.d||"")).toLowerCase();
-        li.innerHTML = `<label class="task">
-            <input type="checkbox" data-id="${id}" ${done[id] ? "checked":""}/>
-            <span class="box">${checkSvg}</span>
-            <span class="label"><b>${it.t}</b>${it.d ? `<small>${it.d}</small>`:""}</span>
-          </label>`;
-        ul.appendChild(li);
-      });
-      group.innerHTML = `<h3>${g.title}</h3>`;
-      group.appendChild(ul);
-      phase.appendChild(group);
-    });
-    checkEl.appendChild(phase);
+function build() {
+  let idc = 0;
+  // tabs
+  tabsEl.innerHTML = "";
+  [...DATA, ...EXTRA].forEach(s => {
+    const b = document.createElement("button");
+    b.className = "tab"; b.textContent = s.tab; b.dataset.key = s.key;
+    b.setAttribute("role","tab");
+    b.addEventListener("click", () => show(s.key));
+    tabsEl.appendChild(b);
   });
+  // views
+  mainEl.innerHTML = "";
+  DATA.forEach(s => {
+    const v = document.createElement("section");
+    v.className = "view"; v.dataset.key = s.key;
+    let h = `<div class="view-head"><span class="flag">${s.flag}</span><div><h2>${s.tab.replace(/^\d+ · /,'')}</h2><small>${s.phase}</small></div></div>`;
+    if (s.tip) h += `<div class="tip ${s.tip.type}">${s.tip.type==="info"?"ℹ️":"⚠️"} ${s.tip.text}</div>`;
+    s.groups.forEach(g => {
+      h += `<div class="group"><h3>${g.title}</h3><ul class="tasks">`;
+      g.items.forEach(it => {
+        const id = "t"+(idc++); allIds.push(id);
+        h += `<li><label class="task"><input type="checkbox" data-id="${id}" ${done[id]?"checked":""}/><span class="box">${checkSvg}</span><span class="label"><b>${it.t}</b>${it.d?`<small>${it.d}</small>`:""}</span></label></li>`;
+      });
+      h += `</ul></div>`;
+    });
+    v.innerHTML = h;
+    mainEl.appendChild(v);
+  });
+  EXTRA.forEach(s => {
+    const v = document.createElement("section");
+    v.className = "view"; v.dataset.key = s.key;
+    v.innerHTML = s.html();
+    mainEl.appendChild(v);
+  });
+  show(active);
   update();
 }
 
-function makeTip(tip) {
-  const d = document.createElement("div");
-  d.className = "tip " + (tip.type || "");
-  d.innerHTML = `<span class="ic">${tip.type==="info"?"ℹ️":"⚠️"}</span><span>${tip.text}</span>`;
-  return d;
+function show(key) {
+  active = key;
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.key === key));
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.dataset.key === key));
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function update() {
@@ -437,63 +281,49 @@ function update() {
   const pct = total ? Math.round(n/total*100) : 0;
   document.getElementById("ring").style.setProperty("--p", pct);
   document.getElementById("ringPct").textContent = pct + "%";
-  document.getElementById("progCount").textContent = `${n} / ${total} étapes complétées`;
+  document.getElementById("progCount").textContent = `${n} / ${total} étapes`;
   const lbl = document.getElementById("progLabel");
-  if (pct === 0) lbl.textContent = "Démarrons !";
-  else if (pct === 100) lbl.textContent = "🎉 Dossier complet, bravo !";
-  else if (pct < 40) lbl.textContent = "C'est parti 💪";
-  else if (pct < 80) lbl.textContent = "Belle avancée 🚗";
-  else lbl.textContent = "Presque au bout 🏁";
+  lbl.textContent = pct===0 ? "Démarrons !" : pct===100 ? "🎉 Dossier complet !" : pct<40 ? "C'est parti 💪" : pct<80 ? "Belle avancée 🚗" : "Presque au bout 🏁";
 }
 
-/* ---------- Events ---------- */
-checkEl.addEventListener("change", e => {
-  const cb = e.target.closest("input[type=checkbox]");
-  if (!cb) return;
+mainEl.addEventListener("change", e => {
+  const cb = e.target.closest("input[type=checkbox]"); if (!cb) return;
   if (cb.checked) done[cb.dataset.id] = 1; else delete done[cb.dataset.id];
   localStorage.setItem(KEY, JSON.stringify(done));
   update();
-  if (todoOnly) applyFilter();
 });
 
 document.getElementById("resetBtn").addEventListener("click", () => {
   if (!confirm("Réinitialiser toute votre progression ?")) return;
-  done = {}; localStorage.removeItem(KEY); render();
+  done = {}; localStorage.removeItem(KEY);
+  document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
+  update();
 });
 
-const searchInput = document.getElementById("search");
-const todoBtn = document.getElementById("todoFilter");
-searchInput.addEventListener("input", applyFilter);
-todoBtn.addEventListener("click", () => {
-  todoOnly = !todoOnly;
-  todoBtn.setAttribute("aria-pressed", todoOnly);
-  applyFilter();
-});
-
-function applyFilter() {
-  const q = searchInput.value.trim().toLowerCase();
-  let visible = 0;
-  document.querySelectorAll(".tasks li").forEach(li => {
-    const cb = li.querySelector("input");
-    const matchText = !q || li.dataset.text.includes(q);
-    const matchTodo = !todoOnly || !cb.checked;
-    const show = matchText && matchTodo;
-    li.classList.toggle("hidden", !show);
-    if (show) visible++;
-  });
-  // masque les groupes/phases vides
-  document.querySelectorAll(".group").forEach(g => {
-    const any = [...g.querySelectorAll("li")].some(li => !li.classList.contains("hidden"));
-    g.classList.toggle("hidden", !any);
-  });
-  document.querySelectorAll(".phase").forEach(p => {
-    const any = [...p.querySelectorAll(".group")].some(g => !g.classList.contains("hidden"));
-    p.classList.toggle("hidden", !any);
-  });
-  document.getElementById("empty").style.display = visible ? "none" : "block";
+function infosHTML() {
+  return `<div class="view-head"><span class="flag">📌</span><div><h2>Bon à savoir</h2><small>Les conditions clés du régime FCR</small></div></div>
+  <div class="info-grid">
+    <div class="info-card"><h4>🚗 Âge du véhicule</h4><span class="big">≤ 5 ans</span><p>Voitures. ≤ 3 ans pour les utilitaires légers.</p></div>
+    <div class="info-card"><h4>🏠 Résidence à l'étranger</h4><span class="big">≥ 2 ans</span><p>Sans dépasser 120 jours/an en Tunisie.</p></div>
+    <div class="info-card"><h4>📑 Passeport</h4><span class="big">32 pages</span><p>Photocopie intégrale exigée.</p></div>
+    <div class="info-card"><h4>🪪 Plaque « ن ت »</h4><span class="big">Régime RS</span><p>Plaque normale possible si taxes payées (≈ 30 %).</p></div>
+  </div>
+  <div class="disclaimer">⚠️ Outil d'aide non officiel. Les exigences évoluent : vérifiez toujours auprès de la <b>Douane tunisienne</b>, de l'<b>ATTT</b> et du <b>Consulat de Tunisie</b>. Aucune donnée n'est envoyée — votre progression reste sur votre appareil.</div>`;
 }
 
-render();
+function faqHTML() {
+  const faqs = [
+    ["Qu'est-ce que la « Mou3ayna » ?","Visite technique d'identification du véhicule dans un centre de l'ATTT. Elle débouche sur le Certificat d'identification (Annexe V), indispensable pour la douane."],
+    ["Ai-je besoin d'un transitaire ?","Oui dans la plupart des cas : il saisit la déclaration de douane et accompagne le dépôt et la validation du dossier."],
+    ["Pourquoi réimprimer le non-gage en Tunisie ?","La douane exige souvent un certificat français récent, daté après votre entrée en Tunisie."],
+    ["Qui peut conduire une plaque RS ?","Par défaut, seul le bénéficiaire. Pour la famille proche, une autorisation exceptionnelle (procuration RS) est requise auprès de la douane."],
+    ["Le « Modèle 6.3.41 » ?","C'est la Demande de privilège fiscal à signer pour bénéficier de la franchise dans le cadre du changement de résidence."],
+  ];
+  return `<div class="view-head"><span class="flag">❓</span><div><h2>Questions fréquentes</h2><small>Les points qui bloquent le plus</small></div></div>`
+    + faqs.map(f => `<details class="faq"><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("");
+}
+
+build();
 </script>
 </body>
 </html>
