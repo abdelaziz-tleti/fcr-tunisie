@@ -64,6 +64,18 @@
       "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["h1", ".lead"] }
     },
     {
+      "@type": "Article",
+      "headline": "FCR Tunisie 2026 : guide complet pour importer votre voiture (changement de résidence)",
+      "inLanguage": "fr",
+      "datePublished": "2026-06-01",
+      "dateModified": "2026-06-13",
+      "author": { "@id": "https://fcr-tunisie.com/#org" },
+      "publisher": { "@id": "https://fcr-tunisie.com/#org" },
+      "image": "https://fcr-tunisie.com/og-image.svg",
+      "mainEntityOfPage": { "@id": "https://fcr-tunisie.com/#webpage" },
+      "about": "Régime FCR, importation de véhicule en Tunisie, changement de résidence, exonération douane, plaque RS"
+    },
+    {
       "@type": "HowTo",
       "name": "Importer une voiture en Tunisie sous le régime FCR (changement de résidence)",
       "description": "Procédure officielle pas à pas pour importer un véhicule en Tunisie sous le régime FCR : conditions, documents, douane, ATTT et immatriculation.",
@@ -102,7 +114,7 @@
     --red-deep: #b01228;
     --red-soft: #fdecef;
     --ink: #16131a;
-    --muted: #6c6675;
+    --muted: #4b4654;
     --paper: #ffffff;
     --bg: #f4f5f9;
     --line: #e9e7f0;
@@ -175,9 +187,16 @@
   .nav-item[aria-current="true"] .nav-ic { background: linear-gradient(135deg, var(--red), var(--red-deep)); color: #fff; box-shadow: 0 8px 18px -7px rgba(220,38,64,.6); animation: navfloat 2.8s var(--ease) infinite; }
   .nav-item:hover .nav-ic { transform: scale(1.12) rotate(-7deg); }
   @keyframes navfloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px) scale(1.04)} }
+  .subnav { display: none; flex-direction: column; gap: 1px; margin: .1rem 0 .4rem; padding-inline-start: 2.85rem; }
+  .nav-item[aria-current="true"] + .subnav { display: flex; animation: rise .3s var(--ease); }
+  .sub-item { display: flex; align-items: center; gap: .55rem; border: none; background: transparent; cursor: pointer; text-align: start; font: 600 .82rem var(--sans); color: var(--muted); padding: .4rem .55rem; border-radius: 9px; transition: background .18s var(--ease), color .18s var(--ease), padding .18s var(--ease); line-height: 1.25; }
+  .sub-item:hover { background: var(--red-soft); color: var(--red-deep); padding-inline-start: .8rem; }
+  .sub-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; opacity: .55; }
+  .group.flash { animation: flash 1.3s var(--ease); }
+  @keyframes flash { 0%,15%{ box-shadow: 0 0 0 2.5px var(--red), var(--shadow); } 100%{ box-shadow: var(--shadow-sm); } }
   .nav-tx { flex: 1; min-width: 0; }
-  .nav-tx b { display: block; font-size: .88rem; font-weight: 600; }
-  .nav-tx small { color: var(--muted); font-size: .72rem; }
+  .nav-tx b { display: block; font-size: .94rem; font-weight: 650; }
+  .nav-tx small { color: var(--muted); font-size: .76rem; }
   .nav-count { font-size: .7rem; font-weight: 700; color: var(--red-deep); background: var(--red-soft); border-radius: 999px; padding: .14rem .5rem; transition: all .25s var(--ease); }
   .nav-item.done .nav-count { background: var(--green); color: #fff; }
 
@@ -199,7 +218,7 @@
   .eyebrow { display: inline-flex; align-items: center; gap: .45rem; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--red-deep); background: var(--red-soft); padding: .34rem .8rem; border-radius: 999px; }
   .eyebrow .ic { width: 15px; height: 15px; }
   .view-head h2 { margin: .6rem 0 .25rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem,1rem+2vw,2.25rem); letter-spacing: -.02em; line-height: 1.1; }
-  .view-head .sub { color: var(--muted); font-size: .95rem; max-width: 56ch; }
+  .view-head .sub { color: var(--muted); font-size: 1rem; max-width: 56ch; }
 
   .group { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 1rem; transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
   .group:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
@@ -212,8 +231,8 @@
   .box svg { color: #fff; }
   .box svg path { stroke-dasharray: 22; stroke-dashoffset: 22; transition: stroke-dashoffset .3s var(--ease) .04s; }
   .task .label { flex: 1; }
-  .task .label b { font-weight: 600; }
-  .task .label small { display: block; color: var(--muted); font-size: .84rem; margin-top: .12rem; }
+  .task .label b { font-weight: 650; font-size: 1rem; color: var(--ink); }
+  .task .label small { display: block; color: var(--muted); font-size: .9rem; margin-top: .14rem; }
   .task input:checked + .box { background: var(--green); border-color: var(--green); animation: pop .32s var(--ease); }
   .task input:checked + .box svg path { stroke-dashoffset: 0; }
   .task:has(input:checked) { background: #effaf3; }
@@ -247,7 +266,7 @@
   .info-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
   .info-card .ic-wrap { width: 38px; height: 38px; border-radius: 11px; background: var(--red-soft); color: var(--red-deep); display: grid; place-items: center; margin-bottom: .6rem; }
   .info-card h4 { margin: 0 0 .3rem; font-size: .9rem; }
-  .info-card p { margin: 0; font-size: .84rem; color: var(--muted); }
+  .info-card p { margin: 0; font-size: .9rem; color: var(--muted); }
 
   .cond-list { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.1rem; }
   .cond { display: flex; gap: .9rem; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: 15px; padding: 1rem 1.15rem; box-shadow: var(--shadow-sm); transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
@@ -256,7 +275,7 @@
   .cond .ic-wrap { width: 40px; height: 40px; flex: none; border-radius: 12px; background: var(--red-soft); color: var(--red-deep); display: grid; place-items: center; }
   .cond .ic-wrap .ic { width: 21px; height: 21px; }
   .cond b { font-size: .96rem; }
-  .cond p { margin: .18rem 0 0; color: var(--muted); font-size: .86rem; }
+  .cond p { margin: .18rem 0 0; color: var(--muted); font-size: .92rem; }
 
   details.faq { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; margin-bottom: .6rem; box-shadow: var(--shadow-sm); overflow: hidden; transition: box-shadow .25s var(--ease); }
   details.faq:hover { box-shadow: var(--shadow); }
@@ -266,7 +285,15 @@
   details.faq[open] summary::after { transform: rotate(135deg); }
   details.faq p { margin: 0; padding: 0 1.15rem 1.1rem; color: var(--muted); font-size: .89rem; animation: rise .35s var(--ease); }
 
-  .disclaimer { margin-top: 1.5rem; padding: 1.15rem 1.25rem; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); font-size: .81rem; color: var(--muted); line-height: 1.65; box-shadow: var(--shadow-sm); }
+  .disclaimer { margin-top: 1.5rem; padding: 1.15rem 1.25rem; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); font-size: .84rem; color: var(--muted); line-height: 1.65; box-shadow: var(--shadow-sm); }
+  .article { margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1.4rem; }
+  .article h3 { font-family: var(--display); font-weight: 700; font-size: 1.18rem; letter-spacing: -.01em; color: var(--ink); margin: 1.5rem 0 .45rem; }
+  .article h3:first-child { margin-top: 0; }
+  .article p { margin: 0 0 .7rem; font-size: .96rem; line-height: 1.7; color: #2c2733; }
+  .article p b { color: var(--red-deep); font-weight: 600; }
+  .article .src { font-size: .86rem; color: var(--muted); margin-top: 1rem; }
+  .article .src a { color: var(--red-deep); font-weight: 600; text-decoration: none; }
+  .article .src a:hover { text-decoration: underline; }
 
   @media (max-width: 880px) {
     .app { grid-template-columns: 1fr; }
@@ -278,6 +305,7 @@
     .nav-tx { text-align: center; }
     .nav-tx small { display: none; }
     .reset-btn { display: none; }
+    .subnav { display: none !important; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, .view.active > *, .box svg path, .dot { animation: none !important; transition-duration: .01ms !important; }
@@ -506,6 +534,27 @@ const FAQS = [
   { q:{fr:"Le « Modèle 6.3.41 » ?",ar:"ما هو «النموذج 6.3.41»؟",en:"What is « Form 6.3.41 »?"}, a:{fr:"C'est la Demande de privilège fiscal à signer pour bénéficier de la franchise dans le cadre du changement de résidence.",ar:"هو مطلب الامتياز الجبائي الذي يُمضى للانتفاع بالإعفاء في إطار تغيير مكان الإقامة.",en:"It's the Tax Privilege Request to sign in order to get the exemption under the change-of-residence scheme."} },
 ];
 
+/* ---------- Contenu éditorial (SEO, visible) ---------- */
+const CONTENT = [
+  { h:{fr:"Qu'est-ce que le régime FCR en Tunisie ?",ar:"ما هو نظام FCR في تونس؟",en:"What is the FCR scheme in Tunisia?"},
+    p:{fr:"Le <b>FCR (Franchise pour Changement de Résidence)</b> permet à un <b>Tunisien résidant à l'étranger</b> d'importer une voiture en Tunisie avec une <b>exonération</b> totale ou partielle des droits et taxes de douane, lors d'un retour ou d'un changement de résidence. C'est la voie la plus avantageuse pour ramener son véhicule depuis la France, l'Allemagne, l'Italie ou tout autre pays.",
+       ar:"يُتيح <b>نظام FCR (الامتياز عند تغيير مكان الإقامة)</b> <b>للتونسي المقيم بالخارج</b> استيراد سيارة إلى تونس مع <b>إعفاء</b> كلي أو جزئي من المعاليم والأداءات الديوانية عند العودة أو تغيير الإقامة. وهو أفضل صيغة لإرجاع السيارة من فرنسا أو ألمانيا أو إيطاليا أو أي بلد آخر.",
+       en:"The <b>FCR (change-of-residence franchise)</b> lets a <b>Tunisian living abroad</b> import a car into Tunisia with full or partial <b>exemption</b> from customs duties and taxes, when returning or changing residence. It is the most advantageous way to bring your vehicle back from France, Germany, Italy or any other country."} },
+  { h:{fr:"Conditions FCR 2026",ar:"شروط FCR 2026",en:"FCR 2026 conditions"},
+    p:{fr:"Être <b>tunisien de plus de 18 ans</b>, avoir résidé <b>au moins 2 ans</b> à l'étranger sans dépasser <b>183 jours par an</b> en Tunisie, et importer un véhicule de <b>moins de 5 ans</b>. Le privilège est accordé <b>une fois tous les 10 ans</b> (loi de finances 2024) et nécessite une <b>importation de devises</b> équivalente aux droits et taxes.",
+       ar:"أن تكون <b>تونسيًا يفوق سنّك 18 عامًا</b>، وأن تكون قد أقمت <b>سنتين على الأقل</b> بالخارج دون تجاوز <b>183 يومًا سنويًا</b> في تونس، وأن تستورد سيارة <b>أقل من 5 سنوات</b>. يُمنح الامتياز <b>مرة كل 10 سنوات</b> (قانون المالية 2024) ويتطلب <b>توريد عملة صعبة</b> يعادل المعاليم والأداءات.",
+       en:"Be <b>Tunisian over 18</b>, have lived <b>at least 2 years</b> abroad without exceeding <b>183 days per year</b> in Tunisia, and import a vehicle <b>under 5 years old</b>. The privilege is granted <b>once every 10 years</b> (2024 finance law) and requires a <b>currency import</b> equal to the duties and taxes."} },
+  { h:{fr:"Exonération totale ou partielle : combien ça coûte ?",ar:"إعفاء كلي أو جزئي: ما الكلفة؟",en:"Full or partial exemption: how much does it cost?"},
+    p:{fr:"Deux options : l'<b>exonération totale</b> (0 % de taxes) avec une <b>plaque incessible « ن ت » (RS)</b>, ou l'<b>exonération partielle</b> où vous payez <b>25 % des droits et taxes</b> (30 % pour les grosses cylindrées) et obtenez une <b>plaque normale</b> revendable.",
+       ar:"خياران: <b>الإعفاء الكلي</b> (0٪) مع <b>لوحة «ن ت» غير قابلة للتفويت (RS)</b>، أو <b>الإعفاء الجزئي</b> بدفع <b>25٪ من المعاليم والأداءات</b> (30٪ للمحركات الكبيرة) مع <b>لوحة عادية</b> قابلة للبيع.",
+       en:"Two options: <b>full exemption</b> (0% tax) with a <b>non-transferable « ن ت » (RS) plate</b>, or <b>partial exemption</b> where you pay <b>25% of duties and taxes</b> (30% for large engines) and get a <b>normal, resaleable plate</b>."} },
+  { h:{fr:"Documents et étapes de la procédure",ar:"الوثائق ومراحل الإجراءات",en:"Documents and procedure steps"},
+    p:{fr:"La procédure se déroule en 4 phases : achat et papiers <b>à l'étranger</b>, <b>traversée en bateau</b>, <b>inspection (Mou3ayna ATTT) et douane</b> en Tunisie, puis <b>immatriculation</b>. Utilisez la <b>checklist interactive ci-dessus</b> pour ne rien oublier et suivre votre avancement.",
+       ar:"تمرّ الإجراءات عبر 4 مراحل: الشراء والوثائق <b>بالخارج</b>، <b>العبور بالباخرة</b>، <b>المعاينة (ATTT) والديوانة</b> في تونس، ثم <b>الترقيم</b>. استعمل <b>القائمة التفاعلية أعلاه</b> حتى لا تنسى شيئًا وتتابع تقدّمك.",
+       en:"The procedure has 4 phases: purchase and papers <b>abroad</b>, the <b>sea crossing</b>, <b>inspection (Mou3ayna ATTT) and customs</b> in Tunisia, then <b>registration</b>. Use the <b>interactive checklist above</b> so you forget nothing and track your progress."} },
+];
+const SRC = {fr:"Source officielle :", ar:"المصدر الرسمي:", en:"Official source:"};
+
 const KEY = "fcr-tn-v3";
 let done = JSON.parse(localStorage.getItem(KEY) || "{}");
 let active = "intro";
@@ -527,6 +576,20 @@ function build() {
     b.addEventListener("click", () => show(s.key));
     navEl.appendChild(b);
 
+    // Sous-menu : un lien par groupe quand la phase en compte plusieurs
+    if (s.groups && s.groups.length > 1) {
+      const sub = document.createElement("div");
+      sub.className = "subnav"; sub.dataset.for = s.key;
+      s.groups.forEach((g, gi) => {
+        const sb = document.createElement("button");
+        sb.className = "sub-item"; sb.type = "button";
+        sb.innerHTML = `<span class="sub-dot"></span><span>${T(g.title)}</span>`;
+        sb.addEventListener("click", () => show(s.key, gi));
+        sub.appendChild(sb);
+      });
+      navEl.appendChild(sub);
+    }
+
     const v = document.createElement("section");
     v.className = "view"; v.dataset.key = s.key;
     let h = `<div class="view-head"><span class="eyebrow">${icon(s.icon)} ${T(s.phase)}</span><h2>${T(s.title)}</h2><div class="sub">${T(s.sub)}</div></div>`;
@@ -535,8 +598,8 @@ function build() {
     else if (s.custom === "faq") h += faqHTML();
     else {
       if (s.tip) h += `<div class="tip">${icon('info')} ${T(s.tip.text)}</div>`;
-      s.groups.forEach(g => {
-        h += `<div class="group"><h3>${T(g.title)}</h3><ul class="tasks">`;
+      s.groups.forEach((g, gi) => {
+        h += `<div class="group" id="grp-${s.key}-${gi}"><h3>${T(g.title)}</h3><ul class="tasks">`;
         g.items.forEach(it => {
           const id = "t"+(idc++); allIds.push(id); phaseIds[s.key].push(id);
           h += `<li><label class="task"><input type="checkbox" data-id="${id}" ${done[id]?"checked":""}/><span class="box">${checkSvg}</span><span class="label"><b>${T(it.t)}</b>${it.d?`<small>${T(it.d)}</small>`:""}</span><span class="done-mark">${icon('check2')}</span></label></li>`;
@@ -551,11 +614,20 @@ function build() {
   update();
 }
 
-function show(key) {
+function show(key, groupIdx) {
   active = key;
   document.querySelectorAll(".nav-item").forEach(t => t.setAttribute("aria-current", t.dataset.key === key));
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.dataset.key === key));
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (groupIdx != null) {
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`grp-${key}-${groupIdx}`);
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 }
 
 function update() {
@@ -595,6 +667,8 @@ function introHTML() {
   return `<p class="lead">${T(LEAD)}</p>
   <div class="info-grid">${INTRO_CARDS.map(c => `<div class="info-card"><div class="ic-wrap">${icon(c.ic)}</div><h4>${T(c.t)}</h4><p>${T(c.d)}</p></div>`).join("")}</div>
   <div class="steps">${STEPS.map(s => `<div class="step"><span class="n">${s.n}</span><b>${T(s.t)}</b><small>${T(s.s)}</small></div>`).join("")}</div>
+  <div class="article">${CONTENT.map(c => `<h3>${T(c.h)}</h3><p>${T(c.p)}</p>`).join("")}
+  <p class="src">${T(SRC)} <a href="https://www.douane.gov.tn/retour-definitif/" target="_blank" rel="noopener">Douane Tunisienne — FCR</a></p></div>
   <p style="margin-top:1.3rem"><span class="updated"><span class="dot"></span> ${T(UI.updated)} : ${UPDATED}</span></p>`;
 }
 function condHTML() {
