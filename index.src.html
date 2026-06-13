@@ -214,8 +214,11 @@
   .task .label small { display: block; color: var(--muted); font-size: .84rem; margin-top: .12rem; }
   .task input:checked + .box { background: var(--green); border-color: var(--green); animation: pop .32s var(--ease); }
   .task input:checked + .box svg path { stroke-dashoffset: 0; }
-  .task input:checked ~ .label { color: var(--muted); }
-  .task input:checked ~ .label b { text-decoration: line-through; text-decoration-color: rgba(0,0,0,.22); }
+  .task:has(input:checked) { background: #effaf3; }
+  .task input:checked ~ .label b { color: #0f7a43; }
+  .done-mark { flex: none; align-self: center; display: grid; place-items: center; width: 22px; height: 22px; color: var(--green); opacity: 0; transform: scale(.3) rotate(-25deg); transition: opacity .25s var(--ease), transform .35s var(--ease); }
+  .done-mark .ic { width: 22px; height: 22px; stroke-width: 2.2; }
+  .task input:checked ~ .done-mark { opacity: 1; transform: none; animation: pop .4s var(--ease); }
   .task input:focus-visible + .box { outline: 2px solid var(--red); outline-offset: 2px; }
   @keyframes pop { 0%{transform:scale(.7)} 55%{transform:scale(1.18)} 100%{transform:scale(1)} }
 
@@ -528,7 +531,7 @@ function build() {
         h += `<div class="group"><h3>${T(g.title)}</h3><ul class="tasks">`;
         g.items.forEach(it => {
           const id = "t"+(idc++); allIds.push(id); phaseIds[s.key].push(id);
-          h += `<li><label class="task"><input type="checkbox" data-id="${id}" ${done[id]?"checked":""}/><span class="box">${checkSvg}</span><span class="label"><b>${T(it.t)}</b>${it.d?`<small>${T(it.d)}</small>`:""}</span></label></li>`;
+          h += `<li><label class="task"><input type="checkbox" data-id="${id}" ${done[id]?"checked":""}/><span class="box">${checkSvg}</span><span class="label"><b>${T(it.t)}</b>${it.d?`<small>${T(it.d)}</small>`:""}</span><span class="done-mark">${icon('check')}</span></label></li>`;
         });
         h += `</ul></div>`;
       });
