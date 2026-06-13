@@ -570,9 +570,6 @@ const DATA = [
 
   { key:"faq", icon:"help", short:{fr:"FAQ",ar:"أسئلة",en:"FAQ"}, phase:{fr:"Aide",ar:"مساعدة",en:"Help"},
     title:{fr:"Questions fréquentes", ar:"أسئلة شائعة", en:"Frequently asked questions"}, sub:{fr:"Les points qui bloquent le plus souvent.", ar:"النقاط التي تثير الإشكال غالبًا.", en:"The points that most often cause trouble."}, custom:"faq" },
-
-  { key:"contact", icon:"mail", short:{fr:"Contact",ar:"اتصال",en:"Contact"}, phase:{fr:"Nous écrire",ar:"راسلنا",en:"Get in touch"},
-    title:{fr:"Une remarque, une erreur, une question ?", ar:"ملاحظة أو خطأ أو سؤال؟", en:"A remark, an error, a question?"}, sub:{fr:"Aidez-nous à améliorer ce guide gratuit.", ar:"ساعدنا على تحسين هذا الدليل المجاني.", en:"Help us improve this free guide."}, custom:"contact" },
 ];
 
 const CONDS = [
@@ -632,15 +629,6 @@ const CONTENT = [
        en:"The procedure has 4 phases: purchase and papers <b>abroad</b>, the <b>sea crossing</b>, <b>inspection (Mou3ayna ATTT) and customs</b> in Tunisia, then <b>registration</b>. Use the <b>interactive checklist above</b> so you forget nothing and track your progress."} },
 ];
 const SRC = {fr:"Source officielle :", ar:"المصدر الرسمي:", en:"Official source:"};
-/* ✏️ Adresse de contact — remplacez-la par la vôtre si besoin */
-const CONTACT_EMAIL = "abdelaziz.tleti@gmail.com";
-const CONTACT = {
-  intro:{fr:"Ce site est tenu par une personne, bénévolement, pour aider la communauté. Vous avez repéré une <b>information erronée</b>, une étape manquante, ou vous avez une <b>remarque</b> ? Écrivez-nous, on lit tout.",
-    ar:"يُدير هذا الموقع شخصٌ بشكل تطوّعي لمساعدة الجالية. هل لاحظت <b>معلومة خاطئة</b> أو خطوة ناقصة أو لديك <b>ملاحظة</b>؟ راسلنا، نقرأ كل الرسائل.",
-    en:"This site is run by one person, voluntarily, to help the community. Spotted <b>wrong information</b>, a missing step, or have a <b>remark</b>? Write to us, we read everything."},
-  btn:{fr:"Envoyer un e-mail", ar:"إرسال بريد إلكتروني", en:"Send an email"},
-  subject:{fr:"Remarque sur FCR Tunisie", ar:"ملاحظة حول FCR Tunisie", en:"Feedback about FCR Tunisie"},
-};
 
 const KEY = "fcr-tn-v3";
 let done = JSON.parse(localStorage.getItem(KEY) || "{}");
@@ -662,7 +650,6 @@ const TABS = [
   { id:"steps",                  icon:"list",  label:{fr:"Étapes",ar:"الخطوات",en:"Steps"} },
   { id:"cond",    sec:"cond",    icon:"check", label:{fr:"Conditions",ar:"الشروط",en:"Conditions"} },
   { id:"faq",     sec:"faq",     icon:"help",  label:{fr:"FAQ",ar:"الأسئلة",en:"FAQ"} },
-  { id:"contact", sec:"contact", icon:"mail",  label:{fr:"Contact",ar:"اتصال",en:"Contact"} },
 ];
 let activeKey = "intro", activePhase = "p1", activeGi = null;
 const activeGroup = {};
@@ -680,7 +667,6 @@ function build() {
     if (s.custom === "intro") h += introHTML();
     else if (s.custom === "cond") h += condHTML();
     else if (s.custom === "faq") h += faqHTML();
-    else if (s.custom === "contact") h += contactHTML();
     else {
       if (s.tip) h += `<div class="tip">${icon('info')} ${T(s.tip.text)}</div>`;
       s.groups.forEach((g, gi) => {
@@ -847,15 +833,6 @@ function condHTML() {
 }
 function faqHTML() {
   return FAQS.map(f => `<details class="faq"><summary>${T(f.q)}</summary><p>${T(f.a)}</p></details>`).join("");
-}
-function contactHTML() {
-  const href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(T(CONTACT.subject))}`;
-  return `<div class="contact-card">
-    <div class="ic-wrap">${icon('mail')}</div>
-    <p>${T(CONTACT.intro)}</p>
-    <a class="contact-btn" href="${href}">${icon('mail')} ${T(CONTACT.btn)}</a>
-    <p class="contact-mail">${CONTACT_EMAIL}</p>
-  </div>`;
 }
 
 function applyLang(l) {
