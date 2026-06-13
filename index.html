@@ -111,6 +111,20 @@
   .info-card .big { font-size: 1.4rem; font-weight: 800; color: var(--sage-dark); display: block; font-family: var(--serif); }
   .info-card p { margin: .2rem 0 0; font-size: .83rem; color: var(--muted); }
 
+  .lead { font-size: 1.04rem; line-height: 1.6; color: var(--ink); margin: 0 0 1.2rem; max-width: 62ch; }
+  .lead b { color: var(--sage-dark); }
+  .updated { display: inline-flex; align-items: center; gap: .4rem; font-size: .76rem; font-weight: 700; color: var(--sage-dark); background: var(--sage-soft); border: 1px solid var(--sage-line); padding: .32rem .75rem; border-radius: 999px; }
+  .steps { display: grid; gap: .55rem; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); margin: 1.1rem 0 .2rem; }
+  .step { background: var(--paper); border: 1px solid var(--sage-line); border-radius: 13px; padding: .85rem .95rem; box-shadow: var(--shadow-sm); }
+  .step .n { font-family: var(--serif); font-size: 1.1rem; color: var(--sage); font-weight: 800; }
+  .step b { display: block; font-size: .88rem; margin-top: .1rem; }
+  .step small { color: var(--muted); font-size: .78rem; }
+  .cond-list { display: flex; flex-direction: column; gap: .65rem; margin-bottom: 1rem; }
+  .cond { display: flex; gap: .9rem; align-items: flex-start; background: var(--paper); border: 1px solid var(--sage-line); border-radius: 14px; padding: .9rem 1.05rem; box-shadow: var(--shadow-sm); }
+  .cond > span { font-size: 1.35rem; line-height: 1.2; flex: none; }
+  .cond b { font-size: .94rem; }
+  .cond p { margin: .15rem 0 0; color: var(--muted); font-size: .85rem; }
+
   details.faq { background: var(--paper); border: 1px solid var(--sage-line); border-radius: 13px; margin-bottom: .6rem; box-shadow: var(--shadow-sm); overflow: hidden; }
   details.faq summary { padding: .95rem 1.1rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; align-items: center; font-size: .93rem; }
   details.faq summary::-webkit-details-marker { display: none; }
@@ -162,7 +176,10 @@
 </div>
 
 <script>
+const UPDATED = "13 juin 2026";
+
 const DATA = [
+  { key:"intro", short:"Accueil", icon:"🏠", phase:"Présentation", title:"Importer votre véhicule en Tunisie, sereinement", sub:"Le guide pas à pas du régime FCR (changement de résidence).", custom:"intro" },
   { key:"p1", short:"France", icon:"🇫🇷", phase:"Phase 1", title:"En France", sub:"Achat du véhicule et formalités avant le départ.",
     groups:[
       { title:"Avant d'acheter", items:[
@@ -221,13 +238,13 @@ const DATA = [
         { t:"Procuration de conduite RS", d:"Autorisation exceptionnelle pour la famille proche." },
       ]},
     ]},
-  { key:"infos", short:"Infos", icon:"📌", phase:"Repère", title:"Bon à savoir", sub:"Les conditions clés du régime FCR.", custom:"infos" },
+  { key:"cond", short:"Conditions", icon:"✅", phase:"Éligibilité", title:"Conditions d'éligibilité", sub:"Qui peut bénéficier du régime FCR, et sous quelles conditions.", custom:"cond" },
   { key:"faq", short:"FAQ", icon:"❓", phase:"Aide", title:"Questions fréquentes", sub:"Les points qui bloquent le plus souvent.", custom:"faq" },
 ];
 
 const KEY = "fcr-tn-v3";
 let done = JSON.parse(localStorage.getItem(KEY) || "{}");
-let active = "p1";
+let active = "intro";
 const checkSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 const phaseIds = {}; const allIds = [];
 
@@ -250,7 +267,8 @@ function build() {
     const v = document.createElement("section");
     v.className = "view"; v.dataset.key = s.key;
     let h = `<div class="view-head"><span class="eyebrow">${s.icon} ${s.phase}</span><h2>${s.title}</h2><div class="sub">${s.sub}</div></div>`;
-    if (s.custom === "infos") h += infosHTML();
+    if (s.custom === "intro") h += introHTML();
+    else if (s.custom === "cond") h += condHTML();
     else if (s.custom === "faq") h += faqHTML();
     else {
       if (s.tip) h += `<div class="tip ${s.tip.type}">${s.tip.type==="info"?"ℹ️":"⚠️"} ${s.tip.text}</div>`;
@@ -311,14 +329,31 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   update();
 });
 
-function infosHTML() {
-  return `<div class="info-grid">
-    <div class="info-card"><h4>🚗 Âge du véhicule</h4><span class="big">≤ 5 ans</span><p>Voitures. ≤ 3 ans pour les utilitaires légers.</p></div>
-    <div class="info-card"><h4>🏠 Résidence à l'étranger</h4><span class="big">≥ 2 ans</span><p>Sans dépasser 120 jours/an en Tunisie.</p></div>
-    <div class="info-card"><h4>📑 Passeport</h4><span class="big">32 pages</span><p>Photocopie intégrale exigée.</p></div>
-    <div class="info-card"><h4>🪪 Plaque « ن ت »</h4><span class="big">Régime RS</span><p>Plaque normale possible si taxes payées (≈ 30 %).</p></div>
+function introHTML() {
+  return `<p class="lead">Vous rapatriez votre voiture en Tunisie dans le cadre d'un <b>changement de résidence</b> ? Le <b>régime FCR</b> permet de l'importer en franchise (ou à taxes réduites). Ce guide réunit, étape par étape, <b>tous les documents et démarches</b> — de l'achat en France jusqu'à l'immatriculation finale.</p>
+  <div class="info-grid">
+    <div class="info-card"><h4>🧭 Comment l'utiliser</h4><p>Parcourez les 4 phases dans l'ordre et cochez chaque étape au fur et à mesure.</p></div>
+    <div class="info-card"><h4>💾 Sauvegarde auto</h4><p>Votre progression est enregistrée sur cet appareil — rien à créer, aucun compte.</p></div>
+    <div class="info-card"><h4>🔒 100 % privé</h4><p>Aucune donnée n'est envoyée sur internet. Tout reste dans votre navigateur.</p></div>
   </div>
-  <div class="disclaimer">⚠️ Outil d'aide non officiel. Les exigences évoluent : vérifiez toujours auprès de la <b>Douane tunisienne</b>, de l'<b>ATTT</b> et du <b>Consulat de Tunisie</b>. Aucune donnée n'est envoyée — votre progression reste sur votre appareil.</div>`;
+  <div class="steps">
+    <div class="step"><span class="n">1</span><b>En France</b><small>Achat & papiers</small></div>
+    <div class="step"><span class="n">2</span><b>Le bateau</b><small>Traversée CTN</small></div>
+    <div class="step"><span class="n">3</span><b>Douane</b><small>Inspection ATTT</small></div>
+    <div class="step"><span class="n">4</span><b>Immatriculation</b><small>Mise en circulation</small></div>
+  </div>
+  <p style="margin-top:1.2rem"><span class="updated">🟢 Mise à jour : ${UPDATED}</span></p>`;
+}
+
+function condHTML() {
+  return `<div class="cond-list">
+    <div class="cond"><span>🚗</span><div><b>Âge du véhicule</b><p>Voiture particulière : <b>moins de 5 ans</b>. Utilitaire léger : <b>moins de 3 ans</b>.</p></div></div>
+    <div class="cond"><span>🏠</span><div><b>Durée de résidence à l'étranger</b><p>Au moins <b>2 ans</b> de résidence continue hors de Tunisie.</p></div></div>
+    <div class="cond"><span>📆</span><div><b>Présence en Tunisie</b><p>Sans dépasser <b>120 jours cumulés par an</b> sur la période de résidence.</p></div></div>
+    <div class="cond"><span>👤</span><div><b>Bénéficiaire</b><p>Le régime s'applique au titre du changement de résidence du bénéficiaire (justificatifs d'identité et de mouvements frontaliers requis).</p></div></div>
+    <div class="cond"><span>💶</span><div><b>Régime fiscal & plaque</b><p>Franchise sous plaque <b>RS « ن ت »</b>, ou immatriculation tunisienne normale si les taxes sont acquittées (≈ 30 %).</p></div></div>
+  </div>
+  <div class="disclaimer">⚠️ Outil d'aide non officiel. Les exigences évoluent : vérifiez toujours auprès de la <b>Douane tunisienne</b>, de l'<b>ATTT</b> et du <b>Consulat de Tunisie</b> dont vous dépendez. Aucune donnée n'est envoyée — votre progression reste sur votre appareil.<br><br><span class="updated">🟢 Mise à jour : ${UPDATED}</span></div>`;
 }
 function faqHTML() {
   const faqs = [
