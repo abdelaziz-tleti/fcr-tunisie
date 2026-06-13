@@ -157,7 +157,7 @@
 
   /* ---------- Sidebar ---------- */
   aside { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 1rem; }
-  .panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 1.15rem; }
+  .panel { background: rgba(255,255,255,.6); backdrop-filter: blur(22px) saturate(1.5); -webkit-backdrop-filter: blur(22px) saturate(1.5); border: 1px solid rgba(255,255,255,.75); border-radius: var(--r-lg); box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.7); padding: 1.15rem; }
   .overall { display: flex; align-items: center; gap: 1rem; }
   .ring { --p: 0; width: 60px; height: 60px; flex: none; border-radius: 50%; background: conic-gradient(var(--red) calc(var(--p)*1%), var(--line) 0); display: grid; place-items: center; transition: --p .7s var(--ease); }
   .ring::after { content:""; width: 46px; height: 46px; background: var(--paper); border-radius: 50%; grid-area: 1/1; }
@@ -170,10 +170,11 @@
   .nav-item:hover { background: var(--red-soft); }
   .nav-item[aria-current="true"] { background: linear-gradient(100deg, var(--red-soft), transparent); }
   .nav-item[aria-current="true"]::before { content:""; position: absolute; inset-inline-start: -.45rem; top: 50%; transform: translateY(-50%); width: 4px; height: 22px; border-radius: 4px; background: var(--red); }
-  .nav-ic { width: 33px; height: 33px; flex: none; border-radius: 10px; display: grid; place-items: center; background: var(--bg); color: var(--red-deep); transition: transform .25s var(--ease); }
+  .nav-ic { width: 33px; height: 33px; flex: none; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.7); color: var(--red-deep); box-shadow: var(--shadow-sm); transition: transform .3s var(--ease), background .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease); }
   .nav-ic .ic { width: 18px; height: 18px; }
-  .nav-item[aria-current="true"] .nav-ic { background: var(--red); color: #fff; }
-  .nav-item:hover .nav-ic { transform: scale(1.08); }
+  .nav-item[aria-current="true"] .nav-ic { background: linear-gradient(135deg, var(--red), var(--red-deep)); color: #fff; box-shadow: 0 8px 18px -7px rgba(220,38,64,.6); animation: navfloat 2.8s var(--ease) infinite; }
+  .nav-item:hover .nav-ic { transform: scale(1.12) rotate(-7deg); }
+  @keyframes navfloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px) scale(1.04)} }
   .nav-tx { flex: 1; min-width: 0; }
   .nav-tx b { display: block; font-size: .88rem; font-weight: 600; }
   .nav-tx small { color: var(--muted); font-size: .72rem; }
@@ -217,9 +218,11 @@
   .task input:checked + .box svg path { stroke-dashoffset: 0; }
   .task:has(input:checked) { background: #effaf3; }
   .task input:checked ~ .label b { color: #0f7a43; }
-  .done-mark { flex: none; align-self: center; display: grid; place-items: center; width: 22px; height: 22px; color: var(--green); opacity: 0; transform: scale(.3) rotate(-25deg); transition: opacity .25s var(--ease), transform .35s var(--ease); }
-  .done-mark .ic { width: 22px; height: 22px; stroke-width: 2.2; }
-  .task input:checked ~ .done-mark { opacity: 1; transform: none; animation: pop .4s var(--ease); }
+  .done-mark { flex: none; align-self: center; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #1ec46b, var(--green)); color: #fff; box-shadow: 0 6px 14px -5px rgba(20,163,90,.6); opacity: 0; transform: scale(.2) rotate(-45deg); transition: opacity .2s var(--ease), transform .4s var(--ease); }
+  .done-mark .ic { width: 18px; height: 18px; stroke-width: 3; }
+  .task input:checked ~ .done-mark { opacity: 1; transform: none; animation: stamp .55s var(--ease), donering .65s var(--ease); }
+  @keyframes stamp { 0%{transform:scale(.2) rotate(-45deg);opacity:0} 45%{transform:scale(1.3) rotate(10deg);opacity:1} 70%{transform:scale(.9) rotate(-4deg)} 100%{transform:scale(1) rotate(0)} }
+  @keyframes donering { 0%{box-shadow:0 0 0 0 rgba(20,163,90,.55), 0 6px 14px -5px rgba(20,163,90,.6)} 100%{box-shadow:0 0 0 14px rgba(20,163,90,0), 0 6px 14px -5px rgba(20,163,90,.6)} }
   .task input:focus-visible + .box { outline: 2px solid var(--red); outline-offset: 2px; }
   @keyframes pop { 0%{transform:scale(.7)} 55%{transform:scale(1.18)} 100%{transform:scale(1)} }
 
@@ -291,6 +294,7 @@
     </div>
     <div class="lang" role="group" aria-label="Langue">
       <button data-l="fr" type="button">FR</button>
+      <button data-l="en" type="button">EN</button>
       <button data-l="ar" type="button">العربية</button>
     </div>
   </div>
@@ -358,6 +362,7 @@ const P = {
   landmark:'<path d="M12 3 4 8h16zM3 21h18M6 21V11M10 21V11M14 21V11M18 21V11"/>',
   card:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18"/>',
   check:'<circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.6 2.6 4.6-5.2"/>',
+  check2:'<path d="M20 6.5 9.4 17.5 4 12"/>',
   help:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.4c-.9.5-1.2 1-1.2 1.9"/><path d="M12 16.6h.01"/>',
   car:'<path d="M3 13.5 4.9 8a2 2 0 0 1 1.9-1.3h10.4A2 2 0 0 1 19.1 8L21 13.5"/><path d="M3 13.5h18V18a1 1 0 0 1-1 1h-1.5M3 13.5V18a1 1 0 0 0 1 1h1.5"/><circle cx="7.2" cy="17.6" r="1.4"/><circle cx="16.8" cy="17.6" r="1.4"/>',
   calendar:'<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v4M16 3v4"/>',
@@ -375,128 +380,130 @@ const icon = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${P[n]
 let lang = localStorage.getItem("fcr-lang") || "fr";
 const T = v => (v && typeof v === "object" && !Array.isArray(v)) ? (v[lang] ?? v.fr) : v;
 const UI = {
-  subtitle:{fr:"Importation de véhicule · changement de résidence", ar:"استيراد سيارة · تغيير مكان الإقامة"},
-  reset:{fr:"Réinitialiser ma progression", ar:"إعادة ضبط التقدّم"},
-  confirm:{fr:"Réinitialiser toute votre progression ?", ar:"هل تريد إعادة ضبط كل تقدّمك؟"},
-  steps:{fr:"étapes", ar:"خطوة"},
-  updated:{fr:"Mise à jour", ar:"آخر تحديث"},
-  s_start:{fr:"Démarrons", ar:"لنبدأ"}, s_done:{fr:"Terminé 🎉", ar:"اكتمل 🎉"},
-  s_mid:{fr:"En cours 💪", ar:"قيد التقدّم 💪"}, s_near:{fr:"Bientôt fini 🏁", ar:"اقتربت 🏁"},
+  subtitle:{fr:"Importation de véhicule · changement de résidence", ar:"استيراد سيارة · تغيير مكان الإقامة", en:"Vehicle import · change of residence"},
+  reset:{fr:"Réinitialiser ma progression", ar:"إعادة ضبط التقدّم", en:"Reset my progress"},
+  confirm:{fr:"Réinitialiser toute votre progression ?", ar:"هل تريد إعادة ضبط كل تقدّمك؟", en:"Reset all your progress?"},
+  steps:{fr:"étapes", ar:"خطوة", en:"steps"},
+  updated:{fr:"Mise à jour", ar:"آخر تحديث", en:"Updated"},
+  s_start:{fr:"Démarrons", ar:"لنبدأ", en:"Let's start"}, s_done:{fr:"Terminé 🎉", ar:"اكتمل 🎉", en:"Done 🎉"},
+  s_mid:{fr:"En cours 💪", ar:"قيد التقدّم 💪", en:"In progress 💪"}, s_near:{fr:"Bientôt fini 🏁", ar:"اقتربت 🏁", en:"Almost there 🏁"},
 };
 
 /* ---------- Données bilingues ---------- */
 const DATA = [
-  { key:"intro", icon:"home", short:{fr:"Accueil",ar:"الرئيسية"}, phase:{fr:"Présentation",ar:"تقديم"},
-    title:{fr:"Importer votre véhicule en Tunisie, sereinement", ar:"استورد سيارتك إلى تونس بكل اطمئنان"},
-    sub:{fr:"Le guide pas à pas du régime FCR (changement de résidence).", ar:"دليل خطوة بخطوة لنظام FCR (تغيير مكان الإقامة)."}, custom:"intro" },
+  { key:"intro", icon:"home", short:{fr:"Accueil",ar:"الرئيسية",en:"Home"}, phase:{fr:"Présentation",ar:"تقديم",en:"Overview"},
+    title:{fr:"Importer votre véhicule en Tunisie, sereinement", ar:"استورد سيارتك إلى تونس بكل اطمئنان", en:"Import your vehicle to Tunisia, with peace of mind"},
+    sub:{fr:"Le guide pas à pas du régime FCR (changement de résidence).", ar:"دليل خطوة بخطوة لنظام FCR (تغيير مكان الإقامة).", en:"The step-by-step guide to the FCR scheme (change of residence)."}, custom:"intro" },
 
-  { key:"p1", icon:"globe", short:{fr:"Étranger",ar:"الخارج"}, phase:{fr:"Phase 1",ar:"المرحلة 1"},
-    title:{fr:"Dans le pays de résidence", ar:"في بلد الإقامة"},
-    sub:{fr:"Achat du véhicule et formalités avant le départ.", ar:"شراء السيارة والإجراءات قبل المغادرة."},
+  { key:"p1", icon:"globe", short:{fr:"Étranger",ar:"الخارج",en:"Abroad"}, phase:{fr:"Phase 1",ar:"المرحلة 1",en:"Phase 1"},
+    title:{fr:"Dans le pays de résidence", ar:"في بلد الإقامة", en:"In the country of residence"},
+    sub:{fr:"Achat du véhicule et formalités avant le départ.", ar:"شراء السيارة والإجراءات قبل المغادرة.", en:"Buying the vehicle and formalities before departure."},
     groups:[
-      { title:{fr:"Avant d'acheter",ar:"قبل الشراء"}, items:[
-        { t:{fr:"Vérifier l'éligibilité FCR",ar:"التحقق من أهلية FCR"}, d:{fr:"Tunisien, 18 ans révolus, droit non utilisé depuis 10 ans.",ar:"تونسي، 18 سنة فما فوق، لم يُستعمل الحق منذ 10 سنوات."} },
-        { t:{fr:"Vérifier l'âge du véhicule",ar:"التحقق من عمر السيارة"}, d:{fr:"≤ 5 ans (tourisme et utilitaires légers < 3,5 t), à la date d'achat/importation.",ar:"≤ 5 سنوات (سياحية ونفعية خفيفة < 3,5 طن)، في تاريخ الشراء/التوريد."} },
-        { t:{fr:"Vérifier les conditions de séjour",ar:"التحقق من شروط الإقامة"}, d:{fr:"≥ 2 ans à l'étranger, sans dépasser 183 jours/an en Tunisie.",ar:"≥ سنتان في الخارج، دون تجاوز 183 يومًا سنويًا في تونس."} },
-        { t:{fr:"Anticiper l'importation de devises",ar:"الإعداد لتوريد العملة الصعبة"}, d:{fr:"Montant équivalent aux droits/taxes, en devises ou via un compte en devises, l'année précédant l'importation.",ar:"مبلغ يعادل المعاليم والأداءات بالعملة الصعبة أو من حساب بالعملة، خلال السنة السابقة للتوريد."} },
+      { title:{fr:"Avant d'acheter",ar:"قبل الشراء",en:"Before buying"}, items:[
+        { t:{fr:"Vérifier l'éligibilité FCR",ar:"التحقق من أهلية FCR",en:"Check FCR eligibility"}, d:{fr:"Tunisien, 18 ans révolus, droit non utilisé depuis 10 ans.",ar:"تونسي، 18 سنة فما فوق، لم يُستعمل الحق منذ 10 سنوات.",en:"Tunisian, over 18, benefit not used in the last 10 years."} },
+        { t:{fr:"Vérifier l'âge du véhicule",ar:"التحقق من عمر السيارة",en:"Check the vehicle's age"}, d:{fr:"≤ 5 ans (tourisme et utilitaires légers < 3,5 t), à la date d'achat/importation.",ar:"≤ 5 سنوات (سياحية ونفعية خفيفة < 3,5 طن)، في تاريخ الشراء/التوريد.",en:"≤ 5 years (cars and light commercial < 3.5 t), at purchase/import date."} },
+        { t:{fr:"Vérifier les conditions de séjour",ar:"التحقق من شروط الإقامة",en:"Check the residence conditions"}, d:{fr:"≥ 2 ans à l'étranger, sans dépasser 183 jours/an en Tunisie.",ar:"≥ سنتان في الخارج، دون تجاوز 183 يومًا سنويًا في تونس.",en:"≥ 2 years abroad, no more than 183 days/year in Tunisia."} },
+        { t:{fr:"Anticiper l'importation de devises",ar:"الإعداد لتوريد العملة الصعبة",en:"Plan the currency import"}, d:{fr:"Montant équivalent aux droits/taxes, en devises ou via un compte en devises, l'année précédant l'importation.",ar:"مبلغ يعادل المعاليم والأداءات بالعملة الصعبة أو من حساب بالعملة، خلال السنة السابقة للتوريد.",en:"Amount equal to duties/taxes, in foreign currency or via a forex account, the year before import."} },
       ]},
-      { title:{fr:"Au moment de l'achat",ar:"عند الشراء"}, items:[
-        { t:{fr:"Paiement du véhicule",ar:"دفع ثمن السيارة"}, d:{fr:"Conserver une preuve de paiement (virement bancaire recommandé).",ar:"الاحتفاظ بإثبات الدفع (يُنصح بالتحويل البنكي)."} },
-        { t:{fr:"Facture d'achat originale",ar:"فاتورة الشراء الأصلية"}, d:{fr:"Original + copie.",ar:"الأصل + نسخة."} },
-        { t:{fr:"Certificat de cession",ar:"شهادة التنازل"}, d:{fr:"Rempli et signé par le vendeur et l'acheteur.",ar:"تُملأ وتُمضى من البائع والمشتري."} },
-        { t:{fr:"Déclaration d'achat",ar:"تصريح الشراء"}, d:{fr:"Si achat via un professionnel.",ar:"في حال الشراء من محترف."} },
-        { t:{fr:"Carte grise originale (pays d'origine)",ar:"البطاقة الرمادية الأصلية (بلد المنشأ)"}, d:{fr:"Barrée, datée, signée — mention « Vendu le… ».",ar:"مشطوبة، مؤرّخة، مُمضاة — مع عبارة «بيعت في…»."} },
-        { t:{fr:"Certificat de non-gage",ar:"شهادة عدم الرهن"}, d:{fr:"Situation administrative à imprimer.",ar:"الوضعية الإدارية للطباعة."} },
+      { title:{fr:"Au moment de l'achat",ar:"عند الشراء",en:"At the time of purchase"}, items:[
+        { t:{fr:"Paiement du véhicule",ar:"دفع ثمن السيارة",en:"Vehicle payment"}, d:{fr:"Conserver une preuve de paiement (virement bancaire recommandé).",ar:"الاحتفاظ بإثبات الدفع (يُنصح بالتحويل البنكي).",en:"Keep a proof of payment (bank transfer recommended)."} },
+        { t:{fr:"Facture d'achat originale",ar:"فاتورة الشراء الأصلية",en:"Original purchase invoice"}, d:{fr:"Original + copie.",ar:"الأصل + نسخة.",en:"Original + copy."} },
+        { t:{fr:"Certificat de cession",ar:"شهادة التنازل",en:"Transfer certificate"}, d:{fr:"Rempli et signé par le vendeur et l'acheteur.",ar:"تُملأ وتُمضى من البائع والمشتري.",en:"Filled in and signed by seller and buyer."} },
+        { t:{fr:"Déclaration d'achat",ar:"تصريح الشراء",en:"Purchase declaration"}, d:{fr:"Si achat via un professionnel.",ar:"في حال الشراء من محترف.",en:"If buying via a dealer."} },
+        { t:{fr:"Carte grise originale (pays d'origine)",ar:"البطاقة الرمادية الأصلية (بلد المنشأ)",en:"Original registration card (origin country)"}, d:{fr:"Barrée, datée, signée — mention « Vendu le… ».",ar:"مشطوبة، مؤرّخة، مُمضاة — مع عبارة «بيعت في…».",en:"Crossed out, dated, signed — 'Sold on…' note."} },
+        { t:{fr:"Certificat de non-gage",ar:"شهادة عدم الرهن",en:"Certificate of non-pledge"}, d:{fr:"Situation administrative à imprimer.",ar:"الوضعية الإدارية للطباعة.",en:"Administrative status to print."} },
       ]},
-      { title:{fr:"Consulat de Tunisie (pays de résidence)",ar:"قنصلية تونس (بلد الإقامة)"}, items:[
-        { t:{fr:"Légalisation de signature",ar:"تصديق الإمضاء"}, d:{fr:"Sur le certificat de cession.",ar:"على شهادة التنازل."} },
-        { t:{fr:"Fiche des mouvements frontaliers",ar:"بطاقة الحركات الحدودية"}, d:{fr:"Si passeport < 2 ans ou tampons illisibles.",ar:"إذا كان الجواز < سنتين أو الأختام غير واضحة."} },
+      { title:{fr:"Consulat de Tunisie (pays de résidence)",ar:"قنصلية تونس (بلد الإقامة)",en:"Consulate of Tunisia (country of residence)"}, items:[
+        { t:{fr:"Légalisation de signature",ar:"تصديق الإمضاء",en:"Signature legalization"}, d:{fr:"Sur le certificat de cession.",ar:"على شهادة التنازل.",en:"On the transfer certificate."} },
+        { t:{fr:"Fiche des mouvements frontaliers",ar:"بطاقة الحركات الحدودية",en:"Border movements record"}, d:{fr:"Si passeport < 2 ans ou tampons illisibles.",ar:"إذا كان الجواز < سنتين أو الأختام غير واضحة.",en:"If passport < 2 years or stamps unreadable."} },
       ]},
     ]},
 
-  { key:"p2", icon:"ship", short:{fr:"Bateau",ar:"الباخرة"}, phase:{fr:"Phase 2",ar:"المرحلة 2"},
-    title:{fr:"La traversée en bateau", ar:"العبور بالباخرة"}, sub:{fr:"Formalités à bord du navire.", ar:"الإجراءات على متن السفينة."},
-    tip:{ text:{fr:"Ces formalités se font à bord, auprès du bureau des douanes du navire.",ar:"تتم هذه الإجراءات على متن السفينة، لدى مكتب الديوانة بالباخرة."} },
+  { key:"p2", icon:"ship", short:{fr:"Bateau",ar:"الباخرة",en:"Ferry"}, phase:{fr:"Phase 2",ar:"المرحلة 2",en:"Phase 2"},
+    title:{fr:"La traversée en bateau", ar:"العبور بالباخرة", en:"The sea crossing"}, sub:{fr:"Formalités à bord du navire.", ar:"الإجراءات على متن السفينة.", en:"Formalities on board the ship."},
+    tip:{ text:{fr:"Ces formalités se font à bord, auprès du bureau des douanes du navire.",ar:"تتم هذه الإجراءات على متن السفينة، لدى مكتب الديوانة بالباخرة.",en:"These formalities are done on board, at the ship's customs office."} },
     groups:[
-      { title:{fr:"À bord du bateau",ar:"على متن الباخرة"}, items:[
-        { t:{fr:"Déclaration de douane du véhicule",ar:"تصريح ديواني للسيارة"}, d:{fr:"À remplir auprès des douanes à bord.",ar:"يُملأ لدى الديوانة على المتن."} },
-        { t:{fr:"Permis de circulation provisoire",ar:"رخصة جولان مؤقتة"}, d:{fr:"Récupérer le ticket / diptyque cartonné.",ar:"استلام التذكرة / البطاقة الكرتونية."} },
+      { title:{fr:"À bord du bateau",ar:"على متن الباخرة",en:"On board the ship"}, items:[
+        { t:{fr:"Déclaration de douane du véhicule",ar:"تصريح ديواني للسيارة",en:"Vehicle customs declaration"}, d:{fr:"À remplir auprès des douanes à bord.",ar:"يُملأ لدى الديوانة على المتن.",en:"To fill in with customs on board."} },
+        { t:{fr:"Permis de circulation provisoire",ar:"رخصة جولان مؤقتة",en:"Temporary circulation permit"}, d:{fr:"Récupérer le ticket / diptyque cartonné.",ar:"استلام التذكرة / البطاقة الكرتونية.",en:"Collect the ticket / cardboard slip."} },
       ]},
     ]},
 
-  { key:"p3", icon:"landmark", short:{fr:"Douane",ar:"الديوانة"}, phase:{fr:"Phase 3",ar:"المرحلة 3"},
-    title:{fr:"En Tunisie — Inspection & Douane", ar:"في تونس — المعاينة والديوانة"}, sub:{fr:"Le cœur de la procédure à l'arrivée.", ar:"جوهر الإجراءات عند الوصول."},
+  { key:"p3", icon:"landmark", short:{fr:"Douane",ar:"الديوانة",en:"Customs"}, phase:{fr:"Phase 3",ar:"المرحلة 3",en:"Phase 3"},
+    title:{fr:"En Tunisie — Inspection & Douane", ar:"في تونس — المعاينة والديوانة", en:"In Tunisia — Inspection & Customs"}, sub:{fr:"Le cœur de la procédure à l'arrivée.", ar:"جوهر الإجراءات عند الوصول.", en:"The core of the procedure on arrival."},
     groups:[
-      { title:{fr:"Documents administratifs",ar:"الوثائق الإدارية"}, items:[
-        { t:{fr:"Photocopie des 32 pages du passeport",ar:"نسخة من 32 صفحة من جواز السفر"}, d:{fr:"Bénéficiaire.",ar:"المنتفع."} },
-        { t:{fr:"Photocopie de la CIN",ar:"نسخة من بطاقة التعريف الوطنية"}, d:{fr:"Bénéficiaire + conjoint.",ar:"المنتفع + القرين."} },
-        { t:{fr:"Extrait de naissance tunisien",ar:"مضمون ولادة تونسي"}, d:{fr:"Moins de 3 mois.",ar:"أقل من 3 أشهر."} },
-        { t:{fr:"Certificat de non-gage récent",ar:"شهادة عدم رهن حديثة"}, d:{fr:"Du pays d'origine, réimprimé après la date d'entrée en Tunisie.",ar:"من بلد المنشأ، تُعاد طباعتها بعد تاريخ الدخول إلى تونس."} },
+      { title:{fr:"Documents administratifs",ar:"الوثائق الإدارية",en:"Administrative documents"}, items:[
+        { t:{fr:"Photocopie des 32 pages du passeport",ar:"نسخة من 32 صفحة من جواز السفر",en:"Photocopy of all 32 passport pages"}, d:{fr:"Bénéficiaire.",ar:"المنتفع.",en:"Beneficiary."} },
+        { t:{fr:"Photocopie de la CIN",ar:"نسخة من بطاقة التعريف الوطنية",en:"Photocopy of the national ID card"}, d:{fr:"Bénéficiaire + conjoint.",ar:"المنتفع + القرين.",en:"Beneficiary + spouse."} },
+        { t:{fr:"Extrait de naissance tunisien",ar:"مضمون ولادة تونسي",en:"Tunisian birth certificate"}, d:{fr:"Moins de 3 mois.",ar:"أقل من 3 أشهر.",en:"Less than 3 months old."} },
+        { t:{fr:"Certificat de non-gage récent",ar:"شهادة عدم رهن حديثة",en:"Recent certificate of non-pledge"}, d:{fr:"Du pays d'origine, réimprimé après la date d'entrée en Tunisie.",ar:"من بلد المنشأ، تُعاد طباعتها بعد تاريخ الدخول إلى تونس.",en:"From the origin country, reprinted after entry into Tunisia."} },
       ]},
-      { title:{fr:"Inspection ATTT",ar:"المعاينة الفنية (ATTT)"}, items:[
-        { t:{fr:"Passage de la Mou3ayna (معاينة)",ar:"إجراء المعاينة"}, d:{fr:"Centre de visite technique de l'ATTT.",ar:"مركز الفحص الفني التابع لـ ATTT."} },
-        { t:{fr:"Certificat d'identification (Annexe V)",ar:"شهادة التعريف (الملحق V)"}, d:{fr:"À récupérer après la Mou3ayna.",ar:"تُستلم بعد المعاينة."} },
-        { t:{fr:"Fiche de pesée",ar:"بطاقة الوزن"}, d:{fr:"Uniquement utilitaires / grands gabarits.",ar:"فقط للسيارات النفعية / كبيرة الحجم."} },
+      { title:{fr:"Inspection ATTT",ar:"المعاينة الفنية (ATTT)",en:"ATTT inspection"}, items:[
+        { t:{fr:"Passage de la Mou3ayna (معاينة)",ar:"إجراء المعاينة",en:"Mou3ayna inspection (معاينة)"}, d:{fr:"Centre de visite technique de l'ATTT.",ar:"مركز الفحص الفني التابع لـ ATTT.",en:"ATTT technical inspection centre."} },
+        { t:{fr:"Certificat d'identification (Annexe V)",ar:"شهادة التعريف (الملحق V)",en:"Identification certificate (Annex V)"}, d:{fr:"À récupérer après la Mou3ayna.",ar:"تُستلم بعد المعاينة.",en:"Collect after the Mou3ayna."} },
+        { t:{fr:"Fiche de pesée",ar:"بطاقة الوزن",en:"Weighing slip"}, d:{fr:"Uniquement utilitaires / grands gabarits.",ar:"فقط للسيارات النفعية / كبيرة الحجم.",en:"Only for commercial / large vehicles."} },
       ]},
-      { title:{fr:"Douane & transitaire",ar:"الديوانة والوسيط الديواني"}, items:[
-        { t:{fr:"Saisie de la déclaration de douane",ar:"تسجيل التصريح الديواني"}, d:{fr:"Avec le transitaire.",ar:"بمساعدة الوسيط الديواني."} },
-        { t:{fr:"Demande de privilège fiscal (Modèle 6.3.41)",ar:"مطلب امتياز جبائي (نموذج 6.3.41)"}, d:{fr:"Formulaire officiel à signer.",ar:"مطبوعة رسمية للإمضاء."} },
-        { t:{fr:"Dépôt du dossier complet",ar:"إيداع الملف الكامل"}, d:{fr:"Identité, papiers légalisés, Mou3ayna, permis provisoire.",ar:"الهوية، الوثائق المصادق عليها، المعاينة، الرخصة المؤقتة."} },
-        { t:{fr:"Paiement des droits & Mainlevée",ar:"خلاص المعاليم ورفع اليد"}, d:{fr:"Quittance / mainlevée.",ar:"الوصل / رفع اليد."} },
+      { title:{fr:"Douane & transitaire",ar:"الديوانة والوسيط الديواني",en:"Customs & broker"}, items:[
+        { t:{fr:"Saisie de la déclaration de douane",ar:"تسجيل التصريح الديواني",en:"Filing the customs declaration"}, d:{fr:"Avec le transitaire.",ar:"بمساعدة الوسيط الديواني.",en:"With the customs broker."} },
+        { t:{fr:"Demande de privilège fiscal (Modèle 6.3.41)",ar:"مطلب امتياز جبائي (نموذج 6.3.41)",en:"Tax privilege request (Form 6.3.41)"}, d:{fr:"Formulaire officiel à signer.",ar:"مطبوعة رسمية للإمضاء.",en:"Official form to sign."} },
+        { t:{fr:"Dépôt du dossier complet",ar:"إيداع الملف الكامل",en:"Submit the full file"}, d:{fr:"Identité, papiers légalisés, Mou3ayna, permis provisoire.",ar:"الهوية، الوثائق المصادق عليها، المعاينة، الرخصة المؤقتة.",en:"ID, legalized papers, Mou3ayna, temporary permit."} },
+        { t:{fr:"Paiement des droits & Mainlevée",ar:"خلاص المعاليم ورفع اليد",en:"Pay the duties & clearance"}, d:{fr:"Quittance / mainlevée.",ar:"الوصل / رفع اليد.",en:"Receipt / customs release."} },
       ]},
     ]},
 
-  { key:"p4", icon:"card", short:{fr:"Immat.",ar:"الترقيم"}, phase:{fr:"Phase 4",ar:"المرحلة 4"},
-    title:{fr:"Formalités finales & immatriculation", ar:"الإجراءات النهائية والترقيم"}, sub:{fr:"Mise en circulation du véhicule.", ar:"وضع السيارة في الجولان."},
+  { key:"p4", icon:"card", short:{fr:"Immat.",ar:"الترقيم",en:"Plates"}, phase:{fr:"Phase 4",ar:"المرحلة 4",en:"Phase 4"},
+    title:{fr:"Formalités finales & immatriculation", ar:"الإجراءات النهائية والترقيم", en:"Final formalities & registration"}, sub:{fr:"Mise en circulation du véhicule.", ar:"وضع السيارة في الجولان.", en:"Putting the vehicle on the road."},
     groups:[
-      { title:{fr:"Immatriculation",ar:"الترقيم"}, items:[
-        { t:{fr:"Demande de carte grise tunisienne",ar:"مطلب بطاقة رمادية تونسية"}, d:{fr:"À l'ATTT, avec l'accord de la douane.",ar:"لدى ATTT، بموافقة الديوانة."} },
-        { t:{fr:"Pose de la nouvelle plaque",ar:"تركيب اللوحة الجديدة"}, d:{fr:"Série incessible « ن ت » (RS) si exonération totale ; plaque normale si exonération partielle (25 %).",ar:"سلسلة «ن ت» (RS) غير قابلة للتفويت عند الإعفاء الكلي؛ لوحة عادية عند الإعفاء الجزئي (25٪)."} },
+      { title:{fr:"Immatriculation",ar:"الترقيم",en:"Registration"}, items:[
+        { t:{fr:"Demande de carte grise tunisienne",ar:"مطلب بطاقة رمادية تونسية",en:"Request the Tunisian registration card"}, d:{fr:"À l'ATTT, avec l'accord de la douane.",ar:"لدى ATTT، بموافقة الديوانة.",en:"At the ATTT, with customs approval."} },
+        { t:{fr:"Pose de la nouvelle plaque",ar:"تركيب اللوحة الجديدة",en:"Fit the new plate"}, d:{fr:"Série incessible « ن ت » (RS) si exonération totale ; plaque normale si exonération partielle (25 %).",ar:"سلسلة «ن ت» (RS) غير قابلة للتفويت عند الإعفاء الكلي؛ لوحة عادية عند الإعفاء الجزئي (25٪).",en:"Non-transferable « ن ت » (RS) series if full exemption; normal plate if partial exemption (25%)."} },
       ]},
-      { title:{fr:"Mise en circulation",ar:"وضع في الجولان"}, items:[
-        { t:{fr:"Assurance tunisienne",ar:"تأمين تونسي"}, d:{fr:"Avec le nouveau numéro d'immatriculation.",ar:"بالرقم المنجمي الجديد."} },
-        { t:{fr:"Achat de la vignette",ar:"شراء الأداء على وسائل النقل"}, d:{fr:"Taxe de circulation à la Recette des Finances.",ar:"معلوم الجولان بقباضة المالية."} },
-        { t:{fr:"Conduite du véhicule RS",ar:"سياقة سيارة RS"}, d:{fr:"Conjoint : conduite autorisée avec justificatif. Autres : en présence du bénéficiaire/conjoint, sinon autorisation de la douane.",ar:"القرين: السياقة مرخّصة مع ما يُثبت ذلك. الآخرون: بحضور المنتفع/القرين، وإلا فبترخيص من الديوانة."} },
+      { title:{fr:"Mise en circulation",ar:"وضع في الجولان",en:"Putting on the road"}, items:[
+        { t:{fr:"Assurance tunisienne",ar:"تأمين تونسي",en:"Tunisian insurance"}, d:{fr:"Avec le nouveau numéro d'immatriculation.",ar:"بالرقم المنجمي الجديد.",en:"With the new registration number."} },
+        { t:{fr:"Achat de la vignette",ar:"شراء الأداء على وسائل النقل",en:"Buy the road tax sticker"}, d:{fr:"Taxe de circulation à la Recette des Finances.",ar:"معلوم الجولان بقباضة المالية.",en:"Circulation tax at the Revenue Office."} },
+        { t:{fr:"Conduite du véhicule RS",ar:"سياقة سيارة RS",en:"Driving the RS vehicle"}, d:{fr:"Conjoint : conduite autorisée avec justificatif. Autres : en présence du bénéficiaire/conjoint, sinon autorisation de la douane.",ar:"القرين: السياقة مرخّصة مع ما يُثبت ذلك. الآخرون: بحضور المنتفع/القرين، وإلا فبترخيص من الديوانة.",en:"Spouse: allowed with proof. Others: in presence of the beneficiary/spouse, otherwise customs authorization."} },
       ]},
     ]},
 
-  { key:"cond", icon:"check", short:{fr:"Conditions",ar:"الشروط"}, phase:{fr:"Éligibilité",ar:"الأهلية"},
-    title:{fr:"Conditions d'éligibilité", ar:"شروط الانتفاع"}, sub:{fr:"Qui peut bénéficier du régime FCR, et sous quelles conditions.", ar:"من يمكنه الانتفاع بنظام FCR، وبأيّ شروط."}, custom:"cond" },
+  { key:"cond", icon:"check", short:{fr:"Conditions",ar:"الشروط",en:"Conditions"}, phase:{fr:"Éligibilité",ar:"الأهلية",en:"Eligibility"},
+    title:{fr:"Conditions d'éligibilité", ar:"شروط الانتفاع", en:"Eligibility conditions"}, sub:{fr:"Qui peut bénéficier du régime FCR, et sous quelles conditions.", ar:"من يمكنه الانتفاع بنظام FCR، وبأيّ شروط.", en:"Who can benefit from the FCR scheme, and under what conditions."}, custom:"cond" },
 
-  { key:"faq", icon:"help", short:{fr:"FAQ",ar:"أسئلة"}, phase:{fr:"Aide",ar:"مساعدة"},
-    title:{fr:"Questions fréquentes", ar:"أسئلة شائعة"}, sub:{fr:"Les points qui bloquent le plus souvent.", ar:"النقاط التي تثير الإشكال غالبًا."}, custom:"faq" },
+  { key:"faq", icon:"help", short:{fr:"FAQ",ar:"أسئلة",en:"FAQ"}, phase:{fr:"Aide",ar:"مساعدة",en:"Help"},
+    title:{fr:"Questions fréquentes", ar:"أسئلة شائعة", en:"Frequently asked questions"}, sub:{fr:"Les points qui bloquent le plus souvent.", ar:"النقاط التي تثير الإشكال غالبًا.", en:"The points that most often cause trouble."}, custom:"faq" },
 ];
 
 const CONDS = [
-  { ic:"user", t:{fr:"Bénéficiaire",ar:"المنتفع"}, d:{fr:"Tunisien âgé de plus de 18 ans. Privilège accordé une fois tous les 10 ans (loi de finances 2024).",ar:"تونسي يفوق سنّه 18 عامًا. يُمنح الامتياز مرة كل 10 سنوات (قانون المالية 2024)."} },
-  { ic:"car", t:{fr:"Âge du véhicule",ar:"عمر السيارة"}, d:{fr:"≤ 5 ans (tourisme et utilitaires légers < 3,5 t), à la date d'acquisition ou d'importation.",ar:"≤ 5 سنوات (سياحية ونفعية خفيفة < 3,5 طن)، في تاريخ الاقتناء أو التوريد."} },
-  { ic:"home", t:{fr:"Durée de résidence à l'étranger",ar:"مدة الإقامة بالخارج"}, d:{fr:"Au moins 2 ans consécutifs hors de Tunisie.",ar:"سنتان متتاليتان على الأقل خارج تونس."} },
-  { ic:"calendar", t:{fr:"Présence en Tunisie",ar:"التواجد في تونس"}, d:{fr:"≤ 183 jours par an (seuil relevé par le décret de juin 2024 ; 120 j auparavant).",ar:"≤ 183 يومًا في السنة (رُفع السقف بمرسوم جوان 2024؛ كان 120 يومًا سابقًا)."} },
-  { ic:"money", t:{fr:"Importation de devises",ar:"توريد العملة الصعبة"}, d:{fr:"Importer en devises un montant équivalent aux droits et taxes (ou le débiter d'un compte en devises), dans l'année précédant l'importation.",ar:"توريد مبلغ بالعملة الصعبة يعادل المعاليم والأداءات (أو خصمه من حساب بالعملة)، خلال السنة السابقة للتوريد."} },
-  { ic:"coins", t:{fr:"Régime fiscal & plaque",ar:"النظام الجبائي واللوحة"}, d:{fr:"Exonération totale → plaque incessible « ن ت » (RS). Exonération partielle → 25 % des droits/taxes (30 % grosses cylindrées) + plaque normale cessible.",ar:"إعفاء كلي → لوحة «ن ت» (RS) غير قابلة للتفويت. إعفاء جزئي → 25٪ من المعاليم (30٪ للمحركات الكبيرة) + لوحة عادية قابلة للتفويت."} },
+  { ic:"user", t:{fr:"Bénéficiaire",ar:"المنتفع",en:"Beneficiary"}, d:{fr:"Tunisien âgé de plus de 18 ans. Privilège accordé une fois tous les 10 ans (loi de finances 2024).",ar:"تونسي يفوق سنّه 18 عامًا. يُمنح الامتياز مرة كل 10 سنوات (قانون المالية 2024).",en:"Tunisian over 18. Privilege granted once every 10 years (2024 finance law)."} },
+  { ic:"car", t:{fr:"Âge du véhicule",ar:"عمر السيارة",en:"Vehicle age"}, d:{fr:"≤ 5 ans (tourisme et utilitaires légers < 3,5 t), à la date d'acquisition ou d'importation.",ar:"≤ 5 سنوات (سياحية ونفعية خفيفة < 3,5 طن)، في تاريخ الاقتناء أو التوريد.",en:"≤ 5 years (cars and light commercial < 3.5 t), at acquisition or import date."} },
+  { ic:"home", t:{fr:"Durée de résidence à l'étranger",ar:"مدة الإقامة بالخارج",en:"Time residing abroad"}, d:{fr:"Au moins 2 ans consécutifs hors de Tunisie.",ar:"سنتان متتاليتان على الأقل خارج تونس.",en:"At least 2 consecutive years outside Tunisia."} },
+  { ic:"calendar", t:{fr:"Présence en Tunisie",ar:"التواجد في تونس",en:"Presence in Tunisia"}, d:{fr:"≤ 183 jours par an (seuil relevé par le décret de juin 2024 ; 120 j auparavant).",ar:"≤ 183 يومًا في السنة (رُفع السقف بمرسوم جوان 2024؛ كان 120 يومًا سابقًا).",en:"≤ 183 days per year (raised by the June 2024 decree; 120 days before)."} },
+  { ic:"money", t:{fr:"Importation de devises",ar:"توريد العملة الصعبة",en:"Currency import"}, d:{fr:"Importer en devises un montant équivalent aux droits et taxes (ou le débiter d'un compte en devises), dans l'année précédant l'importation.",ar:"توريد مبلغ بالعملة الصعبة يعادل المعاليم والأداءات (أو خصمه من حساب بالعملة)، خلال السنة السابقة للتوريد.",en:"Import in foreign currency an amount equal to the duties and taxes (or debit a forex account), in the year before import."} },
+  { ic:"coins", t:{fr:"Régime fiscal & plaque",ar:"النظام الجبائي واللوحة",en:"Tax regime & plate"}, d:{fr:"Exonération totale → plaque incessible « ن ت » (RS). Exonération partielle → 25 % des droits/taxes (30 % grosses cylindrées) + plaque normale cessible.",ar:"إعفاء كلي → لوحة «ن ت» (RS) غير قابلة للتفويت. إعفاء جزئي → 25٪ من المعاليم (30٪ للمحركات الكبيرة) + لوحة عادية قابلة للتفويت.",en:"Full exemption → non-transferable « ن ت » (RS) plate. Partial exemption → 25% of duties/taxes (30% for large engines) + normal transferable plate."} },
 ];
 const INTRO_CARDS = [
-  { ic:"compass", t:{fr:"Comment l'utiliser",ar:"كيفية الاستعمال"}, d:{fr:"Parcourez les 4 phases dans l'ordre et cochez chaque étape au fur et à mesure.",ar:"تصفّح المراحل الأربع بالترتيب وأشّر على كل خطوة تباعًا."} },
-  { ic:"save", t:{fr:"Sauvegarde auto",ar:"حفظ تلقائي"}, d:{fr:"Votre progression est enregistrée sur cet appareil — rien à créer, aucun compte.",ar:"يُحفظ تقدّمك على هذا الجهاز — دون إنشاء أي حساب."} },
-  { ic:"lock", t:{fr:"100 % privé",ar:"خصوصية تامة"}, d:{fr:"Aucune donnée n'est envoyée sur internet. Tout reste dans votre navigateur.",ar:"لا تُرسل أي بيانات عبر الإنترنت. كل شيء يبقى في متصفّحك."} },
+  { ic:"compass", t:{fr:"Comment l'utiliser",ar:"كيفية الاستعمال",en:"How to use it"}, d:{fr:"Parcourez les 4 phases dans l'ordre et cochez chaque étape au fur et à mesure.",ar:"تصفّح المراحل الأربع بالترتيب وأشّر على كل خطوة تباعًا.",en:"Go through the 4 phases in order and tick each step as you go."} },
+  { ic:"save", t:{fr:"Sauvegarde auto",ar:"حفظ تلقائي",en:"Auto-save"}, d:{fr:"Votre progression est enregistrée sur cet appareil — rien à créer, aucun compte.",ar:"يُحفظ تقدّمك على هذا الجهاز — دون إنشاء أي حساب.",en:"Your progress is saved on this device — nothing to create, no account."} },
+  { ic:"lock", t:{fr:"100 % privé",ar:"خصوصية تامة",en:"100% private"}, d:{fr:"Aucune donnée n'est envoyée sur internet. Tout reste dans votre navigateur.",ar:"لا تُرسل أي بيانات عبر الإنترنت. كل شيء يبقى في متصفّحك.",en:"No data is sent online. Everything stays in your browser."} },
 ];
 const STEPS = [
-  { n:1, t:{fr:"À l'étranger",ar:"بالخارج"}, s:{fr:"Achat & papiers",ar:"الشراء والوثائق"} },
-  { n:2, t:{fr:"Le bateau",ar:"الباخرة"}, s:{fr:"La traversée",ar:"العبور"} },
-  { n:3, t:{fr:"Douane",ar:"الديوانة"}, s:{fr:"Inspection ATTT",ar:"المعاينة"} },
-  { n:4, t:{fr:"Immatriculation",ar:"الترقيم"}, s:{fr:"Mise en circulation",ar:"الجولان"} },
+  { n:1, t:{fr:"À l'étranger",ar:"بالخارج",en:"Abroad"}, s:{fr:"Achat & papiers",ar:"الشراء والوثائق",en:"Purchase & papers"} },
+  { n:2, t:{fr:"Le bateau",ar:"الباخرة",en:"The ferry"}, s:{fr:"La traversée",ar:"العبور",en:"The crossing"} },
+  { n:3, t:{fr:"Douane",ar:"الديوانة",en:"Customs"}, s:{fr:"Inspection ATTT",ar:"المعاينة",en:"ATTT inspection"} },
+  { n:4, t:{fr:"Immatriculation",ar:"الترقيم",en:"Registration"}, s:{fr:"Mise en circulation",ar:"الجولان",en:"On the road"} },
 ];
 const LEAD = {fr:"Vous rapatriez votre voiture en Tunisie dans le cadre d'un <b>changement de résidence</b> ? Le <b>régime FCR</b> permet de l'importer en franchise (ou à taxes réduites). Ce guide réunit, étape par étape, <b>tous les documents et démarches</b> — de l'achat à l'étranger jusqu'à l'immatriculation finale.",
-  ar:"هل تنقل سيارتك إلى تونس في إطار <b>تغيير مكان الإقامة</b>؟ يتيح <b>نظام FCR</b> استيرادها بإعفاء (أو بمعاليم مخفّضة). يجمع هذا الدليل، خطوة بخطوة، <b>كل الوثائق والإجراءات</b> — من الشراء بالخارج إلى الترقيم النهائي."};
+  ar:"هل تنقل سيارتك إلى تونس في إطار <b>تغيير مكان الإقامة</b>؟ يتيح <b>نظام FCR</b> استيرادها بإعفاء (أو بمعاليم مخفّضة). يجمع هذا الدليل، خطوة بخطوة، <b>كل الوثائق والإجراءات</b> — من الشراء بالخارج إلى الترقيم النهائي.",
+  en:"Bringing your car to Tunisia as part of a <b>change of residence</b>? The <b>FCR scheme</b> lets you import it duty-free (or at reduced taxes). This guide gathers, step by step, <b>all the documents and procedures</b> — from buying abroad to final registration."};
 const DISCLAIMER = {fr:"⚠️ Outil d'aide non officiel. Les exigences évoluent : vérifiez toujours auprès de la <b>Douane tunisienne</b>, de l'<b>ATTT</b> et du <b>Consulat de Tunisie</b> dont vous dépendez. Aucune donnée n'est envoyée — votre progression reste sur votre appareil.",
-  ar:"⚠️ أداة مساعدة غير رسمية. قد تتغيّر المتطلبات: تحقّق دائمًا لدى <b>الديوانة التونسية</b> و<b>ATTT</b> و<b>القنصلية التونسية</b> المعنية. لا تُرسل أي بيانات — يبقى تقدّمك على جهازك."};
+  ar:"⚠️ أداة مساعدة غير رسمية. قد تتغيّر المتطلبات: تحقّق دائمًا لدى <b>الديوانة التونسية</b> و<b>ATTT</b> و<b>القنصلية التونسية</b> المعنية. لا تُرسل أي بيانات — يبقى تقدّمك على جهازك.",
+  en:"⚠️ Unofficial helper tool. Requirements change: always check with the <b>Tunisian Customs</b>, the <b>ATTT</b> and the <b>Tunisian Consulate</b> you depend on. No data is sent — your progress stays on your device."};
 const FAQS = [
-  { q:{fr:"Qu'est-ce que la « Mou3ayna » ?",ar:"ما هي «المعاينة»؟"}, a:{fr:"Visite technique d'identification du véhicule dans un centre de l'ATTT. Elle débouche sur le Certificat d'identification (Annexe V), indispensable pour la douane.",ar:"فحص فني لتعريف السيارة في مركز ATTT. ينتج عنه شهادة التعريف (الملحق V) الضرورية للديوانة."} },
-  { q:{fr:"Ai-je besoin d'un transitaire ?",ar:"هل أحتاج إلى وسيط ديواني؟"}, a:{fr:"Oui dans la plupart des cas : il saisit la déclaration de douane et accompagne le dépôt et la validation du dossier.",ar:"نعم في أغلب الحالات: يسجّل التصريح الديواني ويرافق إيداع الملف والمصادقة عليه."} },
-  { q:{fr:"Pourquoi réimprimer le non-gage en Tunisie ?",ar:"لماذا تُعاد طباعة شهادة عدم الرهن في تونس؟"}, a:{fr:"La douane exige souvent un certificat récent, daté après votre entrée en Tunisie.",ar:"تطلب الديوانة غالبًا شهادة حديثة مؤرّخة بعد دخولك إلى تونس."} },
-  { q:{fr:"Qui peut conduire un véhicule RS ?",ar:"من يمكنه قيادة سيارة بلوحة RS؟"}, a:{fr:"Le bénéficiaire et son conjoint (sur présentation d'un justificatif de mariage) conduisent sans autorisation. Toute autre personne peut conduire uniquement en présence du bénéficiaire ou du conjoint à bord ; sinon une autorisation de la douane est nécessaire.",ar:"المنتفع وقرينه (مع تقديم ما يُثبت الزواج) يسوقان دون ترخيص. أما أي شخص آخر فلا يسوق إلا بحضور المنتفع أو القرين في السيارة؛ وإلا لزم ترخيص من الديوانة."} },
-  { q:{fr:"Combien de fois peut-on bénéficier du FCR ?",ar:"كم مرة يمكن الانتفاع بنظام FCR؟"}, a:{fr:"Depuis la loi de finances 2024, le privilège est accordé une fois tous les 10 ans (au lieu d'une seule fois auparavant).",ar:"منذ قانون المالية 2024، يُمنح الامتياز مرة كل 10 سنوات (بدل مرة واحدة سابقًا)."} },
-  { q:{fr:"Le « Modèle 6.3.41 » ?",ar:"ما هو «النموذج 6.3.41»؟"}, a:{fr:"C'est la Demande de privilège fiscal à signer pour bénéficier de la franchise dans le cadre du changement de résidence.",ar:"هو مطلب الامتياز الجبائي الذي يُمضى للانتفاع بالإعفاء في إطار تغيير مكان الإقامة."} },
+  { q:{fr:"Qu'est-ce que la « Mou3ayna » ?",ar:"ما هي «المعاينة»؟",en:"What is the « Mou3ayna »?"}, a:{fr:"Visite technique d'identification du véhicule dans un centre de l'ATTT. Elle débouche sur le Certificat d'identification (Annexe V), indispensable pour la douane.",ar:"فحص فني لتعريف السيارة في مركز ATTT. ينتج عنه شهادة التعريف (الملحق V) الضرورية للديوانة.",en:"A technical identification inspection of the vehicle at an ATTT centre. It produces the Identification Certificate (Annex V), required by customs."} },
+  { q:{fr:"Ai-je besoin d'un transitaire ?",ar:"هل أحتاج إلى وسيط ديواني؟",en:"Do I need a customs broker?"}, a:{fr:"Oui dans la plupart des cas : il saisit la déclaration de douane et accompagne le dépôt et la validation du dossier.",ar:"نعم في أغلب الحالات: يسجّل التصريح الديواني ويرافق إيداع الملف والمصادقة عليه.",en:"Yes in most cases: they file the customs declaration and assist with submitting and validating the file."} },
+  { q:{fr:"Pourquoi réimprimer le non-gage en Tunisie ?",ar:"لماذا تُعاد طباعة شهادة عدم الرهن في تونس؟",en:"Why reprint the non-pledge certificate in Tunisia?"}, a:{fr:"La douane exige souvent un certificat récent, daté après votre entrée en Tunisie.",ar:"تطلب الديوانة غالبًا شهادة حديثة مؤرّخة بعد دخولك إلى تونس.",en:"Customs often require a recent certificate, dated after your entry into Tunisia."} },
+  { q:{fr:"Qui peut conduire un véhicule RS ?",ar:"من يمكنه قيادة سيارة بلوحة RS؟",en:"Who can drive an RS vehicle?"}, a:{fr:"Le bénéficiaire et son conjoint (sur présentation d'un justificatif de mariage) conduisent sans autorisation. Toute autre personne peut conduire uniquement en présence du bénéficiaire ou du conjoint à bord ; sinon une autorisation de la douane est nécessaire.",ar:"المنتفع وقرينه (مع تقديم ما يُثبت الزواج) يسوقان دون ترخيص. أما أي شخص آخر فلا يسوق إلا بحضور المنتفع أو القرين في السيارة؛ وإلا لزم ترخيص من الديوانة.",en:"The beneficiary and their spouse (with proof of marriage) drive without authorization. Anyone else may drive only in the presence of the beneficiary or spouse; otherwise a customs authorization is required."} },
+  { q:{fr:"Combien de fois peut-on bénéficier du FCR ?",ar:"كم مرة يمكن الانتفاع بنظام FCR؟",en:"How many times can you benefit from FCR?"}, a:{fr:"Depuis la loi de finances 2024, le privilège est accordé une fois tous les 10 ans (au lieu d'une seule fois auparavant).",ar:"منذ قانون المالية 2024، يُمنح الامتياز مرة كل 10 سنوات (بدل مرة واحدة سابقًا).",en:"Since the 2024 finance law, the privilege is granted once every 10 years (instead of only once before)."} },
+  { q:{fr:"Le « Modèle 6.3.41 » ?",ar:"ما هو «النموذج 6.3.41»؟",en:"What is « Form 6.3.41 »?"}, a:{fr:"C'est la Demande de privilège fiscal à signer pour bénéficier de la franchise dans le cadre du changement de résidence.",ar:"هو مطلب الامتياز الجبائي الذي يُمضى للانتفاع بالإعفاء في إطار تغيير مكان الإقامة.",en:"It's the Tax Privilege Request to sign in order to get the exemption under the change-of-residence scheme."} },
 ];
 
 const KEY = "fcr-tn-v3";
@@ -532,7 +539,7 @@ function build() {
         h += `<div class="group"><h3>${T(g.title)}</h3><ul class="tasks">`;
         g.items.forEach(it => {
           const id = "t"+(idc++); allIds.push(id); phaseIds[s.key].push(id);
-          h += `<li><label class="task"><input type="checkbox" data-id="${id}" ${done[id]?"checked":""}/><span class="box">${checkSvg}</span><span class="label"><b>${T(it.t)}</b>${it.d?`<small>${T(it.d)}</small>`:""}</span><span class="done-mark">${icon('check')}</span></label></li>`;
+          h += `<li><label class="task"><input type="checkbox" data-id="${id}" ${done[id]?"checked":""}/><span class="box">${checkSvg}</span><span class="label"><b>${T(it.t)}</b>${it.d?`<small>${T(it.d)}</small>`:""}</span><span class="done-mark">${icon('check2')}</span></label></li>`;
         });
         h += `</ul></div>`;
       });
