@@ -97,7 +97,10 @@
         { "@type": "Question", "name": "Qu'est-ce que la Mou3ayna ?", "acceptedAnswer": { "@type": "Answer", "text": "Visite technique d'identification du véhicule dans un centre de l'ATTT. Elle débouche sur le Certificat d'identification (Annexe V), indispensable pour la douane." } },
         { "@type": "Question", "name": "Ai-je besoin d'un transitaire ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui dans la plupart des cas : il saisit la déclaration de douane et accompagne le dépôt et la validation du dossier." } },
         { "@type": "Question", "name": "Qui peut conduire un véhicule RS ?", "acceptedAnswer": { "@type": "Answer", "text": "Le bénéficiaire et son conjoint (avec justificatif de mariage) conduisent sans autorisation. Toute autre personne peut conduire uniquement en présence du bénéficiaire ou du conjoint, sinon une autorisation de la douane est nécessaire." } },
-        { "@type": "Question", "name": "Combien de fois peut-on bénéficier du FCR ?", "acceptedAnswer": { "@type": "Answer", "text": "Depuis la loi de finances 2024, le privilège est accordé une fois tous les 10 ans (au lieu d'une seule fois auparavant)." } }
+        { "@type": "Question", "name": "Combien de fois peut-on bénéficier du FCR ?", "acceptedAnswer": { "@type": "Answer", "text": "Depuis la loi de finances 2024, le privilège est accordé une fois tous les 10 ans (au lieu d'une seule fois auparavant)." } },
+        { "@type": "Question", "name": "Peut-on importer une voiture de plus de 5 ans en FCR ?", "acceptedAnswer": { "@type": "Answer", "text": "Non, le FCR est réservé aux véhicules de moins de 5 ans. Au-delà, l'importation reste possible mais au régime normal, avec paiement intégral des droits et taxes." } },
+        { "@type": "Question", "name": "Peut-on vendre une voiture en plaque RS « ن ت » ?", "acceptedAnswer": { "@type": "Answer", "text": "Non, elle est incessible. La revente nécessite l'autorisation de la douane et le paiement des droits et taxes restants pour la passer en plaque normale." } },
+        { "@type": "Question", "name": "Le FCR fonctionne-t-il depuis la France ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, le FCR s'applique quel que soit le pays de résidence à l'étranger, dès lors que les conditions de résidence et de devises sont remplies." } }
       ]
     }
   ]
@@ -220,7 +223,7 @@
   .view-head h2 { margin: .6rem 0 .25rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem,1rem+2vw,2.25rem); letter-spacing: -.02em; line-height: 1.1; }
   .view-head .sub { color: var(--muted); font-size: 1rem; max-width: 56ch; }
 
-  .group { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 1rem; transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
+  .group { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 1rem; scroll-margin-top: 80px; transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
   .group:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
   .group > h3 { margin: 0; padding: .85rem 1.2rem; font: 700 .73rem var(--sans); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); border-bottom: 1px solid var(--line); }
   ul.tasks { list-style: none; margin: 0; padding: .4rem; }
@@ -296,16 +299,29 @@
   .article .src a:hover { text-decoration: underline; }
 
   @media (max-width: 880px) {
-    .app { grid-template-columns: 1fr; }
+    .app { grid-template-columns: 1fr; padding-top: 1rem; }
     aside { position: static; }
-    nav { flex-direction: row; overflow-x: auto; gap: .5rem; padding-bottom: .35rem; scrollbar-width: none; margin-top: .85rem; }
+    .appbar-in { padding: .5rem .85rem; gap: .55rem; }
+    .brand p { display: none; }
+    .brand h1 { font-size: 1rem; }
+    .brand .mark { width: 36px; height: 36px; }
+    .lang button { padding: .3rem .5rem; font-size: .78rem; }
+    /* barre de navigation des phases : toujours accessible (collante) */
+    .panel { position: sticky; top: 52px; z-index: 30; padding: .8rem .9rem; }
+    .overall { gap: .7rem; }
+    .ring { width: 48px; height: 48px; }
+    .ring::after { width: 37px; height: 37px; }
+    nav { flex-direction: row; overflow-x: auto; gap: .45rem; padding-bottom: .3rem; scrollbar-width: none; margin-top: .7rem; }
     nav::-webkit-scrollbar { display: none; }
-    .nav-item { flex: none; width: auto; flex-direction: column; align-items: center; gap: .35rem; padding: .55rem .65rem; min-width: 78px; }
-    .nav-item[aria-current="true"]::before { inset-inline-start: 50%; top: auto; bottom: -.35rem; transform: translateX(-50%); width: 22px; height: 4px; }
+    .nav-item { flex: none; width: auto; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; padding: .5rem .6rem; min-width: 72px; min-height: 58px; }
+    .nav-item[aria-current="true"]::before { inset-inline-start: 50%; top: auto; bottom: -.3rem; transform: translateX(-50%); width: 22px; height: 4px; }
+    .nav-ic { width: 30px; height: 30px; }
     .nav-tx { text-align: center; }
     .nav-tx small { display: none; }
     .reset-btn { display: none; }
     .subnav { display: none !important; }
+    .view-head h2 { font-size: clamp(1.4rem, 5.5vw, 1.8rem); }
+    main { padding-top: .5rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, .view.active > *, .box svg path, .dot { animation: none !important; transition-duration: .01ms !important; }
@@ -532,6 +548,9 @@ const FAQS = [
   { q:{fr:"Qui peut conduire un véhicule RS ?",ar:"من يمكنه قيادة سيارة بلوحة RS؟",en:"Who can drive an RS vehicle?"}, a:{fr:"Le bénéficiaire et son conjoint (sur présentation d'un justificatif de mariage) conduisent sans autorisation. Toute autre personne peut conduire uniquement en présence du bénéficiaire ou du conjoint à bord ; sinon une autorisation de la douane est nécessaire.",ar:"المنتفع وقرينه (مع تقديم ما يُثبت الزواج) يسوقان دون ترخيص. أما أي شخص آخر فلا يسوق إلا بحضور المنتفع أو القرين في السيارة؛ وإلا لزم ترخيص من الديوانة.",en:"The beneficiary and their spouse (with proof of marriage) drive without authorization. Anyone else may drive only in the presence of the beneficiary or spouse; otherwise a customs authorization is required."} },
   { q:{fr:"Combien de fois peut-on bénéficier du FCR ?",ar:"كم مرة يمكن الانتفاع بنظام FCR؟",en:"How many times can you benefit from FCR?"}, a:{fr:"Depuis la loi de finances 2024, le privilège est accordé une fois tous les 10 ans (au lieu d'une seule fois auparavant).",ar:"منذ قانون المالية 2024، يُمنح الامتياز مرة كل 10 سنوات (بدل مرة واحدة سابقًا).",en:"Since the 2024 finance law, the privilege is granted once every 10 years (instead of only once before)."} },
   { q:{fr:"Le « Modèle 6.3.41 » ?",ar:"ما هو «النموذج 6.3.41»؟",en:"What is « Form 6.3.41 »?"}, a:{fr:"C'est la Demande de privilège fiscal à signer pour bénéficier de la franchise dans le cadre du changement de résidence.",ar:"هو مطلب الامتياز الجبائي الذي يُمضى للانتفاع بالإعفاء في إطار تغيير مكان الإقامة.",en:"It's the Tax Privilege Request to sign in order to get the exemption under the change-of-residence scheme."} },
+  { q:{fr:"Peut-on importer une voiture de plus de 5 ans en FCR ?",ar:"هل يمكن استيراد سيارة يفوق عمرها 5 سنوات عبر FCR؟",en:"Can you import a car older than 5 years under FCR?"}, a:{fr:"Non, le FCR est réservé aux véhicules de moins de 5 ans. Au-delà, l'importation reste possible mais au régime normal, avec paiement intégral des droits et taxes.",ar:"لا، نظام FCR مخصّص للسيارات أقل من 5 سنوات. أما الأقدم فيمكن توريدها بالنظام العادي مع خلاص كامل المعاليم والأداءات.",en:"No, FCR is limited to vehicles under 5 years old. Older vehicles can still be imported, but under the normal regime with full duties and taxes."} },
+  { q:{fr:"Peut-on vendre une voiture en plaque RS « ن ت » ?",ar:"هل يمكن بيع سيارة بلوحة «ن ت» (RS)؟",en:"Can you sell a car with an RS « ن ت » plate?"}, a:{fr:"Non, elle est incessible. La revente nécessite l'autorisation de la douane et le paiement des droits et taxes restants pour la passer en plaque normale.",ar:"لا، فهي غير قابلة للتفويت. يتطلّب بيعها ترخيصًا من الديوانة وخلاص المعاليم والأداءات المتبقّية لتحويلها إلى لوحة عادية.",en:"No, it is non-transferable. Reselling requires customs authorization and payment of the remaining duties and taxes to switch it to a normal plate."} },
+  { q:{fr:"Le FCR fonctionne-t-il depuis la France ?",ar:"هل يعمل نظام FCR انطلاقًا من فرنسا؟",en:"Does FCR work from France?"}, a:{fr:"Oui. Le FCR s'applique quel que soit le pays de résidence à l'étranger (France, Allemagne, Italie, Canada…), dès lors que les conditions de résidence et de devises sont remplies.",ar:"نعم. ينطبق نظام FCR مهما كان بلد الإقامة بالخارج (فرنسا، ألمانيا، إيطاليا، كندا…) ما دامت شروط الإقامة والعملة مستوفاة.",en:"Yes. FCR applies regardless of the country of residence abroad (France, Germany, Italy, Canada…), as long as the residence and currency conditions are met."} },
 ];
 
 /* ---------- Contenu éditorial (SEO, visible) ---------- */
