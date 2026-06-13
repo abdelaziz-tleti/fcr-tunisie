@@ -167,6 +167,9 @@
   .lang { margin-inline-start: auto; display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 11px; padding: 3px; gap: 2px; }
   .lang button { border: none; background: transparent; cursor: pointer; font: 600 .82rem var(--sans); color: var(--muted); padding: .35rem .7rem; border-radius: 8px; transition: all .2s var(--ease); }
   .lang button[aria-pressed="true"] { background: var(--paper); color: var(--red-deep); box-shadow: var(--shadow-sm); }
+  .menu-toggle { display: none; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--line); background: var(--paper); border-radius: 11px; cursor: pointer; color: var(--ink); box-shadow: var(--shadow-sm); padding: 0; }
+  .menu-toggle .ic { width: 22px; height: 22px; stroke-width: 2; }
+  .backdrop { display: none; }
 
   .app { max-width: 1060px; margin: 0 auto; padding: clamp(1rem,3vw,2.2rem) clamp(1rem,3vw,1.5rem); display: grid; gap: clamp(1rem,2.5vw,1.9rem); grid-template-columns: 300px 1fr; align-items: start; }
 
@@ -311,31 +314,24 @@
 
   @media (max-width: 880px) {
     .app { grid-template-columns: 1fr; padding-top: 1rem; }
-    aside { position: static; }
-    .appbar-in { padding: .5rem .85rem; gap: .55rem; }
+    .menu-toggle { display: inline-flex; }
+    .appbar-in { padding: .5rem .8rem; gap: .55rem; }
     .brand p { display: none; }
     .brand h1 { font-size: 1rem; }
     .brand .mark { width: 36px; height: 36px; }
     .lang button { padding: .3rem .5rem; font-size: .78rem; }
-    /* barre de navigation des phases : toujours accessible (collante) */
-    .panel { position: sticky; top: 52px; z-index: 30; padding: .8rem .9rem; }
-    .overall { gap: .7rem; }
-    .ring { width: 48px; height: 48px; }
-    .ring::after { width: 37px; height: 37px; }
-    nav { flex-direction: row; overflow-x: auto; gap: .45rem; padding-bottom: .3rem; scrollbar-width: none; margin-top: .7rem; }
-    nav::-webkit-scrollbar { display: none; }
-    .nav-item { flex: none; width: auto; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; padding: .5rem .6rem; min-width: 72px; min-height: 58px; }
-    .nav-item[aria-current="true"]::before { inset-inline-start: 50%; top: auto; bottom: -.3rem; transform: translateX(-50%); width: 22px; height: 4px; }
-    .nav-ic { width: 30px; height: 30px; }
-    .nav-tx { text-align: center; }
-    .nav-tx small { display: none; }
-    .reset-btn { display: none; }
-    .subnav { flex-direction: row; overflow-x: auto; gap: .4rem; padding-inline-start: 0; margin: .5rem 0 .1rem; scrollbar-width: none; }
-    .subnav::-webkit-scrollbar { display: none; }
-    .sub-item { flex: none; white-space: nowrap; }
-    .sub-item:hover { padding-inline-start: .55rem; }
+
+    /* Menu déroulant (hamburger) */
+    aside { position: fixed; top: 58px; inset-inline: 0; z-index: 46; max-height: calc(100dvh - 58px); overflow-y: auto;
+            transform: translateY(-115%); transition: transform .32s var(--ease); padding: .85rem 1rem 1.2rem; }
+    body.menu-open aside { transform: none; }
+    .panel { border-radius: 0 0 var(--r-lg) var(--r-lg); box-shadow: var(--shadow); }
+    .backdrop { display: block; position: fixed; inset: 0; z-index: 45; background: rgba(20,15,30,.45);
+                opacity: 0; pointer-events: none; transition: opacity .3s var(--ease); }
+    body.menu-open .backdrop { opacity: 1; pointer-events: auto; }
+    body.menu-open { overflow: hidden; }
+    .nav-item { padding: .7rem .6rem; }
     .view-head h2 { font-size: clamp(1.4rem, 5.5vw, 1.8rem); }
-    main { padding-top: .5rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, .view.active > *, .box svg path, .dot { animation: none !important; transition-duration: .01ms !important; }
@@ -346,6 +342,9 @@
 <body>
 <header class="appbar">
   <div class="appbar-in">
+    <button class="menu-toggle" id="burger" type="button" aria-label="Menu" aria-expanded="false">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
     <div class="brand">
       <span class="mark" aria-label="Drapeau tunisien"><svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#dc2640"/><circle cx="50" cy="50" r="30" fill="#fff"/><circle cx="47" cy="50" r="19" fill="#dc2640"/><circle cx="54" cy="50" r="15.5" fill="#fff"/><path d="M62 39 l3.4 8.4 9 0 -7.2 6 2.7 9.2 -7.9-5.8 -7.9 5.8 2.7-9.2 -7.2-6 9 0z" fill="#dc2640"/></svg></span>
       <div><h1>FCR Tunisie</h1><p id="brandSub"></p></div>
@@ -357,6 +356,7 @@
     </div>
   </div>
 </header>
+<div class="backdrop" id="backdrop"></div>
 
 <div class="app">
   <aside>
@@ -613,6 +613,13 @@ const subEl = document.getElementById("subnav");
 const mainEl = document.getElementById("main");
 const SECT = {}; DATA.forEach(s => SECT[s.key] = s);
 
+const burger = document.getElementById("burger");
+const backdrop = document.getElementById("backdrop");
+function setMenu(open) { document.body.classList.toggle("menu-open", open); burger.setAttribute("aria-expanded", open); }
+const closeMenu = () => setMenu(false);
+burger.addEventListener("click", () => setMenu(!document.body.classList.contains("menu-open")));
+backdrop.addEventListener("click", closeMenu);
+
 function build() {
   let idc = 0;
   allIds.length = 0;
@@ -623,7 +630,7 @@ function build() {
     b.className = "nav-item"; b.dataset.key = s.key;
     b.innerHTML = `<span class="nav-ic">${icon(s.icon)}</span><span class="nav-tx"><b>${T(s.short)}</b><small>${T(s.phase)}</small></span>`;
     const multi = s.groups && s.groups.length > 1;
-    b.addEventListener("click", () => show(s.key, multi ? 0 : null));
+    b.addEventListener("click", () => { show(s.key, multi ? 0 : null); if (!multi) closeMenu(); });
     navEl.appendChild(b);
 
     const v = document.createElement("section");
@@ -666,7 +673,7 @@ function show(key, groupIdx) {
       sb.className = "sub-item"; sb.type = "button";
       sb.setAttribute("aria-current", gi === (groupIdx == null ? 0 : groupIdx));
       sb.innerHTML = `<span class="sub-dot"></span><span>${T(g.title)}</span>`;
-      sb.addEventListener("click", () => show(key, gi));
+      sb.addEventListener("click", () => { show(key, gi); closeMenu(); });
       subEl.appendChild(sb);
     });
     subEl.style.display = "";
