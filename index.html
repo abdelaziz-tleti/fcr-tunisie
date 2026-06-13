@@ -242,6 +242,7 @@ const P = {
   save:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7M8 20v-6h8v6"/>',
   lock:'<rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
   info:'<circle cx="12" cy="12" r="9"/><path d="M12 11.5v4.5"/><path d="M12 8h.01"/>',
+  money:'<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/>',
 };
 const icon = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
 
@@ -269,8 +270,10 @@ const DATA = [
     sub:{fr:"Achat du véhicule et formalités avant le départ.", ar:"شراء السيارة والإجراءات قبل المغادرة."},
     groups:[
       { title:{fr:"Avant d'acheter",ar:"قبل الشراء"}, items:[
-        { t:{fr:"Vérifier l'âge du véhicule",ar:"التحقق من عمر السيارة"}, d:{fr:"≤ 5 ans (voitures) · ≤ 3 ans (utilitaires légers).",ar:"≤ 5 سنوات (سيارات) · ≤ 3 سنوات (نفعية خفيفة)."} },
-        { t:{fr:"Vérifier les conditions de séjour",ar:"التحقق من شروط الإقامة"}, d:{fr:"≥ 2 ans à l'étranger, sans dépasser 120 jours/an en Tunisie.",ar:"≥ سنتان في الخارج، دون تجاوز 120 يومًا سنويًا في تونس."} },
+        { t:{fr:"Vérifier l'éligibilité FCR",ar:"التحقق من أهلية FCR"}, d:{fr:"Tunisien, 18 ans révolus, droit non utilisé depuis 10 ans.",ar:"تونسي، 18 سنة فما فوق، لم يُستعمل الحق منذ 10 سنوات."} },
+        { t:{fr:"Vérifier l'âge du véhicule",ar:"التحقق من عمر السيارة"}, d:{fr:"≤ 5 ans (tourisme et utilitaires légers < 3,5 t), à la date d'achat/importation.",ar:"≤ 5 سنوات (سياحية ونفعية خفيفة < 3,5 طن)، في تاريخ الشراء/التوريد."} },
+        { t:{fr:"Vérifier les conditions de séjour",ar:"التحقق من شروط الإقامة"}, d:{fr:"≥ 2 ans à l'étranger, sans dépasser 183 jours/an en Tunisie.",ar:"≥ سنتان في الخارج، دون تجاوز 183 يومًا سنويًا في تونس."} },
+        { t:{fr:"Anticiper l'importation de devises",ar:"الإعداد لتوريد العملة الصعبة"}, d:{fr:"Montant équivalent aux droits/taxes, en devises ou via un compte en devises, l'année précédant l'importation.",ar:"مبلغ يعادل المعاليم والأداءات بالعملة الصعبة أو من حساب بالعملة، خلال السنة السابقة للتوريد."} },
       ]},
       { title:{fr:"Au moment de l'achat",ar:"عند الشراء"}, items:[
         { t:{fr:"Paiement du véhicule",ar:"دفع ثمن السيارة"}, d:{fr:"Conserver une preuve de paiement (virement bancaire recommandé).",ar:"الاحتفاظ بإثبات الدفع (يُنصح بالتحويل البنكي)."} },
@@ -323,12 +326,12 @@ const DATA = [
     groups:[
       { title:{fr:"Immatriculation",ar:"الترقيم"}, items:[
         { t:{fr:"Demande de carte grise tunisienne",ar:"مطلب بطاقة رمادية تونسية"}, d:{fr:"À l'ATTT, avec l'accord de la douane.",ar:"لدى ATTT، بموافقة الديوانة."} },
-        { t:{fr:"Pose de la nouvelle plaque",ar:"تركيب اللوحة الجديدة"}, d:{fr:"Série « ن ت » (RS) ou normale si taxes payées (≈ 30 %).",ar:"سلسلة «ن ت» (RS) أو عادية في حال خلاص المعاليم (≈ 30٪)."} },
+        { t:{fr:"Pose de la nouvelle plaque",ar:"تركيب اللوحة الجديدة"}, d:{fr:"Série incessible « ن ت » (RS) si exonération totale ; plaque normale si exonération partielle (25 %).",ar:"سلسلة «ن ت» (RS) غير قابلة للتفويت عند الإعفاء الكلي؛ لوحة عادية عند الإعفاء الجزئي (25٪)."} },
       ]},
       { title:{fr:"Mise en circulation",ar:"وضع في الجولان"}, items:[
         { t:{fr:"Assurance tunisienne",ar:"تأمين تونسي"}, d:{fr:"Avec le nouveau numéro d'immatriculation.",ar:"بالرقم المنجمي الجديد."} },
         { t:{fr:"Achat de la vignette",ar:"شراء الأداء على وسائل النقل"}, d:{fr:"Taxe de circulation à la Recette des Finances.",ar:"معلوم الجولان بقباضة المالية."} },
-        { t:{fr:"Procuration de conduite RS",ar:"تفويض سياقة RS"}, d:{fr:"Autorisation exceptionnelle pour la famille proche.",ar:"ترخيص استثنائي للعائلة المقرّبة."} },
+        { t:{fr:"Conduite du véhicule RS",ar:"سياقة سيارة RS"}, d:{fr:"Conjoint : conduite autorisée avec justificatif. Autres : en présence du bénéficiaire/conjoint, sinon autorisation de la douane.",ar:"القرين: السياقة مرخّصة مع ما يُثبت ذلك. الآخرون: بحضور المنتفع/القرين، وإلا فبترخيص من الديوانة."} },
       ]},
     ]},
 
@@ -340,11 +343,12 @@ const DATA = [
 ];
 
 const CONDS = [
-  { ic:"car", t:{fr:"Âge du véhicule",ar:"عمر السيارة"}, d:{fr:"Voiture particulière : moins de 5 ans. Utilitaire léger : moins de 3 ans.",ar:"سيارة خاصة: أقل من 5 سنوات. نفعية خفيفة: أقل من 3 سنوات."} },
-  { ic:"home", t:{fr:"Durée de résidence à l'étranger",ar:"مدة الإقامة بالخارج"}, d:{fr:"Au moins 2 ans de résidence continue hors de Tunisie.",ar:"سنتان على الأقل من الإقامة المتواصلة خارج تونس."} },
-  { ic:"calendar", t:{fr:"Présence en Tunisie",ar:"التواجد في تونس"}, d:{fr:"Sans dépasser 120 jours cumulés par an sur la période de résidence.",ar:"دون تجاوز 120 يومًا في السنة طيلة فترة الإقامة."} },
-  { ic:"user", t:{fr:"Bénéficiaire",ar:"المنتفع"}, d:{fr:"Le régime s'applique au titre du changement de résidence du bénéficiaire (justificatifs d'identité et de mouvements frontaliers requis).",ar:"ينطبق النظام بعنوان تغيير إقامة المنتفع (مع وثائق الهوية والحركات الحدودية)."} },
-  { ic:"coins", t:{fr:"Régime fiscal & plaque",ar:"النظام الجبائي واللوحة"}, d:{fr:"Franchise sous plaque RS « ن ت », ou immatriculation tunisienne normale si les taxes sont acquittées (≈ 30 %).",ar:"إعفاء بلوحة RS «ن ت»، أو ترقيم تونسي عادي عند خلاص المعاليم (≈ 30٪)."} },
+  { ic:"user", t:{fr:"Bénéficiaire",ar:"المنتفع"}, d:{fr:"Tunisien âgé de plus de 18 ans. Privilège accordé une fois tous les 10 ans (loi de finances 2024).",ar:"تونسي يفوق سنّه 18 عامًا. يُمنح الامتياز مرة كل 10 سنوات (قانون المالية 2024)."} },
+  { ic:"car", t:{fr:"Âge du véhicule",ar:"عمر السيارة"}, d:{fr:"≤ 5 ans (tourisme et utilitaires légers < 3,5 t), à la date d'acquisition ou d'importation.",ar:"≤ 5 سنوات (سياحية ونفعية خفيفة < 3,5 طن)، في تاريخ الاقتناء أو التوريد."} },
+  { ic:"home", t:{fr:"Durée de résidence à l'étranger",ar:"مدة الإقامة بالخارج"}, d:{fr:"Au moins 2 ans consécutifs hors de Tunisie.",ar:"سنتان متتاليتان على الأقل خارج تونس."} },
+  { ic:"calendar", t:{fr:"Présence en Tunisie",ar:"التواجد في تونس"}, d:{fr:"≤ 183 jours par an (seuil relevé par le décret de juin 2024 ; 120 j auparavant).",ar:"≤ 183 يومًا في السنة (رُفع السقف بمرسوم جوان 2024؛ كان 120 يومًا سابقًا)."} },
+  { ic:"money", t:{fr:"Importation de devises",ar:"توريد العملة الصعبة"}, d:{fr:"Importer en devises un montant équivalent aux droits et taxes (ou le débiter d'un compte en devises), dans l'année précédant l'importation.",ar:"توريد مبلغ بالعملة الصعبة يعادل المعاليم والأداءات (أو خصمه من حساب بالعملة)، خلال السنة السابقة للتوريد."} },
+  { ic:"coins", t:{fr:"Régime fiscal & plaque",ar:"النظام الجبائي واللوحة"}, d:{fr:"Exonération totale → plaque incessible « ن ت » (RS). Exonération partielle → 25 % des droits/taxes (30 % grosses cylindrées) + plaque normale cessible.",ar:"إعفاء كلي → لوحة «ن ت» (RS) غير قابلة للتفويت. إعفاء جزئي → 25٪ من المعاليم (30٪ للمحركات الكبيرة) + لوحة عادية قابلة للتفويت."} },
 ];
 const INTRO_CARDS = [
   { ic:"compass", t:{fr:"Comment l'utiliser",ar:"كيفية الاستعمال"}, d:{fr:"Parcourez les 4 phases dans l'ordre et cochez chaque étape au fur et à mesure.",ar:"تصفّح المراحل الأربع بالترتيب وأشّر على كل خطوة تباعًا."} },
@@ -365,7 +369,8 @@ const FAQS = [
   { q:{fr:"Qu'est-ce que la « Mou3ayna » ?",ar:"ما هي «المعاينة»؟"}, a:{fr:"Visite technique d'identification du véhicule dans un centre de l'ATTT. Elle débouche sur le Certificat d'identification (Annexe V), indispensable pour la douane.",ar:"فحص فني لتعريف السيارة في مركز ATTT. ينتج عنه شهادة التعريف (الملحق V) الضرورية للديوانة."} },
   { q:{fr:"Ai-je besoin d'un transitaire ?",ar:"هل أحتاج إلى وسيط ديواني؟"}, a:{fr:"Oui dans la plupart des cas : il saisit la déclaration de douane et accompagne le dépôt et la validation du dossier.",ar:"نعم في أغلب الحالات: يسجّل التصريح الديواني ويرافق إيداع الملف والمصادقة عليه."} },
   { q:{fr:"Pourquoi réimprimer le non-gage en Tunisie ?",ar:"لماذا تُعاد طباعة شهادة عدم الرهن في تونس؟"}, a:{fr:"La douane exige souvent un certificat récent, daté après votre entrée en Tunisie.",ar:"تطلب الديوانة غالبًا شهادة حديثة مؤرّخة بعد دخولك إلى تونس."} },
-  { q:{fr:"Qui peut conduire une plaque RS ?",ar:"من يمكنه قيادة سيارة بلوحة RS؟"}, a:{fr:"Par défaut, seul le bénéficiaire. Pour la famille proche, une autorisation exceptionnelle (procuration RS) est requise auprès de la douane.",ar:"مبدئيًا المنتفع فقط. أما العائلة المقرّبة فتتطلب ترخيصًا استثنائيًا (تفويض RS) من الديوانة."} },
+  { q:{fr:"Qui peut conduire un véhicule RS ?",ar:"من يمكنه قيادة سيارة بلوحة RS؟"}, a:{fr:"Le bénéficiaire et son conjoint (sur présentation d'un justificatif de mariage) conduisent sans autorisation. Toute autre personne peut conduire uniquement en présence du bénéficiaire ou du conjoint à bord ; sinon une autorisation de la douane est nécessaire.",ar:"المنتفع وقرينه (مع تقديم ما يُثبت الزواج) يسوقان دون ترخيص. أما أي شخص آخر فلا يسوق إلا بحضور المنتفع أو القرين في السيارة؛ وإلا لزم ترخيص من الديوانة."} },
+  { q:{fr:"Combien de fois peut-on bénéficier du FCR ?",ar:"كم مرة يمكن الانتفاع بنظام FCR؟"}, a:{fr:"Depuis la loi de finances 2024, le privilège est accordé une fois tous les 10 ans (au lieu d'une seule fois auparavant).",ar:"منذ قانون المالية 2024، يُمنح الامتياز مرة كل 10 سنوات (بدل مرة واحدة سابقًا)."} },
   { q:{fr:"Le « Modèle 6.3.41 » ?",ar:"ما هو «النموذج 6.3.41»؟"}, a:{fr:"C'est la Demande de privilège fiscal à signer pour bénéficier de la franchise dans le cadre du changement de résidence.",ar:"هو مطلب الامتياز الجبائي الذي يُمضى للانتفاع بالإعفاء في إطار تغيير مكان الإقامة."} },
 ];
 
