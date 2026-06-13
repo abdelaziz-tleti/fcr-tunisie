@@ -5,18 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FCR Tunisie — Checklist importation véhicule</title>
 <meta name="description" content="Checklist claire pour importer votre véhicule en Tunisie sous le régime FCR (changement de résidence) — Douane tunisienne & ATTT." />
-<meta name="theme-color" content="#6f8f76" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%236f8f76'/><circle cx='50' cy='50' r='26' fill='%23f7f8f4'/><circle cx='56' cy='50' r='21' fill='%236f8f76'/><path d='M60 38 l4 10 10 0 -8 7 3 11 -9-7 -9 7 3-11 -8-7 10 0z' fill='%23f7f8f4'/></svg>" />
+<meta name="theme-color" content="#d62631" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23d62631'/><circle cx='50' cy='50' r='26' fill='%23ffffff'/><circle cx='56' cy='50' r='21' fill='%23d62631'/><path d='M60 38 l4 10 10 0 -8 7 3 11 -9-7 -9 7 3-11 -8-7 10 0z' fill='%23ffffff'/></svg>" />
 <style>
   :root {
-    --sage: #6f8f76;
-    --sage-dark: #4f6c57;
-    --sage-soft: #eef3ec;
-    --sage-line: #dde6da;
-    --ink: #2a2f2b;
-    --muted: #6c756d;
+    --sage: #d62631;
+    --sage-dark: #a4161f;
+    --sage-soft: #fdeded;
+    --sage-line: #f0dadc;
+    --green: #16a34a;
+    --ink: #2a2226;
+    --muted: #76696c;
     --paper: #ffffff;
-    --bg: #f5f7f2;
+    --bg: #faf6f6;
     --gold: #c2a36b;
     --radius: 18px;
     --shadow: 0 1px 2px rgba(40,50,40,.04), 0 14px 40px -20px rgba(40,60,45,.35);
@@ -31,8 +32,8 @@
   body {
     margin: 0; color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased;
     background:
-      radial-gradient(900px 500px at 12% -10%, #eaf0e6, transparent),
-      radial-gradient(800px 600px at 100% 0%, #eef2ed, transparent),
+      radial-gradient(900px 500px at 12% -10%, #fde3e4, transparent),
+      radial-gradient(800px 600px at 100% 0%, #fdeceb, transparent),
       var(--bg);
     min-height: 100vh;
   }
@@ -69,7 +70,7 @@
   .nav-tx b { display: block; font-size: .88rem; font-weight: 600; }
   .nav-tx small { color: var(--muted); font-size: .74rem; }
   .nav-count { font-size: .72rem; font-weight: 700; color: var(--sage-dark); background: var(--sage-soft); border-radius: 999px; padding: .12rem .5rem; }
-  .nav-item.done .nav-count { background: var(--sage); color: #fff; }
+  .nav-item.done .nav-count { background: var(--green); color: #fff; }
 
   .reset-btn { margin-top: .6rem; width: 100%; border: 1px solid var(--sage-line); background: var(--bg); color: var(--muted); border-radius: 11px; padding: .55rem; font-size: .8rem; font-weight: 600; cursor: pointer; transition: all .2s var(--ease); }
   .reset-btn:hover { color: var(--sage-dark); border-color: var(--sage); background: #fff; }
@@ -96,7 +97,7 @@
   .task .label { flex: 1; }
   .task .label b { font-weight: 650; }
   .task .label small { display: block; color: var(--muted); font-size: .83rem; margin-top: .1rem; }
-  .task input:checked + .box { background: var(--sage); border-color: var(--sage); }
+  .task input:checked + .box { background: var(--green); border-color: var(--green); }
   .task input:checked + .box svg { opacity: 1; transform: scale(1); }
   .task input:checked ~ .label { color: var(--muted); }
   .task input:checked ~ .label b { text-decoration: line-through; text-decoration-color: rgba(0,0,0,.22); }
@@ -180,7 +181,7 @@ const UPDATED = "13 juin 2026";
 
 const DATA = [
   { key:"intro", short:"Accueil", icon:"🏠", phase:"Présentation", title:"Importer votre véhicule en Tunisie, sereinement", sub:"Le guide pas à pas du régime FCR (changement de résidence).", custom:"intro" },
-  { key:"p1", short:"France", icon:"🇫🇷", phase:"Phase 1", title:"En France", sub:"Achat du véhicule et formalités avant le départ.",
+  { key:"p1", short:"Étranger", icon:"🌍", phase:"Phase 1", title:"Dans le pays de résidence", sub:"Achat du véhicule et formalités avant le départ.",
     groups:[
       { title:"Avant d'acheter", items:[
         { t:"Vérifier l'âge du véhicule", d:"≤ 5 ans (voitures) · ≤ 3 ans (utilitaires légers)." },
@@ -190,15 +191,15 @@ const DATA = [
         { t:"Facture d'achat originale", d:"Original + copie." },
         { t:"Certificat de cession", d:"Rempli et signé par le vendeur et l'acheteur." },
         { t:"Déclaration d'achat", d:"Si achat via un professionnel." },
-        { t:"Carte grise française originale", d:"Barrée, datée, signée — mention « Vendu le… »." },
+        { t:"Carte grise originale (pays d'origine)", d:"Barrée, datée, signée — mention « Vendu le… »." },
         { t:"Certificat de non-gage", d:"Situation administrative à imprimer." },
       ]},
-      { title:"Consulat de Tunisie en France", items:[
+      { title:"Consulat de Tunisie (pays de résidence)", items:[
         { t:"Légalisation de signature", d:"Sur le certificat de cession." },
         { t:"Fiche des mouvements frontaliers", d:"Si passeport < 2 ans ou tampons illisibles." },
       ]},
     ]},
-  { key:"p2", short:"Bateau", icon:"🚢", phase:"Phase 2", title:"La traversée (CTN)", sub:"Formalités à bord du navire.",
+  { key:"p2", short:"Bateau", icon:"🚢", phase:"Phase 2", title:"La traversée en bateau", sub:"Formalités à bord du navire.",
     tip:{ type:"info", text:"Ces formalités se font à bord, auprès du bureau des douanes du navire." },
     groups:[
       { title:"À bord du bateau", items:[
@@ -212,7 +213,7 @@ const DATA = [
         { t:"Photocopie des 32 pages du passeport", d:"Bénéficiaire." },
         { t:"Photocopie de la CIN", d:"Bénéficiaire + conjoint." },
         { t:"Extrait de naissance tunisien", d:"Moins de 3 mois." },
-        { t:"Certificat de non-gage récent", d:"Réimprimé après la date d'entrée en Tunisie." },
+        { t:"Certificat de non-gage récent", d:"Du pays d'origine, réimprimé après la date d'entrée en Tunisie." },
       ]},
       { title:"Inspection ATTT", items:[
         { t:"Passage de la Mou3ayna (معاينة)", d:"Centre de visite technique de l'ATTT." },
@@ -330,15 +331,15 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 });
 
 function introHTML() {
-  return `<p class="lead">Vous rapatriez votre voiture en Tunisie dans le cadre d'un <b>changement de résidence</b> ? Le <b>régime FCR</b> permet de l'importer en franchise (ou à taxes réduites). Ce guide réunit, étape par étape, <b>tous les documents et démarches</b> — de l'achat en France jusqu'à l'immatriculation finale.</p>
+  return `<p class="lead">Vous rapatriez votre voiture en Tunisie dans le cadre d'un <b>changement de résidence</b> ? Le <b>régime FCR</b> permet de l'importer en franchise (ou à taxes réduites). Ce guide réunit, étape par étape, <b>tous les documents et démarches</b> — de l'achat à l'étranger jusqu'à l'immatriculation finale.</p>
   <div class="info-grid">
     <div class="info-card"><h4>🧭 Comment l'utiliser</h4><p>Parcourez les 4 phases dans l'ordre et cochez chaque étape au fur et à mesure.</p></div>
     <div class="info-card"><h4>💾 Sauvegarde auto</h4><p>Votre progression est enregistrée sur cet appareil — rien à créer, aucun compte.</p></div>
     <div class="info-card"><h4>🔒 100 % privé</h4><p>Aucune donnée n'est envoyée sur internet. Tout reste dans votre navigateur.</p></div>
   </div>
   <div class="steps">
-    <div class="step"><span class="n">1</span><b>En France</b><small>Achat & papiers</small></div>
-    <div class="step"><span class="n">2</span><b>Le bateau</b><small>Traversée CTN</small></div>
+    <div class="step"><span class="n">1</span><b>À l'étranger</b><small>Achat & papiers</small></div>
+    <div class="step"><span class="n">2</span><b>Le bateau</b><small>La traversée</small></div>
     <div class="step"><span class="n">3</span><b>Douane</b><small>Inspection ATTT</small></div>
     <div class="step"><span class="n">4</span><b>Immatriculation</b><small>Mise en circulation</small></div>
   </div>
