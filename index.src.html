@@ -311,6 +311,48 @@
   .contact-btn .ic { width: 18px; height: 18px; }
   .contact-mail { margin: .9rem 0 0; font-size: .85rem; color: var(--muted); }
 
+  /* ---------- Bascule desktop / mobile ---------- */
+  .desktop-only { display: none; }
+  .sidebar { display: none; }
+
+  /* Sidebar (desktop) */
+  .sidebar .panel { background: rgba(255,255,255,.62); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border: 1px solid rgba(255,255,255,.7); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 1.15rem; }
+  .sidebar .overall { display: flex; align-items: center; gap: 1rem; }
+  .sidebar .overall strong { display: block; font-family: var(--display); font-weight: 600; font-size: .96rem; }
+  .sidebar .overall small { color: var(--muted); font-size: .8rem; }
+  #deskNav { display: flex; flex-direction: column; gap: .12rem; margin-top: .8rem; }
+  .nav-item { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: start; border: none; background: transparent; cursor: pointer; color: var(--ink); padding: .55rem .55rem; border-radius: 12px; font: inherit; position: relative; transition: background .2s var(--ease); }
+  .nav-item:hover { background: var(--red-soft); }
+  .nav-item[aria-current="true"] { background: linear-gradient(100deg, var(--red-soft), transparent); }
+  .nav-item[aria-current="true"]::before { content:""; position: absolute; inset-inline-start: -.45rem; top: 50%; transform: translateY(-50%); width: 4px; height: 22px; border-radius: 4px; background: var(--red); }
+  .nav-ic { width: 33px; height: 33px; flex: none; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.75); color: var(--red-deep); box-shadow: var(--shadow-sm); transition: transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease); }
+  .nav-ic .ic { width: 18px; height: 18px; }
+  .nav-item[aria-current="true"] .nav-ic { background: linear-gradient(135deg, var(--red), var(--red-deep)); color: #fff; box-shadow: 0 8px 18px -7px rgba(220,38,64,.55); }
+  .nav-item:hover .nav-ic { transform: scale(1.08); }
+  .nav-tx { flex: 1; min-width: 0; }
+  .nav-tx b { display: block; font-size: .92rem; font-weight: 650; }
+  .nav-tx small { color: var(--muted); font-size: .74rem; }
+  .nav-count { font-size: .7rem; font-weight: 700; color: var(--red-deep); background: var(--red-soft); border-radius: 999px; padding: .12rem .48rem; }
+  .nav-item.done .nav-count { background: var(--green); color: #fff; }
+  .desk-sub { display: flex; flex-direction: column; gap: 1px; margin: .1rem 0 .4rem; padding-inline-start: 2.6rem; animation: rise .25s var(--ease); }
+  .desk-subitem { display: flex; align-items: center; gap: .5rem; border: none; background: transparent; cursor: pointer; text-align: start; font: 600 .8rem var(--sans); color: var(--muted); padding: .35rem .5rem; border-radius: 9px; transition: all .15s var(--ease); }
+  .desk-subitem:hover { background: var(--red-soft); color: var(--red-deep); }
+  .desk-subitem[aria-current="true"] { background: var(--red); color: #fff; }
+  .desk-subitem[aria-current="true"] .sub-dot { background: #fff; opacity: 1; }
+  .sub-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; opacity: .55; }
+  .sidebar .reset-btn { margin-top: .8rem; width: 100%; }
+
+  @media (min-width: 861px) {
+    .mobile-only { display: none !important; }
+    .desktop-only { display: block; }
+    .shell { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 290px 1fr; gap: 1.7rem; align-items: start; padding: 1.6rem clamp(1rem,3vw,1.6rem) 2.5rem; }
+    .sidebar { display: block; position: sticky; top: 76px; min-width: 0; }
+    .app { max-width: none; margin: 0; padding: 0; min-width: 0; }
+    .home-progress { display: none; }
+    .appbar-in { max-width: 1100px; }
+    .view-head h2 { font-size: clamp(1.7rem, 1rem + 1.4vw, 2.3rem); }
+  }
+
   @media (max-width: 560px) {
     .brand p { display: none; }
     .brand h1 { font-size: 1rem; }
@@ -338,14 +380,26 @@
       <button data-l="ar" type="button">العربية</button>
     </div>
   </div>
-  <div class="progressbar"><span class="progressbar-fill" id="pbarFill"></span></div>
-  <div class="topbar" id="topbar">
+  <div class="progressbar mobile-only"><span class="progressbar-fill" id="pbarFill"></span></div>
+  <div class="topbar mobile-only" id="topbar">
     <div class="seg" id="phasebar"></div>
     <div class="chips" id="groupbar"></div>
   </div>
 </header>
 
-<main class="app" id="main"></main>
+<div class="shell">
+  <aside class="sidebar desktop-only">
+    <div class="panel">
+      <div class="overall">
+        <div class="ring" id="deskRing"><span id="deskRingPct">0%</span></div>
+        <div><strong id="deskProgLabel"></strong><small id="deskProgCount"></small></div>
+      </div>
+      <nav id="deskNav" aria-label="Navigation"></nav>
+      <button class="reset-btn" id="deskReset" type="button"></button>
+    </div>
+  </aside>
+  <main class="app" id="main"></main>
+</div>
 
   <!-- Contenu statique pour moteurs de recherche et modèles IA (sans JavaScript). Les visiteurs voient l'application interactive ci-dessus. -->
   <noscript>
@@ -384,7 +438,7 @@
     </article>
   </noscript>
 
-<nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+<nav class="tabbar mobile-only" id="tabbar" aria-label="Sections"></nav>
 
 <script>
 const UPDATED = "13 juin 2026";
@@ -590,8 +644,10 @@ const tabbarEl = document.getElementById("tabbar");
 const phasebarEl = document.getElementById("phasebar");
 const groupbarEl = document.getElementById("groupbar");
 const topbarEl = document.getElementById("topbar");
+const deskNavEl = document.getElementById("deskNav");
 const SECT = {}; DATA.forEach(s => SECT[s.key] = s);
 const PHASES = DATA.filter(s => /^p[1-9]$/.test(s.key));
+const isPhase = k => /^p[1-9]$/.test(k);
 const TABS = [
   { id:"home",    sec:"intro",   icon:"home",  label:{fr:"Accueil",ar:"الرئيسية",en:"Home"} },
   { id:"steps",                  icon:"list",  label:{fr:"Étapes",ar:"الخطوات",en:"Steps"} },
@@ -599,13 +655,13 @@ const TABS = [
   { id:"faq",     sec:"faq",     icon:"help",  label:{fr:"FAQ",ar:"الأسئلة",en:"FAQ"} },
   { id:"contact", sec:"contact", icon:"mail",  label:{fr:"Contact",ar:"اتصال",en:"Contact"} },
 ];
-let activeTab = "home", activePhase = "p1";
+let activeKey = "intro", activePhase = "p1";
 const activeGroup = {};
 
 function build() {
   let idc = 0;
   allIds.length = 0;
-  mainEl.innerHTML = ""; tabbarEl.innerHTML = ""; phasebarEl.innerHTML = "";
+  mainEl.innerHTML = ""; tabbarEl.innerHTML = ""; phasebarEl.innerHTML = ""; deskNavEl.innerHTML = "";
   DATA.forEach(s => {
     phaseIds[s.key] = [];
     const v = document.createElement("section");
@@ -628,33 +684,86 @@ function build() {
     }
     v.innerHTML = h;
     mainEl.appendChild(v);
+
+    // Sidebar (desktop) : chaque section + sous-groupes imbriqués
+    const ni = document.createElement("button");
+    ni.className = "nav-item"; ni.type = "button"; ni.dataset.key = s.key;
+    ni.innerHTML = `<span class="nav-ic">${icon(s.icon)}</span><span class="nav-tx"><b>${T(s.short)}</b><small>${T(s.phase)}</small></span>`;
+    ni.addEventListener("click", () => go(s.key));
+    deskNavEl.appendChild(ni);
+    if (s.groups && s.groups.length > 1) {
+      const sub = document.createElement("div");
+      sub.className = "desk-sub"; sub.dataset.for = s.key;
+      s.groups.forEach((g, gi) => {
+        const si = document.createElement("button");
+        si.className = "desk-subitem"; si.type = "button"; si.dataset.key = s.key; si.dataset.g = gi;
+        si.innerHTML = `<span class="sub-dot"></span><span>${T(g.title)}</span>`;
+        si.addEventListener("click", () => go(s.key, gi));
+        sub.appendChild(si);
+      });
+      deskNavEl.appendChild(sub);
+    }
   });
-  // Barre d'onglets (bas)
+  // Onglets (mobile, bas)
   TABS.forEach(t => {
     const b = document.createElement("button");
     b.className = "tab"; b.type = "button"; b.dataset.tab = t.id;
     b.innerHTML = `${icon(t.icon)}<span>${T(t.label)}</span>`;
-    b.addEventListener("click", () => selectTab(t.id));
+    b.addEventListener("click", () => go(t.sec || activePhase));
     tabbarEl.appendChild(b);
   });
-  // Sélecteur de phases (segmenté)
+  // Sélecteur de phases (mobile, segmenté)
   PHASES.forEach(p => {
     const b = document.createElement("button");
     b.className = "seg-btn"; b.type = "button"; b.dataset.key = p.key;
     b.innerHTML = `<span>${T(p.short)}</span>`;
-    b.addEventListener("click", () => selectPhase(p.key));
+    b.addEventListener("click", () => go(p.key));
     phasebarEl.appendChild(b);
   });
-  selectTab(activeTab);
+  go(activeKey);
   update();
 }
 
-function showSection(key, groupIdx) {
+// Cœur unique : affiche une section (+ groupe) et synchronise les 2 navigations
+function go(key, gi) {
+  const sect = SECT[key];
+  const multi = sect.groups && sect.groups.length > 1;
+  if (multi) { if (gi == null) gi = activeGroup[key] != null ? activeGroup[key] : 0; activeGroup[key] = gi; }
+  activeKey = key;
+  if (isPhase(key)) activePhase = key;
+  showSection(key, multi ? gi : null);
+  syncDesktop(key, multi ? gi : null);
+  syncMobile(key, multi ? gi : null);
+  update();
+}
+
+function showSection(key, gi) {
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.dataset.key === key));
   const view = document.querySelector(`.view[data-key="${key}"]`);
-  if (view) view.querySelectorAll(".group").forEach((g, i) => g.style.display = (groupIdx == null || i === groupIdx) ? "" : "none");
+  if (view) view.querySelectorAll(".group").forEach((g, i) => g.style.display = (gi == null || i === gi) ? "" : "none");
   window.scrollTo({ top: 0, behavior: "smooth" });
+  mainEl.scrollTop = 0;
 }
+
+function syncDesktop(key, gi) {
+  deskNavEl.querySelectorAll(".nav-item").forEach(b => b.setAttribute("aria-current", b.dataset.key === key));
+  deskNavEl.querySelectorAll(".desk-sub").forEach(s => {
+    const on = s.dataset.for === key;
+    s.style.display = on ? "" : "none";
+    if (on) s.querySelectorAll(".desk-subitem").forEach(si => si.setAttribute("aria-current", Number(si.dataset.g) === gi));
+  });
+}
+
+function syncMobile(key, gi) {
+  const tabId = isPhase(key) ? "steps" : (TABS.find(t => t.sec === key) || {}).id || "home";
+  [...tabbarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.tab === tabId));
+  topbarEl.style.display = isPhase(key) ? "" : "none";
+  if (isPhase(key)) {
+    [...phasebarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.key === key));
+    renderGroupbar(key, gi == null ? 0 : gi);
+  }
+}
+
 function renderGroupbar(pKey, gi) {
   const sect = SECT[pKey]; groupbarEl.innerHTML = "";
   if (sect && sect.groups && sect.groups.length > 1) {
@@ -663,48 +772,30 @@ function renderGroupbar(pKey, gi) {
       c.className = "chip"; c.type = "button";
       c.setAttribute("aria-current", i === gi);
       c.textContent = T(g.title);
-      c.addEventListener("click", () => selectGroup(i));
+      c.addEventListener("click", () => go(pKey, i));
       groupbarEl.appendChild(c);
     });
     groupbarEl.style.display = "";
   } else groupbarEl.style.display = "none";
 }
-function selectGroup(gi) {
-  activeGroup[activePhase] = gi;
-  [...groupbarEl.children].forEach((b, i) => b.setAttribute("aria-current", i === gi));
-  showSection(activePhase, gi);
-}
-function selectPhase(pKey) {
-  activePhase = pKey;
-  const gi = activeGroup[pKey] != null ? activeGroup[pKey] : 0; activeGroup[pKey] = gi;
-  [...phasebarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.key === pKey));
-  renderGroupbar(pKey, gi);
-  showSection(pKey, SECT[pKey].groups.length > 1 ? gi : null);
-}
-function selectTab(id) {
-  activeTab = id;
-  [...tabbarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.tab === id));
-  const isSteps = id === "steps";
-  topbarEl.style.display = isSteps ? "" : "none";
-  if (isSteps) selectPhase(activePhase);
-  else showSection(TABS.find(t => t.id === id).sec, null);
-}
 
 function update() {
   const n = allIds.filter(id => done[id]).length, total = allIds.length, pct = total ? Math.round(n/total*100) : 0;
+  const label = T(pct===0?UI.s_start:pct===100?UI.s_done:pct<50?UI.s_mid:UI.s_near);
+  const count = `${n} / ${total} ${T(UI.steps)}`;
   const set = (id, fn) => { const el = document.getElementById(id); if (el) fn(el); };
   set("pbarFill", el => el.style.width = pct + "%");
-  set("ring", el => el.style.setProperty("--p", pct));
-  set("ringPct", el => el.textContent = pct + "%");
-  set("progLabel", el => el.textContent = T(pct===0?UI.s_start:pct===100?UI.s_done:pct<50?UI.s_mid:UI.s_near));
-  set("progCount", el => el.textContent = `${n} / ${total} ${T(UI.steps)}`);
-  PHASES.forEach(s => {
-    const btn = phasebarEl.querySelector(`[data-key="${s.key}"]`); if (!btn) return;
-    const ids = phaseIds[s.key], c = ids.filter(id => done[id]).length;
-    let badge = btn.querySelector(".seg-count");
-    if (!badge) { badge = document.createElement("span"); badge.className = "seg-count"; btn.appendChild(badge); }
-    badge.textContent = ids.length ? `${c}/${ids.length}` : "";
-    btn.classList.toggle("done", ids.length > 0 && c === ids.length);
+  ["ring","deskRing"].forEach(id => set(id, el => el.style.setProperty("--p", pct)));
+  ["ringPct","deskRingPct"].forEach(id => set(id, el => el.textContent = pct + "%"));
+  ["progLabel","deskProgLabel"].forEach(id => set(id, el => el.textContent = label));
+  ["progCount","deskProgCount"].forEach(id => set(id, el => el.textContent = count));
+  DATA.forEach(s => {
+    const ids = phaseIds[s.key]; if (!ids.length) return;
+    const c = ids.filter(id => done[id]).length;
+    const ni = deskNavEl.querySelector(`.nav-item[data-key="${s.key}"]`);
+    if (ni) { let bd = ni.querySelector(".nav-count"); if (!bd) { bd = document.createElement("span"); bd.className = "nav-count"; ni.appendChild(bd); } bd.textContent = `${c}/${ids.length}`; ni.classList.toggle("done", c === ids.length); }
+    const sb = phasebarEl.querySelector(`[data-key="${s.key}"]`);
+    if (sb) { let bd = sb.querySelector(".seg-count"); if (!bd) { bd = document.createElement("span"); bd.className = "seg-count"; sb.appendChild(bd); } bd.textContent = `${c}/${ids.length}`; sb.classList.toggle("done", c === ids.length); }
   });
 }
 
@@ -715,7 +806,7 @@ mainEl.addEventListener("change", e => {
   update();
 });
 
-mainEl.addEventListener("click", e => {
+document.body.addEventListener("click", e => {
   if (!e.target.closest(".reset-btn")) return;
   if (!confirm(T(UI.confirm))) return;
   done = {}; localStorage.removeItem(KEY);
@@ -758,6 +849,7 @@ function applyLang(l) {
   document.documentElement.lang = l;
   document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
   document.getElementById("brandSub").textContent = T(UI.subtitle);
+  document.getElementById("deskReset").textContent = T(UI.reset);
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === l));
   build();
 }
