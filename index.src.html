@@ -353,6 +353,15 @@
     .view-head h2 { font-size: clamp(1.7rem, 1rem + 1.4vw, 2.3rem); }
   }
 
+  .chips:empty { display: none; }
+  @media (max-width: 860px) {
+    .topbar { padding-bottom: .5rem; }
+    .seg { overflow: visible; gap: .2rem; }
+    .seg-btn { flex: 1 1 0; min-width: 0; flex-direction: column; gap: 2px; padding: .45rem .25rem; font-size: .78rem; }
+    .seg-btn > span:first-child { overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .seg-count { font-size: .62rem; padding: .03rem .34rem; }
+  }
+
   @media (max-width: 560px) {
     .brand p { display: none; }
     .brand h1 { font-size: 1rem; }
@@ -655,8 +664,9 @@ const TABS = [
   { id:"faq",     sec:"faq",     icon:"help",  label:{fr:"FAQ",ar:"الأسئلة",en:"FAQ"} },
   { id:"contact", sec:"contact", icon:"mail",  label:{fr:"Contact",ar:"اتصال",en:"Contact"} },
 ];
-let activeKey = "intro", activePhase = "p1";
+let activeKey = "intro", activePhase = "p1", activeGi = null;
 const activeGroup = {};
+const mqDesktop = window.matchMedia("(min-width: 861px)");
 
 function build() {
   let idc = 0;
@@ -738,11 +748,17 @@ function go(key, gi) {
 }
 
 function showSection(key, gi) {
+  activeGi = gi;
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.dataset.key === key));
-  const view = document.querySelector(`.view[data-key="${key}"]`);
-  if (view) view.querySelectorAll(".group").forEach((g, i) => g.style.display = (gi == null || i === gi) ? "" : "none");
+  filterGroups(key, gi);
   window.scrollTo({ top: 0, behavior: "smooth" });
-  mainEl.scrollTop = 0;
+}
+// Desktop : filtre sur le groupe choisi. Mobile : affiche tous les groupes de la phase (scroll).
+function filterGroups(key, gi) {
+  const view = document.querySelector(`.view[data-key="${key}"]`);
+  if (!view) return;
+  const showAll = !mqDesktop.matches || gi == null;
+  view.querySelectorAll(".group").forEach((g, i) => g.style.display = (showAll || i === gi) ? "" : "none");
 }
 
 function syncDesktop(key, gi) {
@@ -758,11 +774,9 @@ function syncMobile(key, gi) {
   const tabId = isPhase(key) ? "steps" : (TABS.find(t => t.sec === key) || {}).id || "home";
   [...tabbarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.tab === tabId));
   topbarEl.style.display = isPhase(key) ? "" : "none";
-  if (isPhase(key)) {
-    [...phasebarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.key === key));
-    renderGroupbar(key, gi == null ? 0 : gi);
-  }
+  if (isPhase(key)) [...phasebarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.key === key));
 }
+mqDesktop.addEventListener("change", () => filterGroups(activeKey, activeGi));
 
 function renderGroupbar(pKey, gi) {
   const sect = SECT[pKey]; groupbarEl.innerHTML = "";
