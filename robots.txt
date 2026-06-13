@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abdelaziz-tleti.github.io/fcr-tunisie/sitemap.xml
