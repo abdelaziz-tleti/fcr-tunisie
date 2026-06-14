@@ -302,6 +302,28 @@
   .article .src { font-size: .86rem; color: var(--muted); margin-top: 1rem; }
   .article .src a { color: var(--red-deep); font-weight: 600; text-decoration: none; }
   .article .src a:hover { text-decoration: underline; }
+  /* Accueil réorganisé */
+  .cta { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, var(--red), var(--red-deep)); color: #fff; font: 700 1rem var(--sans); border: none; cursor: pointer; padding: .85rem 1.5rem; border-radius: 14px; box-shadow: 0 12px 24px -10px rgba(220,38,64,.6); transition: transform .2s var(--ease), box-shadow .2s var(--ease); margin-bottom: 2rem; }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -10px rgba(220,38,64,.7); }
+  .cta span { transition: transform .2s var(--ease); }
+  .cta:hover span { transform: translateX(4px); }
+  html[dir="rtl"] .cta span, html[dir="rtl"] .jchev { display: inline-block; transform: scaleX(-1); }
+  .home-h { font-family: var(--display); font-weight: 700; font-size: 1.12rem; letter-spacing: -.01em; margin: 0 0 .8rem; }
+  .journey { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 2rem; }
+  .jstep { display: flex; align-items: center; gap: .9rem; width: 100%; text-align: start; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-sm); padding: .85rem 1rem; cursor: pointer; transition: transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease); }
+  .jstep:hover { transform: translateX(4px); border-color: var(--red); box-shadow: var(--shadow); }
+  html[dir="rtl"] .jstep:hover { transform: translateX(-4px); }
+  .jn { flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--red-soft); color: var(--red-deep); font: 800 1.05rem var(--display); display: grid; place-items: center; }
+  .jtx { flex: 1; min-width: 0; }
+  .jtx b { display: block; font-size: .96rem; font-weight: 650; }
+  .jtx small { color: var(--muted); font-size: .82rem; }
+  .jchev { color: var(--red); font-size: 1.5rem; font-weight: 700; line-height: 1; }
+  details.more { margin-top: 1.4rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  details.more > summary { display: flex; align-items: center; gap: .5rem; cursor: pointer; list-style: none; font: 650 .95rem var(--sans); color: var(--red-deep); padding: .35rem 0; }
+  details.more > summary::-webkit-details-marker { display: none; }
+  details.more > summary .ic { width: 18px; height: 18px; }
+  .more .article { margin-top: .4rem; border-top: none; padding-top: 0; }
+  .more .article h3:first-child { margin-top: 0; }
   .contact-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); padding: 1.6rem 1.4rem; text-align: center; max-width: 460px; }
   .contact-card .ic-wrap { width: 52px; height: 52px; border-radius: 14px; background: var(--red-soft); color: var(--red-deep); display: grid; place-items: center; margin: 0 auto .9rem; }
   .contact-card .ic-wrap .ic { width: 26px; height: 26px; }
@@ -492,6 +514,9 @@ const UI = {
   updated:{fr:"Mise à jour", ar:"آخر تحديث", en:"Updated"},
   s_start:{fr:"Démarrons", ar:"لنبدأ", en:"Let's start"}, s_done:{fr:"Terminé 🎉", ar:"اكتمل 🎉", en:"Done 🎉"},
   s_mid:{fr:"En cours 💪", ar:"قيد التقدّم 💪", en:"In progress 💪"}, s_near:{fr:"Bientôt fini 🏁", ar:"اقتربت 🏁", en:"Almost there 🏁"},
+  cta:{fr:"Voir les étapes", ar:"عرض الخطوات", en:"See the steps"},
+  more:{fr:"En savoir plus sur le régime FCR", ar:"المزيد عن نظام FCR", en:"Learn more about the FCR scheme"},
+  journey:{fr:"Les 4 phases", ar:"المراحل الأربع", en:"The 4 phases"},
 };
 
 /* ---------- Données bilingues ---------- */
@@ -596,9 +621,9 @@ const STEPS = [
   { n:3, t:{fr:"Douane",ar:"الديوانة",en:"Customs"}, s:{fr:"Inspection ATTT",ar:"المعاينة",en:"ATTT inspection"} },
   { n:4, t:{fr:"Immatriculation",ar:"الترقيم",en:"Registration"}, s:{fr:"Mise en circulation",ar:"الجولان",en:"On the road"} },
 ];
-const LEAD = {fr:"Vous rapatriez votre voiture en Tunisie dans le cadre d'un <b>changement de résidence</b> ? Le <b>régime FCR</b> permet de l'importer en franchise (ou à taxes réduites). Ce guide réunit, étape par étape, <b>tous les documents et démarches</b> — de l'achat à l'étranger jusqu'à l'immatriculation finale.",
-  ar:"هل تنقل سيارتك إلى تونس في إطار <b>تغيير مكان الإقامة</b>؟ يتيح <b>نظام FCR</b> استيرادها بإعفاء (أو بمعاليم مخفّضة). يجمع هذا الدليل، خطوة بخطوة، <b>كل الوثائق والإجراءات</b> — من الشراء بالخارج إلى الترقيم النهائي.",
-  en:"Bringing your car to Tunisia as part of a <b>change of residence</b>? The <b>FCR scheme</b> lets you import it duty-free (or at reduced taxes). This guide gathers, step by step, <b>all the documents and procedures</b> — from buying abroad to final registration."};
+const LEAD = {fr:"Votre checklist gratuite pour importer une voiture en Tunisie sous le <b>régime FCR</b> (changement de résidence) — étape par étape.",
+  ar:"قائمتك المجانية لاستيراد سيارة إلى تونس عبر <b>نظام FCR</b> (تغيير مكان الإقامة) — خطوة بخطوة.",
+  en:"Your free checklist to import a car into Tunisia under the <b>FCR scheme</b> (change of residence) — step by step."};
 const DISCLAIMER = {fr:"⚠️ <b>Ce site n'est pas officiel.</b> Il a pour seul but d'<b>aider les gens</b> à préparer leur dossier FCR, gratuitement. Les exigences peuvent évoluer : vérifiez toujours auprès de la <b>Douane tunisienne</b>, de l'<b>ATTT</b> et du <b>Consulat de Tunisie</b> dont vous dépendez. Aucune donnée n'est envoyée — votre progression reste sur votre appareil.",
   ar:"⚠️ <b>هذا الموقع غير رسمي.</b> هدفه الوحيد هو <b>مساعدة الناس</b> على تحضير ملف FCR مجانًا. قد تتغيّر المتطلبات: تحقّق دائمًا لدى <b>الديوانة التونسية</b> و<b>ATTT</b> و<b>القنصلية التونسية</b> المعنية. لا تُرسل أي بيانات — يبقى تقدّمك على جهازك.",
   en:"⚠️ <b>This site is not official.</b> Its only purpose is to <b>help people</b> prepare their FCR file, for free. Requirements may change: always check with the <b>Tunisian Customs</b>, the <b>ATTT</b> and the <b>Tunisian Consulate</b> you depend on. No data is sent — your progress stays on your device."};
@@ -819,6 +844,11 @@ document.body.addEventListener("click", e => {
   update();
 });
 
+mainEl.addEventListener("click", e => {
+  const g = e.target.closest("[data-goto]"); if (!g) return;
+  go(g.dataset.goto);
+});
+
 function introHTML() {
   return `<div class="home-progress">
     <div class="ring" id="ring"><span id="ringPct">0%</span></div>
@@ -826,11 +856,19 @@ function introHTML() {
     <button class="reset-btn" type="button">${T(UI.reset)}</button>
   </div>
   <p class="lead">${T(LEAD)}</p>
+  <button class="cta" data-goto="p1">${T(UI.cta)} <span aria-hidden="true">→</span></button>
+
+  <h3 class="home-h">${T(UI.journey)}</h3>
+  <div class="journey">${STEPS.map((s, i) => `<button class="jstep" data-goto="p${i+1}"><span class="jn">${s.n}</span><span class="jtx"><b>${T(s.t)}</b><small>${T(s.s)}</small></span><span class="jchev" aria-hidden="true">›</span></button>`).join("")}</div>
+
   <div class="info-grid">${INTRO_CARDS.map(c => `<div class="info-card"><div class="ic-wrap">${icon(c.ic)}</div><h4>${T(c.t)}</h4><p>${T(c.d)}</p></div>`).join("")}</div>
-  <div class="steps">${STEPS.map(s => `<div class="step"><span class="n">${s.n}</span><b>${T(s.t)}</b><small>${T(s.s)}</small></div>`).join("")}</div>
-  <div class="article">${CONTENT.map(c => `<h3>${T(c.h)}</h3><p>${T(c.p)}</p>`).join("")}
-  <p class="src">${T(SRC)} <a href="https://www.douane.gov.tn/retour-definitif/" target="_blank" rel="noopener">Douane Tunisienne — FCR</a></p></div>
-  <p style="margin-top:1.3rem"><span class="updated"><span class="dot"></span> ${T(UI.updated)} : ${UPDATED}</span></p>`;
+
+  <details class="more">
+    <summary>${icon('info')} ${T(UI.more)}</summary>
+    <div class="article">${CONTENT.map(c => `<h3>${T(c.h)}</h3><p>${T(c.p)}</p>`).join("")}
+    <p class="src">${T(SRC)} <a href="https://www.douane.gov.tn/retour-definitif/" target="_blank" rel="noopener">Douane Tunisienne — FCR</a></p></div>
+  </details>
+  <p style="margin-top:1.1rem"><span class="updated"><span class="dot"></span> ${T(UI.updated)} : ${UPDATED}</span></p>`;
 }
 function condHTML() {
   return `<div class="cond-list">${CONDS.map(c => `<div class="cond"><span class="ic-wrap">${icon(c.ic)}</span><div><b>${T(c.t)}</b><p>${T(c.d)}</p></div></div>`).join("")}</div>
