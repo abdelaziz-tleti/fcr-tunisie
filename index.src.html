@@ -162,9 +162,14 @@
   .brand .mark { width: 40px; height: 40px; flex: none; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); display: block; transition: transform .4s var(--ease); }
   .brand .mark:hover { transform: rotate(-5deg) scale(1.06); }
   .brand .mark svg { display: block; width: 100%; height: 100%; }
-  .brand h1 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; }
+  .brand h1 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; white-space: nowrap; }
+  .brand { min-width: 0; }
   .brand p { margin: 0; font-size: .72rem; color: var(--muted); }
-  .lang { margin-inline-start: auto; display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 11px; padding: 3px; gap: 2px; }
+  .lang { display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 11px; padding: 3px; gap: 2px; }
+  .phase-prog { margin-inline-start: auto; display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--red-soft); background: var(--red-soft); color: var(--red-deep); cursor: pointer; font: 800 .82rem var(--display); padding: .38rem .7rem; border-radius: 999px; transition: all .2s var(--ease); }
+  .phase-prog .ic { width: 16px; height: 16px; }
+  .phase-prog:hover { background: #fff; border-color: var(--red); transform: translateY(-1px); }
+  .phase-prog.full { background: var(--green); border-color: var(--green); color: #fff; }
   .lang button { border: none; background: transparent; cursor: pointer; font: 600 .82rem var(--sans); color: var(--muted); padding: .35rem .7rem; border-radius: 8px; transition: all .2s var(--ease); }
   .lang button[aria-pressed="true"] { background: var(--paper); color: var(--red-deep); box-shadow: var(--shadow-sm); }
   .menu-toggle { display: none; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--line); background: var(--paper); border-radius: 11px; cursor: pointer; color: var(--ink); box-shadow: var(--shadow-sm); padding: 0; }
@@ -402,6 +407,7 @@
       <span class="mark" aria-label="Drapeau tunisien"><svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#dc2640"/><circle cx="50" cy="50" r="30" fill="#fff"/><circle cx="47" cy="50" r="19" fill="#dc2640"/><circle cx="54" cy="50" r="15.5" fill="#fff"/><path d="M62 39 l3.4 8.4 9 0 -7.2 6 2.7 9.2 -7.9-5.8 -7.9 5.8 2.7-9.2 -7.2-6 9 0z" fill="#dc2640"/></svg></span>
       <div><h1>FCR Tunisie</h1><p id="brandSub"></p></div>
     </div>
+    <button class="phase-prog" id="phaseProg" type="button" title="Avancement des phases"></button>
     <div class="lang" role="group" aria-label="Langue">
       <button data-l="fr" type="button">FR</button>
       <button data-l="en" type="button">EN</button>
@@ -818,6 +824,10 @@ function update() {
     const sb = phasebarEl.querySelector(`[data-key="${s.key}"]`);
     if (sb) { let bd = sb.querySelector(".seg-count"); if (!bd) { bd = document.createElement("span"); bd.className = "seg-count"; sb.appendChild(bd); } bd.textContent = `${c}/${ids.length}`; sb.classList.toggle("done", c === ids.length); }
   });
+  // Indicateur de phases terminées (X/4) dans l'en-tête
+  const phasesDone = PHASES.filter(p => phaseIds[p.key].length && phaseIds[p.key].every(id => done[id])).length;
+  const pp = document.getElementById("phaseProg");
+  if (pp) { pp.innerHTML = `${icon('list')}<span>${phasesDone}/${PHASES.length}</span>`; pp.classList.toggle("full", phasesDone === PHASES.length); }
 }
 
 mainEl.addEventListener("change", e => {
@@ -839,6 +849,8 @@ mainEl.addEventListener("click", e => {
   const g = e.target.closest("[data-goto]"); if (!g) return;
   go(g.dataset.goto);
 });
+
+document.getElementById("phaseProg").addEventListener("click", () => go(activePhase));
 
 function introHTML() {
   return `<div class="home-progress">
