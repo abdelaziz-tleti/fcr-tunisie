@@ -174,10 +174,6 @@
   /* ---------- Layout app (colonne centrée) ---------- */
   .app { display: block; max-width: 640px; margin: 0 auto; min-width: 0; padding: 1.1rem clamp(.9rem,3vw,1.3rem) calc(82px + env(safe-area-inset-bottom)); }
 
-  /* Barre de progression fine sous l'en-tête */
-  .progressbar { height: 3px; background: var(--line); }
-  .progressbar-fill { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--red), var(--red-deep)); border-radius: 0 3px 3px 0; transition: width .6s var(--ease); }
-
   /* Sélecteur de phases (segmenté) + chips de sous-groupes */
   .topbar { max-width: 640px; margin: 0 auto; padding: .55rem clamp(.9rem,3vw,1.3rem) .35rem; }
   .seg { display: flex; gap: .25rem; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 4px; overflow-x: auto; scrollbar-width: none; }
@@ -416,7 +412,6 @@
       <button data-l="ar" type="button">العربية</button>
     </div>
   </div>
-  <div class="progressbar mobile-only"><span class="progressbar-fill" id="pbarFill"></span></div>
   <div class="topbar mobile-only" id="topbar">
     <div class="seg" id="phasebar"></div>
     <div class="chips" id="groupbar"></div>
