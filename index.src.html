@@ -355,11 +355,16 @@
 
   .chips:empty { display: none; }
   @media (max-width: 860px) {
-    .topbar { padding-bottom: .5rem; }
-    .seg { overflow: visible; gap: .2rem; }
-    .seg-btn { flex: 1 1 0; min-width: 0; flex-direction: column; gap: 2px; padding: .45rem .25rem; font-size: .78rem; }
-    .seg-btn > span:first-child { overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-    .seg-count { font-size: .62rem; padding: .03rem .34rem; }
+    .topbar { padding-bottom: .55rem; }
+    .seg { overflow: visible; gap: .5rem; background: transparent; border: none; padding: 0; }
+    .seg-btn { flex: 1 1 0; min-width: 0; flex-direction: column; gap: 4px; padding: .6rem .25rem .5rem; border-radius: 15px; background: var(--paper); border: 1.5px solid var(--line); color: var(--muted); box-shadow: var(--shadow-sm); transition: transform .15s var(--ease), background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease); }
+    .seg-btn:active { transform: scale(.95); }
+    .seg-btn .ic { width: 22px; height: 22px; }
+    .seg-label { font-size: .76rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .seg-count { font-size: .62rem; padding: .04rem .4rem; background: var(--red-soft); color: var(--red-deep); }
+    .seg-btn[aria-current="true"] { background: linear-gradient(140deg, var(--red), var(--red-deep)); border-color: var(--red); color: #fff; box-shadow: 0 9px 20px -7px rgba(220,38,64,.6); }
+    .seg-btn[aria-current="true"] .ic { color: #fff; }
+    .seg-btn[aria-current="true"] .seg-count { background: rgba(255,255,255,.28); color: #fff; }
   }
 
   @media (max-width: 560px) {
@@ -712,7 +717,7 @@ function build() {
   PHASES.forEach(p => {
     const b = document.createElement("button");
     b.className = "seg-btn"; b.type = "button"; b.dataset.key = p.key;
-    b.innerHTML = `<span>${T(p.short)}</span>`;
+    b.innerHTML = `${icon(p.icon)}<span class="seg-label">${T(p.short)}</span>`;
     b.addEventListener("click", () => go(p.key));
     phasebarEl.appendChild(b);
   });
