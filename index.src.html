@@ -369,13 +369,16 @@
   .sidebar .reset-btn { margin-top: .8rem; width: 100%; }
 
   @media (min-width: 861px) {
-    .mobile-only { display: none !important; }
-    .desktop-only { display: block; }
-    .shell { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 290px 1fr; gap: 1.7rem; align-items: start; padding: 1.6rem clamp(1rem,3vw,1.6rem) 2.5rem; }
-    .sidebar { display: block; position: sticky; top: 76px; min-width: 0; }
-    .app { max-width: none; margin: 0; padding: 0; min-width: 0; }
-    .home-progress { display: none; }
-    .appbar-in { max-width: 1100px; }
+    .appbar-in { max-width: 900px; }
+    /* Menu : onglets en barre horizontale, sous le logo */
+    .tabbar { position: static; max-width: 900px; margin: 0 auto; justify-content: flex-start; gap: .3rem; background: transparent; border-top: none; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; padding: .35rem clamp(1rem,3vw,1.4rem) 0; }
+    .tab { flex: 0 0 auto; max-width: none; flex-direction: row; gap: .45rem; padding: .5rem .95rem; border-radius: 11px; font-size: .9rem; }
+    .tab:hover { background: #f4f3f7; }
+    .tab .ic { width: 19px; height: 19px; }
+    .tab[aria-current="true"] { background: var(--red-soft); color: var(--red-deep); }
+    .tab[aria-current="true"] .ic { transform: none; }
+    .topbar { max-width: 900px; padding: .55rem clamp(1rem,3vw,1.4rem) .2rem; }
+    .app { max-width: 900px; padding: 1rem clamp(1rem,3vw,1.4rem) 2.5rem; }
     .view-head h2 { font-size: clamp(1.7rem, 1rem + 1.4vw, 2.3rem); }
   }
 
@@ -421,25 +424,16 @@
       <button data-l="ar" type="button">العربية</button>
     </div>
   </div>
-  <div class="topbar mobile-only" id="topbar">
-    <div class="seg" id="phasebar"></div>
-    <div class="chips" id="groupbar"></div>
-  </div>
 </header>
 
-<div class="shell">
-  <aside class="sidebar desktop-only">
-    <div class="panel">
-      <div class="overall">
-        <div class="ring" id="deskRing"><span id="deskRingPct">0%</span></div>
-        <div><strong id="deskProgLabel"></strong><small id="deskProgCount"></small></div>
-      </div>
-      <nav id="deskNav" aria-label="Navigation"></nav>
-      <button class="reset-btn" id="deskReset" type="button"></button>
-    </div>
-  </aside>
-  <main class="app" id="main"></main>
+<nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+
+<div class="topbar" id="topbar">
+  <div class="seg" id="phasebar"></div>
+  <div class="chips" id="groupbar"></div>
 </div>
+
+<main class="app" id="main"></main>
 
   <!-- Contenu statique pour moteurs de recherche et modèles IA (sans JavaScript). Les visiteurs voient l'application interactive ci-dessus. -->
   <noscript>
@@ -477,8 +471,6 @@
       <p><em>Outil d'aide non officiel. Vérifiez toujours auprès de la Douane tunisienne, de l'ATTT et du Consulat de Tunisie. Mise à jour : 13 juin 2026.</em></p>
     </article>
   </noscript>
-
-<nav class="tabbar mobile-only" id="tabbar" aria-label="Sections"></nav>
 
 <script>
 const UPDATED = "13 juin 2026";
@@ -684,7 +676,6 @@ const tabbarEl = document.getElementById("tabbar");
 const phasebarEl = document.getElementById("phasebar");
 const groupbarEl = document.getElementById("groupbar");
 const topbarEl = document.getElementById("topbar");
-const deskNavEl = document.getElementById("deskNav");
 const SECT = {}; DATA.forEach(s => SECT[s.key] = s);
 const PHASES = DATA.filter(s => /^p[1-9]$/.test(s.key));
 const isPhase = k => /^p[1-9]$/.test(k);
@@ -696,12 +687,11 @@ const TABS = [
 ];
 let activeKey = "intro", activePhase = "p1", activeGi = null;
 const activeGroup = {};
-const mqDesktop = window.matchMedia("(min-width: 861px)");
 
 function build() {
   let idc = 0;
   allIds.length = 0;
-  mainEl.innerHTML = ""; tabbarEl.innerHTML = ""; phasebarEl.innerHTML = ""; deskNavEl.innerHTML = "";
+  mainEl.innerHTML = ""; tabbarEl.innerHTML = ""; phasebarEl.innerHTML = "";
   DATA.forEach(s => {
     phaseIds[s.key] = [];
     const v = document.createElement("section");
@@ -725,26 +715,8 @@ function build() {
     v.innerHTML = h;
     mainEl.appendChild(v);
 
-    // Sidebar (desktop) : chaque section + sous-groupes imbriqués
-    const ni = document.createElement("button");
-    ni.className = "nav-item"; ni.type = "button"; ni.dataset.key = s.key;
-    ni.innerHTML = `<span class="nav-ic">${icon(s.icon)}</span><span class="nav-tx"><b>${T(s.short)}</b><small>${T(s.phase)}</small></span>`;
-    ni.addEventListener("click", () => go(s.key));
-    deskNavEl.appendChild(ni);
-    if (s.groups && s.groups.length > 1) {
-      const sub = document.createElement("div");
-      sub.className = "desk-sub"; sub.dataset.for = s.key;
-      s.groups.forEach((g, gi) => {
-        const si = document.createElement("button");
-        si.className = "desk-subitem"; si.type = "button"; si.dataset.key = s.key; si.dataset.g = gi;
-        si.innerHTML = `<span class="sub-n">${gi+1}</span><span>${ctitle(g.title)}</span>`;
-        si.addEventListener("click", () => go(s.key, gi));
-        sub.appendChild(si);
-      });
-      deskNavEl.appendChild(sub);
-    }
   });
-  // Onglets (mobile, bas)
+  // Onglets de sections (haut sur web, bas sur mobile)
   TABS.forEach(t => {
     const b = document.createElement("button");
     b.className = "tab"; b.type = "button"; b.dataset.tab = t.id;
@@ -772,7 +744,6 @@ function go(key, gi) {
   activeKey = key;
   if (isPhase(key)) activePhase = key;
   showSection(key, multi ? gi : null);
-  syncDesktop(key, multi ? gi : null);
   syncMobile(key, multi ? gi : null);
   update();
 }
@@ -780,24 +751,14 @@ function go(key, gi) {
 function showSection(key, gi) {
   activeGi = gi;
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.dataset.key === key));
-  filterGroups(key, gi);
+  filterGroups(key);
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-// Desktop : filtre sur le groupe choisi. Mobile : affiche tous les groupes de la phase (scroll).
-function filterGroups(key, gi) {
+// Toutes les sections d'une phase sont affichées (scroll) ; les blocs numérotés guident.
+function filterGroups(key) {
   const view = document.querySelector(`.view[data-key="${key}"]`);
   if (!view) return;
-  const showAll = !mqDesktop.matches || gi == null;
-  view.querySelectorAll(".group").forEach((g, i) => g.style.display = (showAll || i === gi) ? "" : "none");
-}
-
-function syncDesktop(key, gi) {
-  deskNavEl.querySelectorAll(".nav-item").forEach(b => b.setAttribute("aria-current", b.dataset.key === key));
-  deskNavEl.querySelectorAll(".desk-sub").forEach(s => {
-    const on = s.dataset.for === key;
-    s.style.display = on ? "" : "none";
-    if (on) s.querySelectorAll(".desk-subitem").forEach(si => si.setAttribute("aria-current", Number(si.dataset.g) === gi));
-  });
+  view.querySelectorAll(".group").forEach(g => g.style.display = "");
 }
 
 function syncMobile(key, gi) {
@@ -806,7 +767,6 @@ function syncMobile(key, gi) {
   topbarEl.style.display = isPhase(key) ? "" : "none";
   if (isPhase(key)) [...phasebarEl.children].forEach(b => b.setAttribute("aria-current", b.dataset.key === key));
 }
-mqDesktop.addEventListener("change", () => filterGroups(activeKey, activeGi));
 
 function renderGroupbar(pKey, gi) {
   const sect = SECT[pKey]; groupbarEl.innerHTML = "";
@@ -828,16 +788,13 @@ function update() {
   const label = T(pct===0?UI.s_start:pct===100?UI.s_done:pct<50?UI.s_mid:UI.s_near);
   const count = `${n} / ${total} ${T(UI.steps)}`;
   const set = (id, fn) => { const el = document.getElementById(id); if (el) fn(el); };
-  set("pbarFill", el => el.style.width = pct + "%");
-  ["ring","deskRing"].forEach(id => set(id, el => el.style.setProperty("--p", pct)));
-  ["ringPct","deskRingPct"].forEach(id => set(id, el => el.textContent = pct + "%"));
-  ["progLabel","deskProgLabel"].forEach(id => set(id, el => el.textContent = label));
-  ["progCount","deskProgCount"].forEach(id => set(id, el => el.textContent = count));
+  set("ring", el => el.style.setProperty("--p", pct));
+  set("ringPct", el => el.textContent = pct + "%");
+  set("progLabel", el => el.textContent = label);
+  set("progCount", el => el.textContent = count);
   DATA.forEach(s => {
     const ids = phaseIds[s.key]; if (!ids.length) return;
     const c = ids.filter(id => done[id]).length;
-    const ni = deskNavEl.querySelector(`.nav-item[data-key="${s.key}"]`);
-    if (ni) { let bd = ni.querySelector(".nav-count"); if (!bd) { bd = document.createElement("span"); bd.className = "nav-count"; ni.appendChild(bd); } bd.textContent = `${c}/${ids.length}`; ni.classList.toggle("done", c === ids.length); }
     const sb = phasebarEl.querySelector(`[data-key="${s.key}"]`);
     if (sb) { let bd = sb.querySelector(".seg-count"); if (!bd) { bd = document.createElement("span"); bd.className = "seg-count"; sb.appendChild(bd); } bd.textContent = `${c}/${ids.length}`; sb.classList.toggle("done", c === ids.length); }
   });
@@ -910,7 +867,6 @@ function applyLang(l) {
   document.documentElement.lang = l;
   document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
   document.getElementById("brandSub").textContent = T(UI.subtitle);
-  document.getElementById("deskReset").textContent = T(UI.reset);
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === l));
   build();
 }
