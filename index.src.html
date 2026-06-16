@@ -232,7 +232,13 @@
 
   .group { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 1rem; scroll-margin-top: 80px; transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
   .group:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-  .group > h3 { margin: 0; padding: .85rem 1.2rem; font: 700 .73rem var(--sans); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); border-bottom: 1px solid var(--line); }
+  .group-head { display: flex; align-items: center; gap: .6rem; padding: .75rem 1rem; border-bottom: 1px solid var(--line); }
+  .group-n { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--red-soft); color: var(--red-deep); font: 800 .85rem var(--display); display: grid; place-items: center; }
+  .group-head h3 { margin: 0; flex: 1; min-width: 0; font: 700 .98rem var(--sans); color: var(--ink); letter-spacing: -.01em; }
+  .group-prog { flex: none; font: 800 .72rem var(--display); color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: .15rem .55rem; transition: all .25s var(--ease); }
+  .group-prog.done { background: #e3f6ec; border-color: #c4ecd3; color: #0f8043; }
+  .sub-n { flex: none; width: 19px; height: 19px; border-radius: 6px; background: rgba(120,110,130,.12); color: inherit; font: 800 .68rem var(--display); display: grid; place-items: center; }
+  .desk-subitem[aria-current="true"] .sub-n { background: rgba(255,255,255,.28); color: #fff; }
   ul.tasks { list-style: none; margin: 0; padding: .4rem; }
   .task { display: flex; gap: .85rem; align-items: flex-start; padding: .72rem .85rem; border-radius: 12px; cursor: pointer; transition: background .18s var(--ease); }
   .task:hover { background: var(--red-soft); }
@@ -670,7 +676,8 @@ const KEY = "fcr-tn-v3";
 let done = JSON.parse(localStorage.getItem(KEY) || "{}");
 let active = "intro";
 const checkSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-const phaseIds = {}; const allIds = [];
+const phaseIds = {}; const groupIds = {}; const allIds = [];
+const ctitle = t => T(t).replace(/^\d+\s*·\s*/, "");
 
 const mainEl = document.getElementById("main");
 const tabbarEl = document.getElementById("tabbar");
@@ -706,9 +713,10 @@ function build() {
     else {
       if (s.tip) h += `<div class="tip">${icon('info')} ${T(s.tip.text)}</div>`;
       s.groups.forEach((g, gi) => {
-        h += `<div class="group" id="grp-${s.key}-${gi}"><h3>${T(g.title)}</h3><ul class="tasks">`;
+        const gkey = `${s.key}-${gi}`; groupIds[gkey] = [];
+        h += `<div class="group" id="grp-${gkey}"><div class="group-head"><span class="group-n">${gi+1}</span><h3>${ctitle(g.title)}</h3><span class="group-prog" id="gp-${gkey}"></span></div><ul class="tasks">`;
         g.items.forEach(it => {
-          const id = "t"+(idc++); allIds.push(id); phaseIds[s.key].push(id);
+          const id = "t"+(idc++); allIds.push(id); phaseIds[s.key].push(id); groupIds[gkey].push(id);
           h += `<li><label class="task"><input type="checkbox" data-id="${id}" ${done[id]?"checked":""}/><span class="box">${checkSvg}</span><span class="label"><b>${T(it.t)}</b>${it.d?`<small>${T(it.d)}</small>`:""}</span></label></li>`;
         });
         h += `</ul></div>`;
@@ -729,7 +737,7 @@ function build() {
       s.groups.forEach((g, gi) => {
         const si = document.createElement("button");
         si.className = "desk-subitem"; si.type = "button"; si.dataset.key = s.key; si.dataset.g = gi;
-        si.innerHTML = `<span class="sub-dot"></span><span>${T(g.title)}</span>`;
+        si.innerHTML = `<span class="sub-n">${gi+1}</span><span>${ctitle(g.title)}</span>`;
         si.addEventListener("click", () => go(s.key, gi));
         sub.appendChild(si);
       });
@@ -832,6 +840,13 @@ function update() {
     if (ni) { let bd = ni.querySelector(".nav-count"); if (!bd) { bd = document.createElement("span"); bd.className = "nav-count"; ni.appendChild(bd); } bd.textContent = `${c}/${ids.length}`; ni.classList.toggle("done", c === ids.length); }
     const sb = phasebarEl.querySelector(`[data-key="${s.key}"]`);
     if (sb) { let bd = sb.querySelector(".seg-count"); if (!bd) { bd = document.createElement("span"); bd.className = "seg-count"; sb.appendChild(bd); } bd.textContent = `${c}/${ids.length}`; sb.classList.toggle("done", c === ids.length); }
+  });
+  // Progression par sous-groupe (X/Y dans l'en-tête de chaque bloc)
+  Object.keys(groupIds).forEach(gk => {
+    const el = document.getElementById(`gp-${gk}`); if (!el) return;
+    const ids = groupIds[gk], c = ids.filter(id => done[id]).length;
+    el.textContent = `${c}/${ids.length}`;
+    el.classList.toggle("done", ids.length > 0 && c === ids.length);
   });
   // Indicateur de phases terminées (X/4) dans l'en-tête
   const phasesDone = PHASES.filter(p => phaseIds[p.key].length && phaseIds[p.key].every(id => done[id])).length;
