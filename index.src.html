@@ -391,6 +391,14 @@
     .tab[aria-current="true"] { background: linear-gradient(135deg, var(--red), var(--red-deep)); color: #fff; box-shadow: 0 8px 18px -8px rgba(220,38,64,.55); }
     .tab[aria-current="true"] .ic { transform: none; color: #fff; }
     .topbar { max-width: 900px; padding: .55rem clamp(1rem,3vw,1.4rem) .2rem; }
+    /* Sélecteur de phases en boutons-cartes clairs */
+    .seg { background: transparent; border: none; padding: 0; gap: .5rem; }
+    .seg-btn { flex: 1 1 0; min-width: 0; background: var(--paper); border: 1.5px solid var(--line); box-shadow: var(--shadow-sm); border-radius: 13px; padding: .6rem .7rem; gap: .45rem; color: var(--ink); font-weight: 700; transition: transform .15s var(--ease), border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease); }
+    .seg-btn .ic { width: 18px; height: 18px; color: var(--red-deep); }
+    .seg-btn:hover { border-color: var(--red); transform: translateY(-1px); }
+    .seg-btn[aria-current="true"] { background: linear-gradient(135deg, var(--red), var(--red-deep)); border-color: var(--red); color: #fff; box-shadow: 0 9px 20px -8px rgba(220,38,64,.55); }
+    .seg-btn[aria-current="true"] .ic { color: #fff; }
+    .seg-btn[aria-current="true"] .seg-count { background: rgba(255,255,255,.28); color: #fff; }
     .app { max-width: 900px; padding: 1rem clamp(1rem,3vw,1.4rem) 2.5rem; }
     .view-head h2 { font-size: clamp(1.7rem, 1rem + 1.4vw, 2.3rem); }
   }
