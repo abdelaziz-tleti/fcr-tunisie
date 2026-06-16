@@ -100,7 +100,8 @@
         { "@type": "Question", "name": "Combien de fois peut-on bénéficier du FCR ?", "acceptedAnswer": { "@type": "Answer", "text": "Depuis la loi de finances 2024, le privilège est accordé une fois tous les 10 ans (au lieu d'une seule fois auparavant)." } },
         { "@type": "Question", "name": "Peut-on importer une voiture de plus de 5 ans en FCR ?", "acceptedAnswer": { "@type": "Answer", "text": "Non, le FCR est réservé aux véhicules de moins de 5 ans. Au-delà, l'importation reste possible mais au régime normal, avec paiement intégral des droits et taxes." } },
         { "@type": "Question", "name": "Peut-on vendre une voiture en plaque RS « ن ت » ?", "acceptedAnswer": { "@type": "Answer", "text": "Non, elle est incessible. La revente nécessite l'autorisation de la douane et le paiement des droits et taxes restants pour la passer en plaque normale." } },
-        { "@type": "Question", "name": "Le FCR fonctionne-t-il depuis la France ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, le FCR s'applique quel que soit le pays de résidence à l'étranger, dès lors que les conditions de résidence et de devises sont remplies." } }
+        { "@type": "Question", "name": "Le FCR fonctionne-t-il depuis la France ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, le FCR s'applique quel que soit le pays de résidence à l'étranger, dès lors que les conditions de résidence et de devises sont remplies." } },
+        { "@type": "Question", "name": "Combien de temps prend la procédure FCR ?", "acceptedAnswer": { "@type": "Answer", "text": "En général de 3 à 7 mois, selon la complexité du dossier, le transitaire et les délais de la douane et de l'ATTT." } }
       ]
     }
   ]
@@ -451,7 +452,7 @@
       </ul>
 
       <h2>Phase 1 — Dans le pays de résidence</h2>
-      <p>Vérifier l'éligibilité FCR, l'âge du véhicule et les conditions de séjour. Réunir : preuve de paiement du véhicule (virement bancaire recommandé), facture d'achat originale, certificat de cession signé, déclaration d'achat, carte grise originale barrée et datée, certificat de non-gage. Au consulat de Tunisie : légalisation de signature et fiche des mouvements frontaliers.</p>
+      <p>Vérifier l'éligibilité FCR, l'âge du véhicule et les conditions de séjour. Le véhicule doit être acheté dans les 2 ans suivant la date de changement de résidence. Réunir : preuve de paiement (virement bancaire recommandé), facture d'achat originale, certificat de cession signé, déclaration d'achat, carte grise originale barrée et datée, certificat de non-gage, certificat de conformité européen (COC), assurance d'export temporaire. Au consulat de Tunisie : légalisation de signature, fiche des mouvements frontaliers, justificatif de résidence à l'étranger et déclaration d'export du véhicule. La procédure complète prend en général de 3 à 7 mois.</p>
 
       <h2>Phase 2 — La traversée en bateau</h2>
       <p>À bord du navire : remplir la déclaration de douane du véhicule et récupérer le permis de circulation provisoire.</p>
@@ -528,6 +529,7 @@ const DATA = [
     groups:[
       { title:{fr:"Avant d'acheter",ar:"قبل الشراء",en:"Before buying"}, items:[
         { t:{fr:"Vérifier l'éligibilité FCR",ar:"التحقق من أهلية FCR",en:"Check FCR eligibility"}, d:{fr:"Tunisien, 18 ans révolus, droit non utilisé depuis 10 ans.",ar:"تونسي، 18 سنة فما فوق، لم يُستعمل الحق منذ 10 سنوات.",en:"Tunisian, over 18, benefit not used in the last 10 years."} },
+        { t:{fr:"Date de changement de résidence",ar:"تاريخ تغيير مكان الإقامة",en:"Change-of-residence date"}, d:{fr:"Le véhicule doit être acheté dans les 2 ans qui suivent.",ar:"يجب شراء السيارة خلال السنتين المواليتين.",en:"The vehicle must be bought within the following 2 years."} },
         { t:{fr:"Vérifier l'âge du véhicule",ar:"التحقق من عمر السيارة",en:"Check the vehicle's age"}, d:{fr:"≤ 5 ans (tourisme et utilitaires légers < 3,5 t), à la date d'achat/importation.",ar:"≤ 5 سنوات (سياحية ونفعية خفيفة < 3,5 طن)، في تاريخ الشراء/التوريد.",en:"≤ 5 years (cars and light commercial < 3.5 t), at purchase/import date."} },
         { t:{fr:"Vérifier les conditions de séjour",ar:"التحقق من شروط الإقامة",en:"Check the residence conditions"}, d:{fr:"≥ 2 ans à l'étranger, sans dépasser 183 jours/an en Tunisie.",ar:"≥ سنتان في الخارج، دون تجاوز 183 يومًا سنويًا في تونس.",en:"≥ 2 years abroad, no more than 183 days/year in Tunisia."} },
         { t:{fr:"Anticiper l'importation de devises",ar:"الإعداد لتوريد العملة الصعبة",en:"Plan the currency import"}, d:{fr:"Montant équivalent aux droits/taxes, en devises ou via un compte en devises, l'année précédant l'importation.",ar:"مبلغ يعادل المعاليم والأداءات بالعملة الصعبة أو من حساب بالعملة، خلال السنة السابقة للتوريد.",en:"Amount equal to duties/taxes, in foreign currency or via a forex account, the year before import."} },
@@ -539,10 +541,14 @@ const DATA = [
         { t:{fr:"Déclaration d'achat",ar:"تصريح الشراء",en:"Purchase declaration"}, d:{fr:"Si achat via un professionnel.",ar:"في حال الشراء من محترف.",en:"If buying via a dealer."} },
         { t:{fr:"Carte grise originale (pays d'origine)",ar:"البطاقة الرمادية الأصلية (بلد المنشأ)",en:"Original registration card (origin country)"}, d:{fr:"Barrée, datée, signée — mention « Vendu le… ».",ar:"مشطوبة، مؤرّخة، مُمضاة — مع عبارة «بيعت في…».",en:"Crossed out, dated, signed — 'Sold on…' note."} },
         { t:{fr:"Certificat de non-gage",ar:"شهادة عدم الرهن",en:"Certificate of non-pledge"}, d:{fr:"Situation administrative à imprimer.",ar:"الوضعية الإدارية للطباعة.",en:"Administrative status to print."} },
+        { t:{fr:"Certificat de conformité (COC)",ar:"شهادة المطابقة (COC)",en:"Certificate of Conformity (COC)"}, d:{fr:"Pour un véhicule acheté en Europe.",ar:"بالنسبة لسيارة مشتراة في أوروبا.",en:"For a vehicle bought in Europe."} },
+        { t:{fr:"Assurance d'export temporaire",ar:"تأمين تصدير مؤقت",en:"Temporary export insurance"}, d:{fr:"Avant l'expédition du véhicule (≈ 80-150 €).",ar:"قبل شحن السيارة (≈ 80-150 أورو).",en:"Before shipping the vehicle (≈ €80-150)."} },
       ]},
       { title:{fr:"Consulat de Tunisie (pays de résidence)",ar:"قنصلية تونس (بلد الإقامة)",en:"Consulate of Tunisia (country of residence)"}, items:[
         { t:{fr:"Légalisation de signature",ar:"تصديق الإمضاء",en:"Signature legalization"}, d:{fr:"Sur le certificat de cession.",ar:"على شهادة التنازل.",en:"On the transfer certificate."} },
         { t:{fr:"Fiche des mouvements frontaliers",ar:"بطاقة الحركات الحدودية",en:"Border movements record"}, d:{fr:"Si passeport < 2 ans ou tampons illisibles.",ar:"إذا كان الجواز < سنتين أو الأختام غير واضحة.",en:"If passport < 2 years or stamps unreadable."} },
+        { t:{fr:"Justificatif de résidence à l'étranger",ar:"إثبات الإقامة بالخارج",en:"Proof of residence abroad"}, d:{fr:"Certificat de résidence du pays d'accueil.",ar:"شهادة إقامة من بلد الاستقبال.",en:"Residence certificate from the host country."} },
+        { t:{fr:"Déclaration d'export du véhicule",ar:"تصريح تصدير السيارة",en:"Vehicle export declaration"}, d:{fr:"Auprès de la douane du pays de départ, avant l'expédition.",ar:"لدى ديوانة بلد المغادرة، قبل الشحن.",en:"With the customs of the departure country, before shipping."} },
       ]},
     ]},
 
@@ -572,7 +578,7 @@ const DATA = [
       ]},
       { title:{fr:"Douane & transitaire",ar:"الديوانة والوسيط الديواني",en:"Customs & broker"}, items:[
         { t:{fr:"Saisie de la déclaration de douane",ar:"تسجيل التصريح الديواني",en:"Filing the customs declaration"}, d:{fr:"Avec le transitaire.",ar:"بمساعدة الوسيط الديواني.",en:"With the customs broker."} },
-        { t:{fr:"Demande de privilège fiscal (Modèle 6.3.41)",ar:"مطلب امتياز جبائي (نموذج 6.3.41)",en:"Tax privilege request (Form 6.3.41)"}, d:{fr:"Formulaire officiel à signer.",ar:"مطبوعة رسمية للإمضاء.",en:"Official form to sign."} },
+        { t:{fr:"Demande de privilège fiscal (Modèle 6.3.41)",ar:"مطلب امتياز جبائي (نموذج 6.3.41)",en:"Tax privilege request (Form 6.3.41)"}, d:{fr:"Formulaire officiel à signer (≈ 5 DT + frais de guichet).",ar:"مطبوعة رسمية للإمضاء (≈ 5 دنانير + معاليم الشباك).",en:"Official form to sign (≈ 5 TND + window fees)."} },
         { t:{fr:"Dépôt du dossier complet",ar:"إيداع الملف الكامل",en:"Submit the full file"}, d:{fr:"Identité, papiers légalisés, Mou3ayna, permis provisoire.",ar:"الهوية، الوثائق المصادق عليها، المعاينة، الرخصة المؤقتة.",en:"ID, legalized papers, Mou3ayna, temporary permit."} },
         { t:{fr:"Paiement des droits & Mainlevée",ar:"خلاص المعاليم ورفع اليد",en:"Pay the duties & clearance"}, d:{fr:"Quittance / mainlevée.",ar:"الوصل / رفع اليد.",en:"Receipt / customs release."} },
       ]},
@@ -634,6 +640,7 @@ const FAQS = [
   { q:{fr:"Peut-on importer une voiture de plus de 5 ans en FCR ?",ar:"هل يمكن استيراد سيارة يفوق عمرها 5 سنوات عبر FCR؟",en:"Can you import a car older than 5 years under FCR?"}, a:{fr:"Non, le FCR est réservé aux véhicules de moins de 5 ans. Au-delà, l'importation reste possible mais au régime normal, avec paiement intégral des droits et taxes.",ar:"لا، نظام FCR مخصّص للسيارات أقل من 5 سنوات. أما الأقدم فيمكن توريدها بالنظام العادي مع خلاص كامل المعاليم والأداءات.",en:"No, FCR is limited to vehicles under 5 years old. Older vehicles can still be imported, but under the normal regime with full duties and taxes."} },
   { q:{fr:"Peut-on vendre une voiture en plaque RS « ن ت » ?",ar:"هل يمكن بيع سيارة بلوحة «ن ت» (RS)؟",en:"Can you sell a car with an RS « ن ت » plate?"}, a:{fr:"Non, elle est incessible. La revente nécessite l'autorisation de la douane et le paiement des droits et taxes restants pour la passer en plaque normale.",ar:"لا، فهي غير قابلة للتفويت. يتطلّب بيعها ترخيصًا من الديوانة وخلاص المعاليم والأداءات المتبقّية لتحويلها إلى لوحة عادية.",en:"No, it is non-transferable. Reselling requires customs authorization and payment of the remaining duties and taxes to switch it to a normal plate."} },
   { q:{fr:"Le FCR fonctionne-t-il depuis la France ?",ar:"هل يعمل نظام FCR انطلاقًا من فرنسا؟",en:"Does FCR work from France?"}, a:{fr:"Oui. Le FCR s'applique quel que soit le pays de résidence à l'étranger (France, Allemagne, Italie, Canada…), dès lors que les conditions de résidence et de devises sont remplies.",ar:"نعم. ينطبق نظام FCR مهما كان بلد الإقامة بالخارج (فرنسا، ألمانيا، إيطاليا، كندا…) ما دامت شروط الإقامة والعملة مستوفاة.",en:"Yes. FCR applies regardless of the country of residence abroad (France, Germany, Italy, Canada…), as long as the residence and currency conditions are met."} },
+  { q:{fr:"Combien de temps prend la procédure FCR ?",ar:"كم تستغرق إجراءات FCR؟",en:"How long does the FCR procedure take?"}, a:{fr:"En général de 3 à 7 mois, selon la complexité du dossier, le transitaire et les délais de la douane et de l'ATTT.",ar:"عادةً من 3 إلى 7 أشهر، حسب تعقيد الملف والوسيط الديواني وآجال الديوانة وATTT.",en:"Usually 3 to 7 months, depending on the file, the customs broker and the customs/ATTT processing times."} },
 ];
 
 /* ---------- Contenu éditorial (SEO, visible) ---------- */
