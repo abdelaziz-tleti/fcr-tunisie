@@ -8,6 +8,10 @@ Checklist web simple et moderne pour importer un véhicule en Tunisie sous le r�
 - Progression cochée **sauvegardée localement** (localStorage) — aucune donnée envoyée.
 - Recherche, filtre « à faire seulement », infos clés et FAQ.
 
+## Mettre à jour le site
+
+Suivre [MAJ-SITE.md](MAJ-SITE.md) (veille actualité, contenu FR/AR/EN, SEO, build, mise en ligne). Avec Claude Code : « mets à jour le site FCR ».
+
 ## Tester en local
 
 Lancez un petit serveur local (les boutons de langue pointent vers `/`, `/ar/`, `/en/`, qui ne marchent pas en double-cliquant le fichier) :

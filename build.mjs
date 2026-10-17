@@ -27,6 +27,38 @@ function loadData() {
 }
 const D = loadData();
 
+/* ---------- Contrôles de cohérence de la source (le build s'arrête si un point est oublié) ---------- */
+const MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+function checkSource() {
+  const errors = [];
+  const [, day, month, year] = D.UPDATED.match(/^(\d{1,2}) (\S+) (\d{4})$/) || [];
+  const m = MONTHS.indexOf(month);
+  if (m < 0) throw new Error(`UPDATED doit être au format « 17 octobre 2026 » (actuel : « ${D.UPDATED} »)`);
+  const iso = `${year}-${String(m + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  for (const [, d] of src.matchAll(/"dateModified": "([\d-]+)"/g))
+    if (d !== iso) errors.push(`index.src.html : JSON-LD "dateModified": "${d}" ≠ ${iso} (UPDATED)`);
+  const noscript = src.match(/<noscript>[\s\S]*?<\/noscript>/)[0];
+  if (!noscript.includes(D.UPDATED)) errors.push(`index.src.html : la date du <noscript> FR doit être « ${D.UPDATED} »`);
+  if (!readFileSync("llms.txt", "utf8").includes(`Dernière mise à jour : ${D.UPDATED}.`))
+    errors.push(`llms.txt : « Dernière mise à jour : ${D.UPDATED}. » attendu`);
+  const ldFr = JSON.parse(src.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  const faqFr = ldFr["@graph"].find(g => g["@type"] === "FAQPage").mainEntity.length;
+  if (faqFr !== D.FAQS.length) errors.push(`index.src.html : JSON-LD FR a ${faqFr} questions, FAQS en a ${D.FAQS.length} (à synchroniser)`);
+  for (const f of D.FAQS) for (const l of ["fr", "ar", "en"])
+    if (!f.q[l] || !f.a[l]) errors.push(`FAQS : traduction « ${l} » manquante pour « ${f.q.fr} »`);
+  if (errors.length) throw new Error("Source incohérente :\n- " + errors.join("\n- "));
+}
+try { checkSource(); } catch (e) { console.error(`\n❌ ${e.message}\n`); process.exit(1); }
+
+/* ---------- Contrôle des pages générées ---------- */
+function checkPage(l, html) {
+  if (!html.includes(`<html lang="${l}"`)) throw new Error(`${l} : <html lang="${l}"> absent`);
+  if (!html.includes(`href="${SITE}${PATHS[l]}"`) || !/rel="?canonical"?/.test(html)) throw new Error(`${l} : canonical absent`);
+  for (const x of [...Object.keys(PATHS), "x-default"])
+    if (!html.includes(`hreflang="${x}"`) && !html.includes(`hreflang=${x}`)) throw new Error(`${l} : hreflang ${x} absent`);
+  for (const [, json] of html.matchAll(/<script type="?application\/ld\+json"?>([\s\S]*?)<\/script>/g)) JSON.parse(json);
+}
+
 /* ---------- Textes SEO propres à chaque langue ---------- */
 const META = {
   ar: {
@@ -156,7 +188,9 @@ for (const l of Object.keys(PATHS)) {
   writeFileSync(tmpFile, page(l));
   const before = existsSync(out) ? readFileSync(out, "utf8") : null;
   minify(tmpFile, out);
-  changed[l] = readFileSync(out, "utf8") !== before;
+  const built = readFileSync(out, "utf8");
+  checkPage(l, built);
+  changed[l] = built !== before;
   console.log(`OK -> ${out} (${readFileSync(out).length} octets)`);
 }
 
