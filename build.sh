@@ -1,10 +1,6 @@
 #!/bin/sh
-# Régénère index.html (minifié/obfusqué) à partir de la source lisible index.src.html
+# Régénère index.html, ar/index.html, en/index.html (minifiés) et sitemap.xml
+# à partir de la source lisible index.src.html (voir build.mjs).
 # Usage : sh build.sh
 set -e
-npx --yes html-minifier-terser \
-  --collapse-whitespace --remove-comments --remove-redundant-attributes \
-  --remove-script-type-attributes --minify-css true \
-  --minify-js '{"mangle":true,"compress":true}' \
-  -o index.html index.src.html
-echo "OK -> index.html ($(wc -c < index.html) octets)"
+node "$(dirname "$0")/build.mjs"

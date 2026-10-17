@@ -4,6 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="google-site-verification" content="vZ1Dya0yRi4a_1tTZwUBHoCsHgzt4R2RF4rxd4F3rfA" />
+<link rel="alternate" hreflang="fr" href="https://fcr-tunisie.com/" />
+<link rel="alternate" hreflang="ar" href="https://fcr-tunisie.com/ar/" />
+<link rel="alternate" hreflang="en" href="https://fcr-tunisie.com/en/" />
+<link rel="alternate" hreflang="x-default" href="https://fcr-tunisie.com/" />
+<!-- SEO:START (bloc remplacé par build.mjs pour /ar/ et /en/) -->
 <title>FCR Tunisie 2026 — Importer sa voiture sans taxes (retour définitif) · Checklist</title>
 <meta name="description" content="FCR Tunisie 2026 : importez votre voiture sans payer de taxes (0 % en franchise totale ou 25 %). Checklist gratuite FR / العربية pour les Tunisiens résidant à l'étranger (TRE) — retour définitif / changement de résidence : conditions, documents, douane, ATTT, plaque RS « ن ت », voitures électriques. Étape par étape." />
 <meta name="keywords" content="FCR Tunisie, FCR 2026, importer voiture Tunisie sans taxes, retour définitif, changement de résidence, Tunisiens résidant à l'étranger, TRE, exonération douanière Tunisie, franchise douane voiture, régime RS, plaque RS, ن ت, douane tunisienne, ATTT, service des mines, mou3ayna, privilège fiscal, voiture électrique FCR, importation véhicule Tunisie, immatriculation voiture Tunisie" />
@@ -20,6 +25,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="fr_TN" />
 <meta property="og:locale:alternate" content="ar_TN" />
+<meta property="og:locale:alternate" content="en_US" />
 <meta property="og:site_name" content="FCR Tunisie" />
 <meta property="og:title" content="FCR Tunisie 2026 — Importer sa voiture sans taxes (retour définitif)" />
 <meta property="og:description" content="Pour les Tunisiens résidant à l'étranger (TRE) : importez votre voiture en franchise (0 %) ou à 25 %. Checklist gratuite FR / AR — conditions, documents, douane, ATTT, immatriculation." />
@@ -48,7 +54,7 @@
       "name": "FCR Tunisie",
       "url": "https://fcr-tunisie.com/",
       "publisher": { "@id": "https://fcr-tunisie.com/#org" },
-      "inLanguage": ["fr", "ar"],
+      "inLanguage": ["fr", "ar", "en"],
       "description": "Checklist FCR pour importer un véhicule en Tunisie (changement de résidence)."
     },
     {
@@ -111,6 +117,7 @@
   ]
 }
 </script>
+<!-- SEO:END -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23dc2640'/><circle cx='50' cy='50' r='30' fill='%23ffffff'/><circle cx='47' cy='50' r='19' fill='%23dc2640'/><circle cx='54' cy='50' r='15.5' fill='%23ffffff'/><path d='M62 39 l3.4 8.4 9 0 -7.2 6 2.7 9.2 -7.9-5.8 -7.9 5.8 2.7-9.2 -7.2-6 9 0z' fill='%23dc2640'/></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -477,7 +484,9 @@ const P = {
 const icon = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
 
 /* ---------- i18n ---------- */
-let lang = localStorage.getItem("fcr-lang") || "fr";
+// La langue vient de l'URL (/, /ar/, /en/) : build.mjs fixe <html lang> pour chaque page.
+let lang = document.documentElement.lang || "fr";
+const LANG_URL = { fr:"/", ar:"/ar/", en:"/en/" };
 const T = v => (v && typeof v === "object" && !Array.isArray(v)) ? (v[lang] ?? v.fr) : v;
 const UI = {
   subtitle:{fr:"Importation de véhicule · changement de résidence", ar:"استيراد سيارة · تغيير مكان الإقامة", en:"Vehicle import · change of residence"},
@@ -888,7 +897,7 @@ function faqHTML() {
 }
 
 function applyLang(l) {
-  lang = l; localStorage.setItem("fcr-lang", l);
+  lang = l;
   document.documentElement.lang = l;
   document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
   document.getElementById("brandSub").textContent = T(UI.subtitle);
@@ -896,7 +905,9 @@ function applyLang(l) {
   build();
 }
 
-document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.l)));
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
+  if (b.dataset.l !== lang) location.href = LANG_URL[b.dataset.l];
+}));
 applyLang(lang);
 </script>
 </body>

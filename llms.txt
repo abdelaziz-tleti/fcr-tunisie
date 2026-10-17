@@ -1,6 +1,6 @@
 # FCR Tunisie
 
-> Guide gratuit et checklist interactive (FR / العربية) pour importer un véhicule en Tunisie sous le régime FCR (Franchise pour Changement de Résidence). Conditions, documents, douane, ATTT et immatriculation, à jour de la loi de finances 2024 et du décret de juin 2024.
+> Guide gratuit et checklist interactive (FR / العربية / EN) pour importer un véhicule en Tunisie sous le régime FCR (Franchise pour Changement de Résidence). Conditions, documents, douane, ATTT et immatriculation, à jour de la loi de finances 2024 et du décret de juin 2024.
 
 ## Régime FCR — l'essentiel
 
@@ -23,8 +23,10 @@
 ## Liens
 
 - [Site FCR Tunisie](https://fcr-tunisie.com/)
+- [النسخة العربية](https://fcr-tunisie.com/ar/)
+- [English version](https://fcr-tunisie.com/en/)
 - [Douane Tunisienne — Retour définitif (FCR)](https://www.douane.gov.tn/retour-definitif/)
 
 ## Avertissement
 
-Outil d'aide non officiel. Les exigences peuvent évoluer : vérifier auprès de la Douane tunisienne, de l'ATTT et du Consulat de Tunisie. Dernière mise à jour : 16 octobre 2026.
+Outil d'aide non officiel. Les exigences peuvent évoluer : vérifier auprès de la Douane tunisienne, de l'ATTT et du Consulat de Tunisie. Dernière mise à jour : 17 octobre 2026.

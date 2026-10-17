@@ -1,0 +1,28 @@
+# Notifie IndexNow (Bing, Yandex, Naver… et donc ChatGPT Search / Copilot) après chaque mise en ligne.
+# Google ne prend pas IndexNow en charge : le sitemap suffit pour lui.
+name: IndexNow
+on:
+  push:
+    branches: [main]
+    paths: ["index.html", "ar/**", "en/**", "sitemap.xml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Attendre que GitHub Pages serve la nouvelle version (max 10 min)
+        run: |
+          for i in $(seq 1 40); do
+            curl -sf "https://fcr-tunisie.com/" | cmp -s - index.html && exit 0
+            sleep 15
+          done
+          echo "Le site ne sert pas encore la nouvelle version, envoi quand même"
+      - name: Envoyer les URLs à IndexNow
+        run: |
+          curl -sS --fail-with-body -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d '{"host":"fcr-tunisie.com","key":"2f2f4ecb97ef0a9c0893adbdc26a75c6","keyLocation":"https://fcr-tunisie.com/2f2f4ecb97ef0a9c0893adbdc26a75c6.txt","urlList":["https://fcr-tunisie.com/","https://fcr-tunisie.com/ar/","https://fcr-tunisie.com/en/"]}' \
+            -w "\nHTTP %{http_code}\n"
