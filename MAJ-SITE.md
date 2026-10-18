@@ -26,7 +26,7 @@ Le site est public (GitHub Pages). **Ne jamais mettre ici ni dans le dépôt** d
 ## 1. Préparer
 
 ```bash
-cd ~/fcr-tunisie
+cd ~/workspace-abdel/fcr-tunisie
 git status -sb          # doit être propre (seul .DS_Store peut être modifié, ne pas le commiter)
 git fetch origin && git log --oneline HEAD..origin/main   # rien à récupérer ? sinon : git pull --ff-only
 ```
@@ -130,7 +130,7 @@ git commit -m "content: …"     # préfixes : content, seo, fix, feat
 ## 8. Mise en ligne (toi)
 
 ```bash
-git -C ~/fcr-tunisie push origin main
+git -C ~/workspace-abdel/fcr-tunisie push origin main
 ```
 
 ## 9. Après la mise en ligne

@@ -17,7 +17,7 @@ Suivre [MAJ-SITE.md](MAJ-SITE.md) (veille actualité, contenu FR/AR/EN, SEO, bui
 Lancez un petit serveur local (les boutons de langue pointent vers `/`, `/ar/`, `/en/`, qui ne marchent pas en double-cliquant le fichier) :
 
 ```bash
-cd ~/fcr-tunisie
+cd ~/workspace-abdel/fcr-tunisie
 python3 -m http.server 8080   # puis http://localhost:8080 (et /ar/, /en/)
 ```
 
